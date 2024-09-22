@@ -1,4 +1,4 @@
 namespace Myceliaudio
 {
-    public delegate void AudioHandler(AudioArgs args);
+    public delegate void AudioHandler(IAudioArgs args);
 }

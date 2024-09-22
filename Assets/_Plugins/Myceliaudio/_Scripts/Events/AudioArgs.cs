@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Myceliaudio
 {
-    public class AudioArgs : System.EventArgs
+    public class AudioArgs : System.EventArgs, IAudioArgs
     {
         public virtual bool WantsClipPlayed { get { return Clip != null; } }
         public virtual AudioClip Clip { get; set; }
@@ -43,7 +43,7 @@ namespace Myceliaudio
         /// <summary>
         /// By default a func that does nothing.
         /// </summary>
-        public virtual AudioHandler OnComplete { get; set; } = (AudioArgs args) => { };
+        public virtual AudioHandler OnComplete { get; set; } = (IAudioArgs args) => { };
         public virtual double LoopStartPoint { get; set; }
 
 

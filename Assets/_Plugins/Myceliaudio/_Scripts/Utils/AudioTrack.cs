@@ -49,7 +49,7 @@ namespace Myceliaudio
             baseSource.volume = EffVolScaleNormalized;
         }
 
-        public virtual void Play(AudioArgs args)
+        public virtual void Play(IAudioArgs args)
         {
             if (!args.WantsClipPlayed)
                 return;
@@ -74,11 +74,11 @@ namespace Myceliaudio
         /// A version of the args' OnComplete that has the passed toExecute
         /// executing first
         /// </returns>
-        protected virtual AudioHandler SetBeforeOnComplete(AudioArgs args,
+        protected virtual AudioHandler SetBeforeOnComplete(IAudioArgs args,
             AudioHandler toExecute)
         {
             AudioHandler origOnComplete = args.OnComplete;
-            AudioHandler result = (AudioArgs maybeOtherArgs) =>
+            AudioHandler result = (IAudioArgs maybeOtherArgs) =>
             {
                 toExecute(maybeOtherArgs);
                 origOnComplete(maybeOtherArgs);
@@ -93,7 +93,7 @@ namespace Myceliaudio
             set { baseSource.clip = value; }
         }
 
-        protected virtual void UpdateSettings(AudioArgs args)
+        protected virtual void UpdateSettings(IAudioArgs args)
         {
             if (args.WantsVolumeSet && !tweeningVolume)
             {
@@ -121,7 +121,7 @@ namespace Myceliaudio
         protected float _latestTargetVolume = 100f;
         protected bool tweeningVolume, tweeningPitch;
 
-        protected virtual void SetVolumeWithoutDelay(AudioArgs args)
+        protected virtual void SetVolumeWithoutDelay(IAudioArgs args)
         {
             _latestTargetVolume = args.TargetVolume;
             UpdateCurrentVol();
@@ -133,12 +133,12 @@ namespace Myceliaudio
             UpdateCurrentVol();
         }
 
-        protected virtual void SetPitchWithoutDelay(AudioArgs args)
+        protected virtual void SetPitchWithoutDelay(IAudioArgs args)
         {
             CurrentPitch = args.TargetPitch;
         }
 
-        protected virtual void PlayASAP(AudioArgs args)
+        protected virtual void PlayASAP(IAudioArgs args)
         {
             if (args.Loop)
             {
@@ -155,7 +155,7 @@ namespace Myceliaudio
         }
 
         protected virtual AudioSystem AudioSys { get {  return AudioSystem.S; } }
-        protected IEnumerator PlayOnLoopCoroutine(AudioArgs args)
+        protected IEnumerator PlayOnLoopCoroutine(IAudioArgs args)
         {
             baseSource.Play();
             
@@ -220,7 +220,7 @@ namespace Myceliaudio
             }
         }
 
-        public virtual void FadeVolume(AudioArgs args)
+        public virtual void FadeVolume(IAudioArgs args)
         {
             float preFinalTargVol = args.TargetVolume * EffVolScaleNormalized; // 0-100
             _latestTargetVolume = preFinalTargVol / AudioMath.VolumeConversion; // 0-1 (for AudioSources to use)
@@ -236,7 +236,7 @@ namespace Myceliaudio
 
         protected Tween fadeTween;
 
-        public virtual void SetVolume(AudioArgs args)
+        public virtual void SetVolume(IAudioArgs args)
         {
             if (!args.WantsVolumeSet)
                 return;
@@ -253,7 +253,7 @@ namespace Myceliaudio
             }
         }
 
-        public virtual void SetPitch(AudioArgs args)
+        public virtual void SetPitch(IAudioArgs args)
         {
             if (!args.WantsPitchSet)
                 return;
@@ -269,7 +269,7 @@ namespace Myceliaudio
             }
         }
 
-        protected virtual void FadePitch(AudioArgs args)
+        protected virtual void FadePitch(IAudioArgs args)
         {
             float startingPitch = CurrentPitch, targetPitch = args.TargetPitch;
             tweeningPitch = true;
@@ -301,7 +301,7 @@ namespace Myceliaudio
             set { baseSource.time = value; }
         }
 
-        public virtual void Stop(AudioArgs args)
+        public virtual void Stop(IAudioArgs args)
         {
             baseSource.Stop();
             args.OnComplete(args);

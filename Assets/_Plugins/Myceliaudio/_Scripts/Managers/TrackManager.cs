@@ -128,8 +128,6 @@ namespace Myceliaudio
         protected float _baseVolumeScale = 100f;
         public event UnityAction<float> BaseVolScaleChanged = delegate { };
 
-        
-
         // This affects the actual volume values that the tracks play at.
         public virtual float EffVolScale
         {
@@ -145,10 +143,6 @@ namespace Myceliaudio
                 return result;
             }
         }
-
-        
-
-        
 
         public virtual void OnAnchorVolChanged(float newVolScale)
         {
