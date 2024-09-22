@@ -4,12 +4,21 @@ using UnityEngine.Events;
 
 namespace Myceliaudio
 {
-    public class TrackManager
+    public class TrackManager : MonoBehaviour
     {
-        public TrackManager(GameObject trackHolder)
+        [SerializeField] protected TrackManager _anchor;
+        [SerializeField] protected TrackSet _trackSet;
+
+        public virtual TrackSet Set
         {
-            this.trackHolder = trackHolder;
+            get { return _trackSet; }
+        }
+
+        public virtual void Init()
+        {
+            this.trackHolder = this.gameObject;
             SetUpInitialTracks();
+            this.Anchor = _anchor; // To get volumes adjusted properly
         }
 
         protected GameObject trackHolder;
@@ -36,6 +45,29 @@ namespace Myceliaudio
         }
 
         protected IDictionary<int, AudioTrack> tracks = new Dictionary<int, AudioTrack>();
+
+        public virtual TrackManager Anchor
+        {
+            get { return _anchor; }
+            set
+            {
+                TrackManager prevAnchor = _anchor;
+                if (prevAnchor != null)
+                {
+                    prevAnchor.BaseVolScaleChanged -= OnAnchorVolChanged;
+                }
+
+                _anchor = value;
+
+                if (_anchor == null)
+                {
+                    _anchor = this;
+                }
+
+                _anchor.BaseVolScaleChanged += OnAnchorVolChanged;
+                UpdateTrackVolumeScales();
+            }
+        }
 
         public virtual void Play(AudioArgs args)
         {
@@ -95,7 +127,7 @@ namespace Myceliaudio
         protected float _baseVolumeScale = 100f;
         public event UnityAction<float> BaseVolScaleChanged = delegate { };
 
-        public virtual TrackSet Set { get; set; }
+        
 
         // This affects the actual volume values that the tracks play at.
         public virtual float EffVolScale
@@ -113,25 +145,9 @@ namespace Myceliaudio
             }
         }
 
-        public virtual TrackManager Anchor
-        {
-            get { return _anchor; }
-            set
-            {
-                TrackManager prevAnchor = _anchor;
-                if (prevAnchor != null)
-                {
-                    prevAnchor.BaseVolScaleChanged -= OnAnchorVolChanged;
-                }
+        
 
-                _anchor = value;
-
-                _anchor.BaseVolScaleChanged += OnAnchorVolChanged;
-                UpdateTrackVolumeScales();
-            }
-        }
-
-        protected TrackManager _anchor;
+        
 
         public virtual void OnAnchorVolChanged(float newVolScale)
         {
