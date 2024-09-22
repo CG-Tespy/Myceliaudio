@@ -34,7 +34,7 @@ namespace Myceliaudio
 
         protected AudioSource baseSource;
 
-        public AudioTrack(GameObject toWorkWith = null)
+        public virtual void Init(GameObject toWorkWith = null)
         {
             holdsSource = toWorkWith;
             SetUpAudioSource();
@@ -235,13 +235,6 @@ namespace Myceliaudio
         }
 
         protected Tween fadeTween;
-
-        protected virtual void TweenVolume(float newUnscaledTargVolume)
-        {
-            _latestTargetVolume = newUnscaledTargVolume;
-            float volumeToApply = _latestTargetVolume * EffVolScaleNormalized;
-            CurrentVolume = volumeToApply;
-        }
 
         public virtual void SetVolume(AudioArgs args)
         {

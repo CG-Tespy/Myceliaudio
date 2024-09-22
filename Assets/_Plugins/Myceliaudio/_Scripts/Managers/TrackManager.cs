@@ -37,7 +37,8 @@ namespace Myceliaudio
         {
             if (!tracks.ContainsKey(id))
             {
-                AudioTrack newTrack = new AudioTrack(trackHolder);
+                AudioTrack newTrack = new AudioTrack();
+                newTrack.Init(trackHolder);
                 newTrack.ID = id;
                 newTrack.EffVolScale = this.EffVolScale;
                 tracks[id] = newTrack;
