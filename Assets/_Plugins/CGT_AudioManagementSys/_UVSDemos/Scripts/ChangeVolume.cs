@@ -1,4 +1,4 @@
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class ChangeVolume : SoundShifterUnit
     {

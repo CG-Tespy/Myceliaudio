@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using CGT.Amanita.Myceliaudio;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     /// <summary>
     /// Alternative to Fungus's built-in MusicManager that works with commands that alter

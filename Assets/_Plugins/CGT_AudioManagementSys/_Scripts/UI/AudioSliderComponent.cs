@@ -2,7 +2,7 @@ using CGT.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class AudioSliderComponent : MonoBehaviour
     {

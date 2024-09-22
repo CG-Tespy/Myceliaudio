@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CGT.AudManSys.Demos
+namespace Myceliaudio.Demos
 {
     public class PlayAudioOnClick : MonoBehaviour
     {

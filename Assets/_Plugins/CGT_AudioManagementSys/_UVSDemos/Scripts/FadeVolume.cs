@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 
-namespace CGT.AudManSys.UVS
+namespace Myceliaudio.UVS
 {
     public class FadeVolume : SoundShifterUnit
     {

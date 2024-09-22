@@ -1,6 +1,6 @@
 using UnityEngine.Events;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public static class AudioEvents
     {

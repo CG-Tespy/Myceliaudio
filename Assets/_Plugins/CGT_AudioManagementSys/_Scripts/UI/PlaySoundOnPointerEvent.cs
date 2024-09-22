@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using PointerEventData = UnityEngine.EventSystems.PointerEventData;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class PlaySoundOnPointerEvent : MonoBehaviour
     {

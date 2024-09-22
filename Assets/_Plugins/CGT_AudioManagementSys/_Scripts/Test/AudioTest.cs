@@ -1,6 +1,6 @@
-using CGT.AudManSys;
+using Myceliaudio;
 using UnityEngine;
-using TrackSet = CGT.AudManSys.TrackSet;
+using TrackSet = Myceliaudio.TrackSet;
 
 public class AudioTest : MonoBehaviour
 {

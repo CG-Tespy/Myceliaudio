@@ -1,4 +1,4 @@
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public interface ITargetsChannel
     {

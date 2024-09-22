@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT.AudManSys.Demos
+namespace Myceliaudio.Demos
 {
     public class PlayMusicOnStart : MonoBehaviour
     {

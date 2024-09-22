@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace CGT.AudManSys.Demos
+namespace Myceliaudio.Demos
 {
     public class CrossfadeTest : MonoBehaviour
     {

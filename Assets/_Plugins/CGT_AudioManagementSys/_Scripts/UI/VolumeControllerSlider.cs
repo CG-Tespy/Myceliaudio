@@ -1,4 +1,4 @@
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     /// <summary>
     /// Changes the volume of a Track Set when a slider's value changes.

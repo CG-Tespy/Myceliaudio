@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
-using CGT.AudManSys;
+using Myceliaudio;
 
 namespace CGT.Amanita.Myceliaudio.Editor
 {

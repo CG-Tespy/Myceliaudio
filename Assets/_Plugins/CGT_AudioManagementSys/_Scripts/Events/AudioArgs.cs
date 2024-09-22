@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class AudioArgs : System.EventArgs
     {

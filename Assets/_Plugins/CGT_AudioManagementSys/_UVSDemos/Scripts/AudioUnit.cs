@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class AudioUnit : Unit
     {

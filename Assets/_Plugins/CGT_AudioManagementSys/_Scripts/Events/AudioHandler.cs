@@ -1,4 +1,4 @@
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public delegate void AudioHandler(AudioArgs args);
 }

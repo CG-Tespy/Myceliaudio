@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class TrackManager
     {

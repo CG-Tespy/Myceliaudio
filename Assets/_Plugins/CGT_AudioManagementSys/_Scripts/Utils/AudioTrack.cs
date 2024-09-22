@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     /// <summary>
     /// Helper class for NeoNeoAudioSys that also kind of wraps Unity's built-in AudioSource component

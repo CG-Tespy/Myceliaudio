@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     public class VolumeAdjusterUI : MonoBehaviour
     {

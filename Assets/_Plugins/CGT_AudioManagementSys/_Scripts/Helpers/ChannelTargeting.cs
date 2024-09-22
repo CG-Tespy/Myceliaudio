@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT.AudManSys
+namespace Myceliaudio
 {
     [System.Serializable]
     public class ChannelTargeting: ITargetsChannel
