@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using MoonSharp.Interpreter.Tree;
 
 namespace MoonSharp.Interpreter.Serialization.Json
 {
-	/// <summary>
-	/// Class performing conversions between Tables and Json.
-	/// NOTE : the conversions are done respecting json syntax but using Lua constructs. This means mostly that:
-	/// 1) Lua string escapes can be accepted while they are not technically valid JSON, and viceversa
-	/// 2) Null values are represented using a static userdata of type JsonNull
-	/// 3) Do not use it when input cannot be entirely trusted
-	/// </summary>
-	public static class JsonTableConverter
+    /// <summary>
+    /// Class performing conversions between Tables and Json.
+    /// NOTE : the conversions are done respecting json syntax but using Lua constructs. This means mostly that:
+    /// 1) Lua string escapes can be accepted while they are not technically valid JSON, and viceversa
+    /// 2) Null values are represented using a static userdata of type JsonNull
+    /// 3) Do not use it when input cannot be entirely trusted
+    /// </summary>
+    public static class JsonTableConverter
 	{
 		/// <summary>
 		/// Converts a table to a json string

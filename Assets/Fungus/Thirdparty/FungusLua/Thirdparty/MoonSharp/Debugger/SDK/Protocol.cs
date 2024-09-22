@@ -31,11 +31,10 @@ using System.IO;
 using System.Text.RegularExpressions;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Serialization.Json;
-using MoonSharp.Interpreter.Serialization;
 
 namespace MoonSharp.VsCodeDebugger.SDK
 {
-	public class ProtocolMessage
+    public class ProtocolMessage
 	{
 		public int seq;
 		public string type { get; private set; }

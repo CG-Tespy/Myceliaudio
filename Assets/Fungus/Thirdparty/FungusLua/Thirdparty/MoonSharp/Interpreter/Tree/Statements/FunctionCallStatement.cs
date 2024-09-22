@@ -1,11 +1,10 @@
-﻿using System;
-using MoonSharp.Interpreter.Execution;
+﻿using MoonSharp.Interpreter.Execution;
 using MoonSharp.Interpreter.Execution.VM;
 using MoonSharp.Interpreter.Tree.Expressions;
 
 namespace MoonSharp.Interpreter.Tree.Statements
 {
-	class FunctionCallStatement : Statement
+    class FunctionCallStatement : Statement
 	{
 		FunctionCallExpression m_FunctionCallExpression;
 

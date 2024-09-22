@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-
-#if UNITY_2019_3_12
+﻿#if UNITY_2019_3_12
 namespace Fungus.EditorUtils
 {
     //fix for a bug introduced in unity 2019.3.12 that prevents cross asmdef references from showing

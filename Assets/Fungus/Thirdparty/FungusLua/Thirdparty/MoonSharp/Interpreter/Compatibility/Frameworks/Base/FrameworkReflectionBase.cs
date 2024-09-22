@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 #if DOTNET_CORE || NETFX_CORE
 	using TTypeInfo = System.Reflection.TypeInfo;
 #else
-	using TTypeInfo = System.Type;
+using TTypeInfo = System.Type;
 #endif
 
 namespace MoonSharp.Interpreter.Compatibility.Frameworks
 {
-	abstract class FrameworkReflectionBase : FrameworkBase
+    abstract class FrameworkReflectionBase : FrameworkBase
 	{
 		public abstract TTypeInfo GetTypeInfoFromType(Type t);
 

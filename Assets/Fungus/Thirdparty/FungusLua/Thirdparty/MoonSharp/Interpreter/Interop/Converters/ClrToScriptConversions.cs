@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using System.Text;
-using MoonSharp.Interpreter.Interop.RegistrationPolicies;
 
 namespace MoonSharp.Interpreter.Interop.Converters
 {
-	internal static class ClrToScriptConversions
+    internal static class ClrToScriptConversions
 	{
 		/// <summary>
 		/// Tries to convert a CLR object to a MoonSharp value, using "trivial" logic.

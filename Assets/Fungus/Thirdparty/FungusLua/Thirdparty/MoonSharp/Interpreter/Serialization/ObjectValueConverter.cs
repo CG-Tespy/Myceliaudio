@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using MoonSharp.Interpreter.Compatibility;
 using MoonSharp.Interpreter.Interop.Converters;
 
 namespace MoonSharp.Interpreter.Serialization
 {
-	public static class ObjectValueConverter
+    public static class ObjectValueConverter
 	{
 		public static DynValue SerializeObjectToDynValue(Script script, object o, DynValue valueForNulls = null)
 		{

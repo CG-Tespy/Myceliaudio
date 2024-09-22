@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using MoonSharp.Interpreter.Interop;
-using System.Reflection;
 
 namespace MoonSharp.Interpreter
 {
-	/// <summary>
-	/// This class wraps a CLR function 
-	/// </summary>
-	public sealed class CallbackFunction : RefIdObject
+    /// <summary>
+    /// This class wraps a CLR function 
+    /// </summary>
+    public sealed class CallbackFunction : RefIdObject
 	{
 		private static InteropAccessMode m_DefaultAccessMode = InteropAccessMode.LazyOptimized;
 

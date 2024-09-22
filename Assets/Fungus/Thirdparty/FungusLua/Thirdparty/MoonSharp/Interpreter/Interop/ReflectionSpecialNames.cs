@@ -1,12 +1,10 @@
-﻿using System.Linq;
-
-namespace MoonSharp.Interpreter.Interop
+﻿namespace MoonSharp.Interpreter.Interop
 {
 
-	/// <summary>
-	/// Helps identifying a reflection special name
-	/// </summary>
-	public enum ReflectionSpecialNameType
+    /// <summary>
+    /// Helps identifying a reflection special name
+    /// </summary>
+    public enum ReflectionSpecialNameType
 	{
 		IndexGetter,
 		IndexSetter,

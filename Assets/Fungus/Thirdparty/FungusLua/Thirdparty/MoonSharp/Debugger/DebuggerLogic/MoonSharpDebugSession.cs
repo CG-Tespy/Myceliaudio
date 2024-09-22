@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Debugging;
@@ -13,7 +12,7 @@ using MoonSharp.VsCodeDebugger.SDK;
 
 namespace MoonSharp.VsCodeDebugger.DebuggerLogic
 {
-	internal class MoonSharpDebugSession : DebugSession, IAsyncDebuggerClient
+    internal class MoonSharpDebugSession : DebugSession, IAsyncDebuggerClient
 	{
 		AsyncDebugger m_Debug;
 		MoonSharpVsCodeDebugServer m_Server;

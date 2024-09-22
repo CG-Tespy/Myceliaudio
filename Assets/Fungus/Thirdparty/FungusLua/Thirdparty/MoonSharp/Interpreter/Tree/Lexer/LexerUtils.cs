@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using MoonSharp.Interpreter.Compatibility;
 
 namespace MoonSharp.Interpreter.Tree
 {
-	internal static class LexerUtils
+    internal static class LexerUtils
 	{
 		public static double ParseNumber(Token T)
 		{

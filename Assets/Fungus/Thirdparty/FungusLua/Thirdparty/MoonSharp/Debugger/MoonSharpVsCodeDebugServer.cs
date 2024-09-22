@@ -2,11 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using MoonSharp.VsCodeDebugger.DebuggerLogic;
 using MoonSharp.Interpreter;
@@ -15,10 +13,10 @@ using MoonSharp.VsCodeDebugger.SDK;
 
 namespace MoonSharp.VsCodeDebugger
 {
-	/// <summary>
-	/// Class implementing a debugger allowing attaching from a Visual Studio Code debugging session.
-	/// </summary>
-	public class MoonSharpVsCodeDebugServer : IDisposable
+    /// <summary>
+    /// Class implementing a debugger allowing attaching from a Visual Studio Code debugging session.
+    /// </summary>
+    public class MoonSharpVsCodeDebugServer : IDisposable
 	{
 		object m_Lock = new object();
 		List<AsyncDebugger> m_DebuggerList = new List<AsyncDebugger>();

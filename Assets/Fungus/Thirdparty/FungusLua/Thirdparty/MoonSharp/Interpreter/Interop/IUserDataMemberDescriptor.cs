@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MoonSharp.Interpreter.Interop
 {
-	/// <summary>
-	/// Interface used by standard descriptors to access members of a given type from scripts.
-	/// </summary>
-	public interface IUserDataMemberDescriptor
+    /// <summary>
+    /// Interface used by standard descriptors to access members of a given type from scripts.
+    /// </summary>
+    public interface IUserDataMemberDescriptor
 	{
 		/// <summary>
 		/// Gets the name of the descriptor (usually, the name of the type described).
