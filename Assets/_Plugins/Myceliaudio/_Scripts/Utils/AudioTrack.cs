@@ -143,10 +143,15 @@ namespace Myceliaudio
             if (args.Loop)
             {
                 baseSource.Stop();
-                // ^ Setting it to loop is fine (and optional) even when you set a loop point. That is, 
-                // so long as you set said point appropriately.
+                baseSource.loop = true; // to avoid issues for when the end point is at the exact end of the song
 
-                AudioSys.StartCoroutine(PlayOnLoopCoroutine(args));
+                if (_playOnLoop != null)
+                {
+                    AudioSys.StopCoroutine(_playOnLoop);
+                }
+
+                _playOnLoop = PlayOnLoopCoroutine(args);
+                AudioSys.StartCoroutine(_playOnLoop);
             }
             else
             {
@@ -154,6 +159,9 @@ namespace Myceliaudio
             }
         }
 
+        protected IEnumerator _playOnLoop;
+        // ^Need this as a separate object to avoid loop points getting confused when
+        // switching from one song to another
         protected virtual AudioSystem AudioSys { get {  return AudioSystem.S; } }
         protected IEnumerator PlayOnLoopCoroutine(IAudioArgs args)
         {
