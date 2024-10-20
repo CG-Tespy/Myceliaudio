@@ -76,6 +76,12 @@ namespace Myceliaudio
             tracks[args.Track].Play(args);
         }
 
+        public virtual void Play(AudioPlayArgs args)
+        {
+            EnsureTrackExists(args.Track);
+            tracks[args.Track].Play(args);
+        }
+
         public virtual void SetVolume(AudioArgs args)
         {
             EnsureTrackExists(args.Track);
@@ -175,6 +181,12 @@ namespace Myceliaudio
             tracks[args.Track].Stop(args);
         }
 
+        public virtual void Stop(int track)
+        {
+            var trackToStop = tracks[track];
+            trackToStop.Stop();
+        }
+
         public virtual float GetVolume(AudioArgs args)
         {
             EnsureTrackExists(args.Track);
@@ -200,5 +212,6 @@ namespace Myceliaudio
         }
 
         public virtual string Name { get; set; }
+
     }
 }

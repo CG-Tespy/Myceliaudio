@@ -70,6 +70,27 @@ namespace Myceliaudio
             }
         }
 
+        public virtual void Play(AudioPlayArgs args)
+        {
+            if (args.Loop)
+            {
+                baseSource.Stop();
+                baseSource.loop = true; // to avoid issues for when the end point is at the exact end of the song
+
+                if (_playOnLoop != null)
+                {
+                    AudioSys.StopCoroutine(_playOnLoop);
+                }
+
+                _playOnLoop = PlayOnLoopCoroutine(args);
+                AudioSys.StartCoroutine(_playOnLoop);
+            }
+            else
+            {
+                baseSource.PlayOneShot(args.Clip);
+            }
+        }
+
         /// <returns>
         /// A version of the args' OnComplete that has the passed toExecute
         /// executing first
@@ -127,6 +148,12 @@ namespace Myceliaudio
             UpdateCurrentVol();
         }
 
+        protected virtual void SetVolumeImmediate(float targVol)
+        {
+            _latestTargetVolume = targVol;
+            UpdateCurrentVol();
+        }
+
         public virtual void SetVolRightAway(float newVol)
         {
             _latestTargetVolume = newVol;
@@ -165,13 +192,13 @@ namespace Myceliaudio
         protected virtual AudioSystem AudioSys { get {  return AudioSystem.S; } }
         protected IEnumerator PlayOnLoopCoroutine(IAudioArgs args)
         {
+            AudioClip clip = baseSource.clip = args.Clip;
             baseSource.Play();
             
             // Since the base loop point is in milliseconds...
             float loopPoint = (float) (args.LoopStartPoint / 1000.0); 
             // ^AudioSource.time is a float, not a double, so...
-            AudioClip clip = args.Clip;
-
+            
             double clipLength = clip.PreciseLength();
             if (args.HasLoopEndPoint)
             {
@@ -196,6 +223,38 @@ namespace Myceliaudio
         }
 
         protected static double dspTimeScheduleOffset = 0.2;
+
+        protected IEnumerator PlayOnLoopCoroutine(AudioPlayArgs args)
+        {
+            AudioClip clip = baseSource.clip = args.Clip;
+            baseSource.Play();
+
+            // Since the base loop point is in milliseconds...
+            float loopPoint = (float)(args.LoopStartPoint / 1000.0);
+            // ^AudioSource.time is a float, not a double, so...
+
+            double clipLength = clip.PreciseLength();
+            if (args.HasLoopEndPoint)
+            {
+                clipLength = args.LoopEndPoint / 1000.0;
+            }
+
+            double lengthOfTheLoopSegment = clipLength - loopPoint;
+            double whenToReturnToLoopPoint = AudioSettings.dspTime + clipLength;
+
+            while (true)
+            {
+                bool shouldReturnToLoopPoint = AudioSettings.dspTime >= whenToReturnToLoopPoint;
+
+                if (shouldReturnToLoopPoint)
+                {
+                    baseSource.time = loopPoint;
+                    whenToReturnToLoopPoint += lengthOfTheLoopSegment;
+                }
+
+                yield return null;
+            }
+        }
 
         /// <summary>
         /// On a scale of 0 to 100. 0 = total silence, 100 = max vol
@@ -244,6 +303,20 @@ namespace Myceliaudio
 
         protected Tween fadeTween;
 
+        public virtual void FadeVolume(SetVolumeArgs args)
+        {
+            float preFinalTargVol = args.TargetVolume * EffVolScaleNormalized; // 0-100
+            _latestTargetVolume = preFinalTargVol / AudioMath.VolumeConversion; // 0-1 (for AudioSources to use)
+
+            if (fadeTween != null)
+            {
+                fadeTween.Kill();
+            }
+
+            fadeTween = baseSource.DOFade(_latestTargetVolume, args.FadeDuration)
+                .OnComplete(() => args.OnComplete(args));
+        }
+
         public virtual void SetVolume(IAudioArgs args)
         {
             if (!args.WantsVolumeSet)
@@ -258,6 +331,18 @@ namespace Myceliaudio
             {
                 SetVolumeWithoutDelay(args);
                 args.OnComplete(args);
+            }
+        }
+
+        public virtual void SetVolume(SetVolumeArgs args)
+        {
+            if (args.WantsFade)
+            {
+                FadeVolume(args);
+            }
+            else
+            {
+                SetVolumeImmediate(args.TargetVolume);
             }
         }
 
@@ -311,8 +396,13 @@ namespace Myceliaudio
 
         public virtual void Stop(IAudioArgs args)
         {
-            baseSource.Stop();
+            Stop();
             args.OnComplete(args);
+        }
+
+        public virtual void Stop()
+        {
+            baseSource.Stop();
         }
 
     }
