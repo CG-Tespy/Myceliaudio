@@ -10,7 +10,7 @@ namespace CGT.Myceliaudio
         [SerializeField] protected TrackManager _anchor;
         [SerializeField] protected TrackGroup _trackGroup;
 
-        public virtual TrackGroup Set
+        public virtual TrackGroup Group
         {
             get { return _trackGroup; }
         }
@@ -113,7 +113,7 @@ namespace CGT.Myceliaudio
             {
                 _baseVolumeScale = Mathf.Clamp(value, AudioMath.MinVol, AudioMath.MaxVol);
                 EffVolScaleChanged(EffVolScale);
-                AudioEvents.TrackSetVolChanged(Set, _baseVolumeScale);
+                AudioEvents.TrackSetVolChanged(Group, _baseVolumeScale);
             }
         }
         
@@ -152,7 +152,6 @@ namespace CGT.Myceliaudio
             AudioTrack toTweenFor = tracks[args.Track];
             Tween fadeTweenToUse = _fadeTweens[toTweenFor];
 
-
             if (fadeTweenToUse != null)
             {
                 fadeTweenToUse.Kill();
@@ -170,6 +169,7 @@ namespace CGT.Myceliaudio
 
         public virtual void Stop(int track)
         {
+            EnsureTrackExists(track);
             var trackToStop = tracks[track];
             trackToStop.Stop();
         }

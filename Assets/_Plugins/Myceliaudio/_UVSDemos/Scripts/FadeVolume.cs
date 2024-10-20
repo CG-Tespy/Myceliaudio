@@ -28,7 +28,7 @@ namespace CGT.Myceliaudio.UVS
         protected override ControlOutput OnEnterStart(Flow flow)
         {
             var baseOutput = base.OnEnterStart(flow);
-            AudioSystem.S.FadeVolume(_setVolumeArgs);
+            AudioSystem.S.FadeTrackVolume(_setVolumeArgs);
             return baseOutput;
         }
 

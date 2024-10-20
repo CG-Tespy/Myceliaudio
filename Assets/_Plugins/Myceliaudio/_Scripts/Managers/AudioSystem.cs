@@ -23,9 +23,8 @@ namespace CGT.Myceliaudio
                 _s = this;
             }
 
-            PrepTrackManagers();
             PrepSettingsFile();
-            SetDefaultVolumeLevels();
+            PrepTrackManagers();
             DontDestroyOnLoad(this.gameObject);
         }
 
@@ -35,7 +34,7 @@ namespace CGT.Myceliaudio
 
             foreach (TrackManager manager in managersFound)
             {
-                TrackManagers[manager.Set] = manager;
+                TrackManagers[manager.Group] = manager;
                 manager.Init();
             }
 
@@ -43,6 +42,8 @@ namespace CGT.Myceliaudio
             musicManager = TrackManagers[TrackGroup.BGMusic];
             soundFXManager = TrackManagers[TrackGroup.SoundFX];
             voiceManager = TrackManagers[TrackGroup.Voice];
+
+            SetDefaultVolumeLevels();
         }
 
         public IDictionary<TrackGroup, TrackManager> TrackManagers = new Dictionary<TrackGroup, TrackManager>();
@@ -154,7 +155,7 @@ namespace CGT.Myceliaudio
             managerToUse.Stop(track);
         }
     
-        public virtual void FadeVolume(AlterVolumeArgs args)
+        public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
             var managerToUse = TrackManagers[args.TrackSet];
             managerToUse.FadeTrackVolume(args);
