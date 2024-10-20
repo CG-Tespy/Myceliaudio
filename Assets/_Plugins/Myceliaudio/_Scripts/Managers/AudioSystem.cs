@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 namespace CGT.Myceliaudio
 {
-    /// <summary>
-    /// Alternative to Fungus's built-in MusicManager that works with commands that alter
-    /// music or sfx properties separately.
-    /// </summary>
     public class AudioSystem : MonoBehaviour
     {
         public static AudioSystem S

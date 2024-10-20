@@ -152,12 +152,10 @@ namespace CGT.Myceliaudio
             EnsureTrackExists(args.Track);
             AudioTrack toTweenFor = tracks[args.Track];
 
-            bool shouldUseCustomTweener = args.CustomFadeTweener != null;
+            bool shouldUseCustomTweener = args.ApplyCustomFade != null;
             if (shouldUseCustomTweener)
             {
-                args.CustomFadeTweener += (leArgs, leTrack) => leArgs.OnComplete(leArgs);
-                // ^So client code doesn't have to worry about it
-                args.CustomFadeTweener(args, toTweenFor);
+                args.ApplyCustomFade(args, toTweenFor);
             }
             else
             {

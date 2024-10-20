@@ -21,7 +21,7 @@ namespace CGT.Myceliaudio
         /// <summary>
         /// Executes the fading process. If null, the system will go with the default.
         /// </summary>
-        public virtual VolumeFadeHandler CustomFadeTweener { get; set; }
+        public virtual VolumeFadeHandler ApplyCustomFade { get; set; }
 
         public static AlterVolumeArgs CreateCopy(AlterVolumeArgs other)
         {
