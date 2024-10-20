@@ -20,5 +20,20 @@ namespace Myceliaudio
         public virtual float FadeDuration { get; set; } = 0f;
 
         public virtual UnityAction<SetVolumeArgs> OnComplete { get; set; } = delegate { };
+
+        public static SetVolumeArgs CreateCopy(SetVolumeArgs other)
+        {
+            SetVolumeArgs result = new SetVolumeArgs()
+            {
+                TargetVolume = other.TargetVolume,
+                TrackSet = other.TrackSet,
+                Track = other.Track,
+                FadeDuration = other.FadeDuration,
+                OnComplete = other.OnComplete
+            };
+
+            return result;
+
+        }
     }
 }

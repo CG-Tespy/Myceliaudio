@@ -145,13 +145,19 @@ namespace Myceliaudio
             managerToUse.SetVolume(args);
         }
 
-        public virtual float GetVolOf(TrackSet trackSet)
+        public virtual void SetTrackVol(SetVolumeArgs args)
+        {
+            var managerToUse = TrackManagers[args.TrackSet];
+            managerToUse.SetVolume(args);
+        }
+
+        public virtual float GetTrackGroupVolume(TrackSet trackSet)
         {
             var managerToUse = TrackManagers[trackSet];
             return managerToUse.BaseVolumeScale;
         }
 
-        public virtual void SetVolOf(TrackSet trackSet, float newVol)
+        public virtual void SetTrackGroupVol(TrackSet trackSet, float newVol)
         {
             var managerToUse = TrackManagers[trackSet];
             managerToUse.BaseVolumeScale = newVol;

@@ -10,7 +10,7 @@ namespace Myceliaudio
         
         protected virtual void Awake()
         {
-            float initVol = AudioSystem.S.GetVolOf(_trackSet);
+            float initVol = AudioSystem.S.GetTrackGroupVolume(_trackSet);
             SyncText(initVol);
         }
 

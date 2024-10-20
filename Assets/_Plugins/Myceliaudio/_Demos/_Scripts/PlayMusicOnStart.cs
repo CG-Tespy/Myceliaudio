@@ -22,17 +22,6 @@ namespace Myceliaudio.Demos
                 LoopEndPoint = _loopEndPoint
             };
 
-            //AudioArgs playMusic = new AudioArgs()
-            //{
-            //    TrackSet = TrackSet.BGMusic,
-            //    TargetVolume = _startingVol,
-            //    Clip = _clip,
-            //    Loop = true,
-            //    LoopStartPoint = _loopStartPoint,
-            //    LoopEndPoint = _loopEndPoint
-            //};
-
-            //AudioSystem.S.Play(playMusic);
             AudioSystem.S.Play(playMusic);
         }
     }

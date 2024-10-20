@@ -23,10 +23,10 @@ namespace Myceliaudio.Demos
             AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
-            AudioSys.SetVolOf(TrackSet.BGMusic, startingMusicVol);
+            AudioSys.SetTrackGroupVol(TrackSet.BGMusic, startingMusicVol);
 
             // We want both clips playing at the same time, but with the second being silent
-            AudioArgs playFirstClip = new AudioArgs()
+            AudioPlayArgs playFirstClip = new AudioPlayArgs()
             {
                 Clip = firstClip,
                 TrackSet = TrackSet.BGMusic,
@@ -35,17 +35,24 @@ namespace Myceliaudio.Demos
 
             AudioSys.Play(playFirstClip);
 
-            AudioArgs playSecondClip = new AudioArgs()
+            AudioPlayArgs playSecondClip = new AudioPlayArgs()
             {
                 Clip = secondClip,
                 TrackSet = TrackSet.BGMusic,
                 Loop = true,
                 Track = 1,
-                TargetVolume = 0,
-                WantsVolumeSet = true
             };
 
             AudioSys.Play(playSecondClip);
+
+            SetVolumeArgs setVolume = new SetVolumeArgs()
+            {
+                TargetVolume = 0,
+                TrackSet = TrackSet.BGMusic,
+                Track = 1,
+            };
+
+            AudioSys.SetTrackVol(setVolume);
 
             clipCurrentlyAudible = firstClip;
 
@@ -59,7 +66,7 @@ namespace Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetVolOf(TrackSet.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVolume(TrackSet.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
@@ -88,7 +95,7 @@ namespace Myceliaudio.Demos
 
         protected virtual void ChangeVol(TrackSet type, float sign)
         {
-            float currentVol = AudioSys.GetVolOf(type);
+            float currentVol = AudioSys.GetTrackGroupVolume(type);
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 
@@ -99,7 +106,16 @@ namespace Myceliaudio.Demos
                 WantsVolumeSet = true
             };
 
-            AudioSys.SetVolOf(setVol.TrackSet, currentVol);
+            //SetVolumeArgs setVol = new SetVolumeArgs()
+            //{
+            //    TrackSet = type,
+            //    TargetVolume = currentVol,
+
+            //};
+
+            //AudioSys.SetVolOf(type, currentVol);
+
+            AudioSys.SetTrackGroupVol(type, currentVol);
 
             UpdateTextFields();
         }
@@ -133,15 +149,23 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnCrossfadeButtonClicked()
         {
-            AudioArgs fadeOut = new AudioArgs()
+            //AudioArgs fadeOut = new AudioArgs()
+            //{
+            //    WantsVolumeSet = true,
+            //    TrackSet = TrackSet.BGMusic,
+            //    TargetVolume = 0,
+            //    FadeDuration = currentFadeDur,
+            //};
+
+            SetVolumeArgs fadeOut = new SetVolumeArgs()
             {
-                WantsVolumeSet = true,
                 TrackSet = TrackSet.BGMusic,
                 TargetVolume = 0,
                 FadeDuration = currentFadeDur,
             };
 
-            AudioArgs fadeIn = AudioArgs.CreateCopy(fadeOut);
+            //AudioArgs fadeIn = AudioArgs.CreateCopy(fadeOut);
+            SetVolumeArgs fadeIn = SetVolumeArgs.CreateCopy(fadeOut);
             fadeIn.TargetVolume = 100f; // Note that this gets scaled by the base vol of the track type
             AudioClip nextClipToBeAudible = null;
             if (clipCurrentlyAudible == firstClip)

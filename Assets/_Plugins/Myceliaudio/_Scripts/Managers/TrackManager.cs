@@ -59,13 +59,10 @@ namespace Myceliaudio
                 }
 
                 _anchor = value;
-
-                if (_anchor == null)
+                if (_anchor != null)
                 {
-                    _anchor = this;
+                    _anchor.BaseVolScaleChanged += OnAnchorVolChanged;
                 }
-
-                _anchor.BaseVolScaleChanged += OnAnchorVolChanged;
                 UpdateTrackVolumeScales();
             }
         }
@@ -83,6 +80,12 @@ namespace Myceliaudio
         }
 
         public virtual void SetVolume(AudioArgs args)
+        {
+            EnsureTrackExists(args.Track);
+            tracks[args.Track].SetVolume(args);
+        }
+
+        public virtual void SetVolume(SetVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].SetVolume(args);

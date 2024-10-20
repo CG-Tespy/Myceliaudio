@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 693288961}
   - component: {fileID: 693288962}
   m_Layer: 0
-  m_Name: Day
+  m_Name: SmallAdventure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 8300000, guid: 8d6c1cc8ba1614a42965feb026fc95c2, type: 3}
   _loopStartPoint: 0
-  _loopEndPoint: 0
+  _loopEndPoint: 60043
   _startingVol: 50
 --- !u!1 &917908509
 GameObject:

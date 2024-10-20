@@ -25,12 +25,12 @@ namespace Myceliaudio.Demos
             AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
-            AudioSys.SetVolOf(TrackSet.BGMusic, startingMusicVol);
-            AudioSys.SetVolOf(TrackSet.SoundFX, startingSfxVol);
+            AudioSys.SetTrackGroupVol(TrackSet.BGMusic, startingMusicVol);
+            AudioSys.SetTrackGroupVol(TrackSet.SoundFX, startingSfxVol);
 
             UpdateTextFields();
 
-            AudioArgs playShortBgm = new AudioArgs()
+            AudioPlayArgs playShortBgm = new AudioPlayArgs()
             {
                 Clip = bgmToPlay,
                 TrackSet = TrackSet.BGMusic,
@@ -44,11 +44,11 @@ namespace Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetVolOf(TrackSet.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVolume(TrackSet.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
-            float sfxVol = AudioSys.GetVolOf(TrackSet.SoundFX);
+            float sfxVol = AudioSys.GetTrackGroupVolume(TrackSet.SoundFX);
             sfxVol = Mathf.Round(sfxVol);
             sfxVolLabel.text = $"SFX Volume: {sfxVol}%";
         }
@@ -72,7 +72,7 @@ namespace Myceliaudio.Demos
 
         protected virtual void ChangeVol(TrackSet type, float sign)
         {
-            float currentVol = AudioSys.GetVolOf(type);
+            float currentVol = AudioSys.GetTrackGroupVolume(type);
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 
@@ -83,7 +83,7 @@ namespace Myceliaudio.Demos
                 WantsVolumeSet = true
             };
 
-            AudioSys.SetVolOf(setVol.TrackSet, currentVol);
+            AudioSys.SetTrackGroupVol(setVol.TrackSet, currentVol);
 
             UpdateTextFields();
         }

@@ -11,7 +11,7 @@ namespace Myceliaudio
         protected override void InitApply()
         {
             base.InitApply();
-            float vol = AudioSystem.S.GetVolOf(_trackSet);
+            float vol = AudioSystem.S.GetTrackGroupVolume(_trackSet);
             SyncWith(vol);
         }
 
