@@ -4,17 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Debugging;
-using MoonSharp.VsCodeDebugger;
-using MoonSharp.VsCodeDebugger.SDK;
 
 namespace MoonSharp.VsCodeDebugger.DebuggerLogic
 {
-	internal class AsyncDebugger : IDebugger
+    internal class AsyncDebugger : IDebugger
 	{
 		private static object s_AsyncDebuggerIdLock = new object();
 		private static int s_AsyncDebuggerIdCounter = 0;

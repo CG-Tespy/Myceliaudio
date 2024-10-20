@@ -1,16 +1,15 @@
 ﻿using System;
-using MoonSharp.Interpreter.Interop.StandardDescriptors.HardwiredDescriptors;
 
 namespace MoonSharp.Interpreter.Interop.RegistrationPolicies
 {
-	/// <summary>
-	/// The default registration policy used by MoonSharp unless explicitely replaced.
-	/// Deregistrations are allowed, but registration of a new descriptor are not allowed
-	/// if a descriptor is already registered for that type.
-	/// 
-	/// Automatic type registration is disabled.
-	/// </summary>
-	public class DefaultRegistrationPolicy : IRegistrationPolicy
+    /// <summary>
+    /// The default registration policy used by MoonSharp unless explicitely replaced.
+    /// Deregistrations are allowed, but registration of a new descriptor are not allowed
+    /// if a descriptor is already registered for that type.
+    /// 
+    /// Automatic type registration is disabled.
+    /// </summary>
+    public class DefaultRegistrationPolicy : IRegistrationPolicy
 	{
 		/// <summary>
 		/// Called to handle the registration or deregistration of a type descriptor. Must return the type descriptor to be registered, or null to remove the registration.

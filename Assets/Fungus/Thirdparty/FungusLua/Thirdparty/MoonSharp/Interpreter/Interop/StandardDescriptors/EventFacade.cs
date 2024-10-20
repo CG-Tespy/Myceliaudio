@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MoonSharp.Interpreter.Interop.StandardDescriptors
 {
-	internal class EventFacade : IUserDataType
+    internal class EventFacade : IUserDataType
 	{
 		Func<object, ScriptExecutionContext, CallbackArguments, DynValue> m_AddCallback;
 		Func<object, ScriptExecutionContext, CallbackArguments, DynValue> m_RemoveCallback;

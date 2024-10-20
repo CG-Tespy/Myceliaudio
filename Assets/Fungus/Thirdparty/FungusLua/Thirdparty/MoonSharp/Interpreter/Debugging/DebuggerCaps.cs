@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MoonSharp.Interpreter.Debugging
 {
-	/// <summary>
-	/// Enumeration of capabilities for a debugger
-	/// </summary>
-	[Flags]
+    /// <summary>
+    /// Enumeration of capabilities for a debugger
+    /// </summary>
+    [Flags]
 	public enum DebuggerCaps
 	{
 		/// <summary>

@@ -1,16 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System;
-
-namespace Fungus
+﻿namespace Fungus
 {
 
-	// Some CSV utilities cobbled together from stack overflow answers
-	// CSV escape & unescape from http://stackoverflow.com/questions/769621/dealing-with-commas-in-a-csv-file
-	// http://answers.unity3d.com/questions/144200/are-there-any-csv-reader-for-unity3d-without-needi.html
-	public static class CSVSupport
+    // Some CSV utilities cobbled together from stack overflow answers
+    // CSV escape & unescape from http://stackoverflow.com/questions/769621/dealing-with-commas-in-a-csv-file
+    // http://answers.unity3d.com/questions/144200/are-there-any-csv-reader-for-unity3d-without-needi.html
+    public static class CSVSupport
 	{
 		public static string Escape( string s )
 		{

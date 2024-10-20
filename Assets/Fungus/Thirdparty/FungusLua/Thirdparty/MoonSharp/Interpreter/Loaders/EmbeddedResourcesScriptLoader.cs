@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace MoonSharp.Interpreter.Loaders
 {
-	/// <summary>
-	/// A script loader loading scripts from an assembly resources
-	/// </summary>
-	public class EmbeddedResourcesScriptLoader : ScriptLoaderBase
+    /// <summary>
+    /// A script loader loading scripts from an assembly resources
+    /// </summary>
+    public class EmbeddedResourcesScriptLoader : ScriptLoaderBase
 	{
 		Assembly m_ResourceAssembly;
 		HashSet<string> m_ResourceNames;

@@ -1,14 +1,11 @@
 ﻿#if !(DOTNET_CORE || NETFX_CORE) 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace MoonSharp.Interpreter.Compatibility.Frameworks
 {
-	abstract class FrameworkClrBase : FrameworkReflectionBase
+    abstract class FrameworkClrBase : FrameworkReflectionBase
 	{
 		BindingFlags BINDINGFLAGS_MEMBER = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
 		BindingFlags BINDINGFLAGS_INNERCLASS = BindingFlags.Public | BindingFlags.NonPublic;

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MoonSharp.Interpreter.Execution.VM;
 
 namespace MoonSharp.Interpreter.Debugging
 {
-	/// <summary>
-	/// Class providing services specific to debugger implementations.
-	/// </summary>
-	/// <seealso cref="MoonSharp.Interpreter.IScriptPrivateResource" />
-	public sealed class DebugService : IScriptPrivateResource
+    /// <summary>
+    /// Class providing services specific to debugger implementations.
+    /// </summary>
+    /// <seealso cref="MoonSharp.Interpreter.IScriptPrivateResource" />
+    public sealed class DebugService : IScriptPrivateResource
 	{
 		Processor m_Processor;
 

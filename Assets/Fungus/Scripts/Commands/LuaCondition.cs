@@ -1,15 +1,12 @@
 // This code is part of the Fungus library (https://github.com/snozbot/fungus)
 // It is released for free under the MIT open source license (https://github.com/snozbot/fungus/blob/master/LICENSE)
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Fungus;
 using MoonSharp.Interpreter;
 
 namespace Fungus
 {
-	public class LuaCondition : Condition 
+    public class LuaCondition : Condition 
 	{
         [Tooltip("Lua Environment to use to execute this Lua script (null for global)")]
         [SerializeField] protected LuaEnvironment luaEnvironment;

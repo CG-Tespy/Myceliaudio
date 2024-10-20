@@ -35,7 +35,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 #endregion
 
@@ -44,12 +43,12 @@ using UnityEngine;
 namespace Fungus
 {
 
-/// <summary>
-/// <para>Version: 2.0.46</para>	 
-/// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
-/// <para>Support: http://itween.pixelplacement.com</para>
-/// </summary>
-[AddComponentMenu("")]
+    /// <summary>
+    /// <para>Version: 2.0.46</para>	 
+    /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
+    /// <para>Support: http://itween.pixelplacement.com</para>
+    /// </summary>
+    [AddComponentMenu("")]
 public class iTween : MonoBehaviour{
 		
 	#region Variables
