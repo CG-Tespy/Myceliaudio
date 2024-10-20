@@ -4,6 +4,20 @@ namespace Myceliaudio.UVS
 {
     public class FadeVolume : SoundShifterUnit
     {
+        [DoNotSerialize] public ValueInput duration;
+
+        protected override void PrepValuePorts()
+        {
+            base.PrepValuePorts();
+            duration = ValueInput<float>(nameof(duration), 0);
+        }
+
+        protected override void PrepValueVars(Flow flow)
+        {
+            base.PrepValueVars(flow);
+            _durationVal = flow.GetValue<float>(duration);
+        }
+
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
@@ -14,7 +28,7 @@ namespace Myceliaudio.UVS
         protected override ControlOutput OnEnterStart(Flow flow)
         {
             var baseOutput = base.OnEnterStart(flow);
-            AudioSystem.S.SetTrackVol(_setVolumeArgs);
+            AudioSystem.S.FadeVolume(_setVolumeArgs);
             return baseOutput;
         }
 
