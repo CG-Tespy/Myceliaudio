@@ -31,7 +31,8 @@ namespace CGT.Myceliaudio
                 TrackSet = other.TrackSet,
                 Track = other.Track,
                 FadeDuration = other.FadeDuration,
-                OnComplete = other.OnComplete
+                OnComplete = other.OnComplete,
+                ApplyCustomFade = other.ApplyCustomFade,
             };
 
             return result;

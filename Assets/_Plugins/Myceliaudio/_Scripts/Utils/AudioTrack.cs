@@ -50,10 +50,10 @@ namespace CGT.Myceliaudio
 
         public virtual void OnAnchorRealVolChanged(float newVolScale)
         {
-            UpdateCurrentVol();
+            UpdateCurrentVolApplied();
         }
 
-        protected virtual void UpdateCurrentVol()
+        protected virtual void UpdateCurrentVolApplied()
         {
             CurrentVolumeApplied = RealVolume;
         }
@@ -95,7 +95,7 @@ namespace CGT.Myceliaudio
             set
             {
                 _baseVolume = value;
-                UpdateCurrentVol();
+                UpdateCurrentVolApplied();
             }
         }
 
