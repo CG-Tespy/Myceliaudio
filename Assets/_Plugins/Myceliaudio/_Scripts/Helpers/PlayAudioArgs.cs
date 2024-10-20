@@ -43,5 +43,19 @@ namespace Myceliaudio
             get { return LoopEndPoint > 0; }
         }
 
+        public static PlayAudioArgs CreateCopy(PlayAudioArgs other)
+        {
+            PlayAudioArgs result = new PlayAudioArgs()
+            {
+                Clip = other.Clip,
+                Track = other.Track,
+                Loop = other.Loop,
+                LoopStartPoint = other.LoopStartPoint,
+                LoopEndPoint = other.LoopEndPoint
+            };
+
+            return result;
+        }
+
     }
 }

@@ -85,7 +85,7 @@ namespace Myceliaudio
             tracks[args.Track].SetVolume(args);
         }
 
-        public virtual void SetVolume(SetVolumeArgs args)
+        public virtual void SetTrackVolume(SetVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].SetVolume(args);
@@ -100,6 +100,13 @@ namespace Myceliaudio
         protected virtual AudioArgs WithVolumeScaleApplied(AudioArgs baseArgs)
         {
             AudioArgs result = AudioArgs.CreateCopy(baseArgs);
+            result.TargetVolume *= VolumeScaleNormalized;
+            return result;
+        }
+
+        protected virtual SetVolumeArgs WithVolumeScaleApplied(SetVolumeArgs baseArgs)
+        {
+            SetVolumeArgs result = SetVolumeArgs.CreateCopy(baseArgs);
             result.TargetVolume *= VolumeScaleNormalized;
             return result;
         }
@@ -167,6 +174,13 @@ namespace Myceliaudio
         }
         
         public virtual void FadeVolume(AudioArgs args)
+        {
+            EnsureTrackExists(args.Track);
+            args = WithVolumeScaleApplied(args);
+            tracks[args.Track].FadeVolume(args);
+        }
+
+        public virtual void FadeVolume(SetVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
             args = WithVolumeScaleApplied(args);
