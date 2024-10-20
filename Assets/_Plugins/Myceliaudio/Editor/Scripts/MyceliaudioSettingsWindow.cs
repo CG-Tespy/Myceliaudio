@@ -11,6 +11,9 @@ namespace CGT.Amanita.Myceliaudio.Editor
         [SerializeField]
         protected VisualTreeAsset m_VisualTreeAsset = default;
 
+        [SerializeField]
+        protected StyleSheet m_StyleSheet = default;
+
         [MenuItem("Tools/Amanita/Myceliaudio Settings")]
         public static void ShowExample()
         {
@@ -66,15 +69,12 @@ namespace CGT.Amanita.Myceliaudio.Editor
             // ^VisualTrees are the uxml files containing the layout and such as you set it
             // up in UI Builder. Of course, as we're loading style sheets separately, 
             // visual trees themselves don't have style sheets; they have references to such
-            VisualTreeAsset visualTree = VisualTreeAt(pathToVisualTree);
-            container.Add(visualTree.Instantiate());
+            container.Add(m_VisualTreeAsset.Instantiate());
         }
 
         protected virtual void LoadStyleSheet()
         {
-            string pathToStyleSheet = Path.Combine(Paths.ToStyles, "MyceliaudioSettings.uss");
-            StyleSheet styleSheet = StyleSheetAt(pathToStyleSheet);
-            container.styleSheets.Add(styleSheet);
+            container.styleSheets.Add(m_StyleSheet);
         }
 
         protected virtual StyleSheet StyleSheetAt(string pathToSheet)
