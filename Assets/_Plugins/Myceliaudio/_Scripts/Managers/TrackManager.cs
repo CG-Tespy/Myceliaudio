@@ -59,16 +59,16 @@ namespace CGT.Myceliaudio
                 TrackManager prevAnchor = _anchor;
                 if (prevAnchor != null)
                 {
-                    prevAnchor.EffVolScaleChanged -= OnAnchorVolChanged;
+                    prevAnchor.RealVolumeChanged -= OnAnchorVolChanged;
                 }
 
                 _anchor = value;
                 if (_anchor != null)
                 {
-                    _anchor.EffVolScaleChanged += OnAnchorVolChanged;
+                    _anchor.RealVolumeChanged += OnAnchorVolChanged;
                 }
 
-                EffVolScaleChanged(EffVolScale);
+                RealVolumeChanged(RealVolume);
             }
         }
 
@@ -81,71 +81,71 @@ namespace CGT.Myceliaudio
         public virtual void SetTrackVolume(AlterVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
-            tracks[args.Track].BaseVolScale = args.TargetVolume;
+            tracks[args.Track].BaseVolume = args.TargetVolume;
         }
 
         public virtual void SetTrackVolume(float newVol, int trackToSetFor = 0)
         {
             EnsureTrackExists(trackToSetFor);
-            tracks[trackToSetFor].BaseVolScale = newVol;
+            tracks[trackToSetFor].BaseVolume = newVol;
         }
 
         /// <summary>
         /// Normalized for AudioSources so we can use it as a multiplier. You know, since those prefer scales of 0 to 1.
         /// </summary>
-        public virtual float VolumeScaleNormalized
+        public virtual float BaseVolumeNormalized
         {
-            get { return BaseVolumeScale / AudioMath.VolumeConversion; }
+            get { return BaseVolume / AudioMath.VolumeConversion; }
         }
 
         /// <summary>
         /// From 0 to 100. Affects how the volume gets changed. Not scaled by the anchor.
         /// This should be what's considered when showing and changing the vol level in the UI.
         /// </summary>
-        public virtual float BaseVolumeScale
+        public virtual float BaseVolume
         {
             // We go for 0-100 scale here so that users can work with it more intuitively. Hence why this
             // property is public while the normalized ver is not
             get
             {
-                return _baseVolumeScale;
+                return _baseVolume;
             }
             set
             {
-                _baseVolumeScale = Mathf.Clamp(value, AudioMath.MinVol, AudioMath.MaxVol);
-                EffVolScaleChanged(EffVolScale);
-                AudioEvents.TrackSetVolChanged(Group, _baseVolumeScale);
+                _baseVolume = Mathf.Clamp(value, AudioMath.MinVol, AudioMath.MaxVol);
+                RealVolumeChanged(RealVolume);
+                AudioEvents.TrackSetVolChanged(Group, _baseVolume);
             }
         }
         
-        protected float _baseVolumeScale = 100f;
+        protected float _baseVolume = 100f;
 
         // This affects the actual volume values that the tracks play at.
-        public virtual float EffVolScale
+        public virtual float RealVolume
         {
             get
             {
-                float result = _baseVolumeScale;
+                float result = _baseVolume;
 
                 if (Anchor != null)
                 {
-                    result *= Anchor.VolumeScaleNormalized;
+                    result *= Anchor.RealVolumeNormalized;
                 }
 
                 return result;
             }
         }
 
-        public virtual float EffVolScaleNormalized
+        public virtual float RealVolumeNormalized
         {
-            get { return EffVolScale / AudioMath.VolumeConversion; }
+            get { return RealVolume / AudioMath.VolumeConversion; }
         }
         public virtual void OnAnchorVolChanged(float newVolScale)
         {
-            EffVolScaleChanged(EffVolScale);
+            RealVolumeChanged(RealVolume);
         }
 
-        public event UnityAction<float> EffVolScaleChanged = delegate { };  
+        public event UnityAction<float> RealVolumeChanged = delegate { };  
 
         public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
@@ -175,7 +175,7 @@ namespace CGT.Myceliaudio
 
         protected virtual IEnumerator DoBasicTween(AlterVolumeArgs args, AudioTrack toTween)
         {
-            float timer = 0f, initVolume = toTween.BaseVolScale,
+            float timer = 0f, initVolume = toTween.BaseVolume,
                 targVolume = args.TargetVolume;
 
             while (timer < args.FadeDuration)
@@ -183,7 +183,7 @@ namespace CGT.Myceliaudio
                 timer += Time.deltaTime;
                 float howFarAlong = timer / args.FadeDuration;
                 float newVol = Mathf.Lerp(initVolume, targVolume, howFarAlong);
-                toTween.BaseVolScale = newVol;
+                toTween.BaseVolume = newVol;
                 yield return null;
             }
 
@@ -200,7 +200,7 @@ namespace CGT.Myceliaudio
         public virtual float GetVolume(int track)
         {
             EnsureTrackExists(track);
-            return tracks[track].CurrentVolume;
+            return tracks[track].CurrentVolumeApplied;
         }
 
         public virtual string Name { get; set; }

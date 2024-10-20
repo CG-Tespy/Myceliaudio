@@ -64,10 +64,10 @@ namespace CGT.Myceliaudio
             // To make sure that things are scaled off the master volume
             bgMusicManager.Anchor = soundFXManager.Anchor = voiceManager.Anchor = masterManager;
 
-            masterManager.BaseVolumeScale = VolumeSettings.master;
-            bgMusicManager.BaseVolumeScale = VolumeSettings.bgMusic;
-            soundFXManager.BaseVolumeScale = VolumeSettings.soundFX;
-            voiceManager.BaseVolumeScale = VolumeSettings.voice;
+            masterManager.BaseVolume = VolumeSettings.master;
+            bgMusicManager.BaseVolume = VolumeSettings.bgMusic;
+            soundFXManager.BaseVolume = VolumeSettings.soundFX;
+            voiceManager.BaseVolume = VolumeSettings.voice;
 
             managers.Add(masterManagerGO);
             managers.Add(bgMusicManagerGO);

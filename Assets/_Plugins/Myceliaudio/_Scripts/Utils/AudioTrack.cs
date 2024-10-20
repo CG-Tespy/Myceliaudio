@@ -22,7 +22,7 @@ namespace CGT.Myceliaudio
         {
             _baseSource = holdsSource.AddComponent<AudioSource>();
             _baseSource.playOnAwake = false;
-            _baseSource.volume = EffVolScaleNormalized;
+            _baseSource.volume = RealVolumeNormalized;
         }
 
         protected AudioSource _baseSource;
@@ -35,33 +35,33 @@ namespace CGT.Myceliaudio
                 TrackManager prevAnchor = _anchor;
                 if (prevAnchor != null)
                 {
-                    prevAnchor.EffVolScaleChanged += OnAnchorEffVolChanged;
+                    prevAnchor.RealVolumeChanged += OnAnchorRealVolChanged;
                 }
 
                 _anchor = value;
                 if (_anchor != null)
                 {
-                    _anchor.EffVolScaleChanged += OnAnchorEffVolChanged;
+                    _anchor.RealVolumeChanged += OnAnchorRealVolChanged;
                 }
             }
         }
 
         protected TrackManager _anchor;
 
-        public virtual void OnAnchorEffVolChanged(float newVolScale)
+        public virtual void OnAnchorRealVolChanged(float newVolScale)
         {
             UpdateCurrentVol();
         }
 
         protected virtual void UpdateCurrentVol()
         {
-            CurrentVolume = EffVolScale;
+            CurrentVolumeApplied = RealVolume;
         }
 
         /// <summary>
         /// On a scale of 0 to 100. 0 = total silence, 100 = max vol
         /// </summary>
-        public virtual float CurrentVolume
+        public virtual float CurrentVolumeApplied
         {
             get { return _baseSource.volume * AudioMath.VolumeConversion; }
             protected set
@@ -74,36 +74,36 @@ namespace CGT.Myceliaudio
             }
         }
 
-        public virtual float EffVolScale
+        public virtual float RealVolume
         {
             get
             {
-                float result = BaseVolScale;
+                float result = BaseVolume;
 
                 if (Anchor != null)
                 {
-                    result *= Anchor.EffVolScaleNormalized;
+                    result *= Anchor.RealVolumeNormalized;
                 }
 
                 return result;
             }
         }
 
-        public virtual float BaseVolScale
+        public virtual float BaseVolume
         {
-            get { return _baseVolScale; }
+            get { return _baseVolume; }
             set
             {
-                _baseVolScale = value;
+                _baseVolume = value;
                 UpdateCurrentVol();
             }
         }
 
-        protected float _baseVolScale = 100f;
+        protected float _baseVolume = 100f;
 
-        protected virtual float EffVolScaleNormalized
+        protected virtual float RealVolumeNormalized
         {
-            get { return EffVolScale / AudioMath.VolumeConversion; }
+            get { return RealVolume / AudioMath.VolumeConversion; }
         }
 
         public virtual void Play(PlayAudioArgs args)

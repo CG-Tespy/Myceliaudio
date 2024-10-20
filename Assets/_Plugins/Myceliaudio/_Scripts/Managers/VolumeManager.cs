@@ -38,7 +38,7 @@ namespace CGT.Myceliaudio
         public virtual void SetTrackSetVol(TrackGroup trackGroup, float newVol)
         {
             TrackManager managerToUse = TrackManagers[trackGroup];
-            managerToUse.BaseVolumeScale = newVol;
+            managerToUse.BaseVolume = newVol;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace CGT.Myceliaudio
         public virtual float GetTrackSetVol(TrackGroup trackGroup)
         {
             TrackManager relevantManager = TrackManagers[trackGroup];
-            float result = relevantManager.BaseVolumeScale;
+            float result = relevantManager.BaseVolume;
             return result;
         }
 

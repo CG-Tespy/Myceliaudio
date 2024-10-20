@@ -89,13 +89,13 @@ namespace CGT.Myceliaudio
         public virtual float GetTrackGroupVolume(TrackGroup trackGroup)
         {
             TrackManager managerToUse = TrackManagers[trackGroup];
-            return managerToUse.BaseVolumeScale;
+            return managerToUse.BaseVolume;
         }
 
         public virtual void SetTrackGroupVol(TrackGroup trackGroup, float newVol)
         {
             TrackManager managerToUse = TrackManagers[trackGroup];
-            managerToUse.BaseVolumeScale = newVol;
+            managerToUse.BaseVolume = newVol;
         }
 
         public virtual void Play(PlayAudioArgs args)
