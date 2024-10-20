@@ -110,27 +110,10 @@ namespace Myceliaudio
             // ^ So that things are scaled relative to the master volume
         }
 
-        /// <summary>
-        /// On a scale of 0 to 100. 
-        /// </summary>
-        /// <param name="args"></param>
-        public virtual float GetTrackVol(AudioArgs args)
-        {
-            return GetTrackVol(args.TrackSet, args.Track);
-        }
-
         public virtual float GetTrackVol(TrackSet trackSet, int track = 0)
         {
             var managerToUse = TrackManagers[trackSet];
             return managerToUse.GetVolume(track);
-        }
-
-        /// <summary>
-        /// On a scale of 0 to 200.
-        /// </summary>
-        public float GetTrackPitch(AudioArgs args)
-        {
-            return GetTrackPitch(args.TrackSet, args.Track);
         }
 
         public virtual float GetTrackPitch(TrackSet trackSet, int track = 0)
@@ -175,11 +158,6 @@ namespace Myceliaudio
         {
             var managerToInvolve = TrackManagers[args.TrackSet];
             managerToInvolve.Play(args);
-        }
-
-        public virtual void PlayVoice(AudioArgs args)
-        {
-            voiceManager.Play(args);
         }
 
         public virtual void Stop(TrackSet trackSet, int track = 0)
