@@ -113,7 +113,7 @@ namespace Myceliaudio.Demos
             AudioSys.Play(playSfxArgs);
         }
 
-        AudioArgs playSfxArgs = new AudioArgs()
+        PlayAudioArgs playSfxArgs = new PlayAudioArgs()
         {
             TrackSet = TrackSet.SoundFX
         };

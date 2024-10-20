@@ -25,7 +25,7 @@ namespace Myceliaudio
             _soundPlayArgs.Track = this._track;
         }
 
-        protected AudioArgs _soundPlayArgs = new AudioArgs();
+        protected PlayAudioArgs _soundPlayArgs = new PlayAudioArgs();
 
         protected override void InitApply()
         {

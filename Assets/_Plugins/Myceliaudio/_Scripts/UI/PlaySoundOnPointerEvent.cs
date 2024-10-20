@@ -21,7 +21,7 @@ namespace Myceliaudio
             _audioArgs.Clip = _soundToPlay;
         }
 
-        protected AudioArgs _audioArgs = new AudioArgs();
+        protected PlayAudioArgs _audioArgs = new PlayAudioArgs();
 
         protected List<UnityAction<PointerEventData>> toListenFor = new List<UnityAction<PointerEventData>>();
 
