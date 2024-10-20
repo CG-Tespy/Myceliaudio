@@ -8,7 +8,7 @@ namespace CGT.Myceliaudio
         [SerializeField] protected TMP_Text _textField;
         [SerializeField] protected TrackGroup _trackGroup;
         
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             float initVol = AudioSystem.S.GetTrackGroupVolume(_trackGroup);
             SyncText(initVol);

@@ -286,7 +286,7 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"clip","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.AudioClip,
       UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"loopStartPoint","value":{"$content":0.0,"$type":"System.Double"},"typeHandle":{"Identification":"System.Double,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"loopEndPoint","value":{"$content":0.0,"$type":"System.Double"},"typeHandle":{"Identification":"System.Double,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"loopEndPoint","value":{"$content":60042.0,"$type":"System.Double"},"typeHandle":{"Identification":"System.Double,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"startingVol","value":{"$content":60.0,"$type":"System.Single"},"typeHandle":{"Identification":"System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences:
@@ -830,6 +830,10 @@ PrefabInstance:
       propertyPath: _trackSet
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
+      propertyPath: _trackGroup
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 986080273401200286, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
       propertyPath: _trackType
       value: 3
@@ -1096,6 +1100,10 @@ PrefabInstance:
       propertyPath: _trackSet
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
+      propertyPath: _trackGroup
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 986080273401200286, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
       propertyPath: _trackType
       value: 4
@@ -1311,6 +1319,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
       propertyPath: _trackSet
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
+      propertyPath: _trackGroup
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 986080273401200286, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
@@ -1623,6 +1635,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
       propertyPath: _trackSet
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 961838053333036702, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}
+      propertyPath: _trackGroup
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 986080273401200286, guid: 8ac2748d1b39c704abfee920ff94c0ac, type: 3}

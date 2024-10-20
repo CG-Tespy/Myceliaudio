@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace CGT.Myceliaudio
 {
@@ -19,6 +20,7 @@ namespace CGT.Myceliaudio
         {
             var baseOutput = base.OnEnterStart(flow);
             AudioSystem.S.SetTrackVol(_setVolumeArgs);
+            Debug.Log($"ChangeVolume set to {_setVolumeArgs.TargetVolume}");
             return baseOutput;
         }
 

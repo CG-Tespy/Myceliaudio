@@ -15,6 +15,15 @@ namespace CGT.Myceliaudio
             UpdateCurrentVol();
         }
 
+        protected virtual void UpdateCurrentVol()
+        {
+            _currentVol = AudioSys.GetTrackGroupVolume(_trackType);
+        }
+
+        protected float _currentVol;
+
+        protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
+
         protected virtual void OnEnable()
         {
             lowerVolButton.onClick.AddListener(OnLowerVolButtonClicked);
@@ -31,21 +40,12 @@ namespace CGT.Myceliaudio
         protected virtual void AlterVol(int sign)
         {
             UpdateCurrentVol();
-            float volAdjustement = adjustmentInterval * sign;
-            float targetVol = _currentVol + volAdjustement;
+            float volAdjustment = adjustmentInterval * sign;
+            float targetVol = _currentVol + volAdjustment;
             targetVol = Mathf.Clamp(targetVol, AudioMath.MinVol, AudioMath.MaxVol);
             AudioSys.SetTrackGroupVol(_trackType, targetVol);
             UpdateCurrentVol();
         }
-
-        protected virtual void UpdateCurrentVol()
-        {
-            _currentVol = AudioSys.GetTrackGroupVolume(_trackType);
-        }
-
-        protected float _currentVol;
-
-        protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
 
         protected virtual void OnRaiseVolButtonClicked()
         {

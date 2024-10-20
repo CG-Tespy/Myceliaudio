@@ -7,7 +7,6 @@ namespace CGT.Myceliaudio.Demos
         [SerializeField] protected AudioClip _clip;
         [Tooltip("In milliseconds")]
         [SerializeField] protected double _loopStartPoint = 0f, _loopEndPoint = 0f;
-        [SerializeField] protected float _startingVol = 50f;
 
         protected virtual void Awake()
         {
