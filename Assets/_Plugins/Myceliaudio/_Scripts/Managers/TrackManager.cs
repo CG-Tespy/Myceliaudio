@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using DG.Tweening;
+using System.Collections;
 
 namespace CGT.Myceliaudio
 {
@@ -43,12 +43,12 @@ namespace CGT.Myceliaudio
                 newTrack.ID = id;
                 newTrack.Anchor = this;
                 tracks[id] = newTrack;
-                _fadeTweens.Add(newTrack, null);
+                _defaultFadeTweens.Add(newTrack, null);
             }
         }
 
         protected IDictionary<int, AudioTrack> tracks = new Dictionary<int, AudioTrack>();
-        protected IDictionary<AudioTrack, Tween> _fadeTweens = new Dictionary<AudioTrack, Tween>();
+        protected IDictionary<AudioTrack, IEnumerator> _defaultFadeTweens = new Dictionary<AudioTrack, IEnumerator>();
 
         public virtual TrackManager Anchor
         {
@@ -150,21 +150,42 @@ namespace CGT.Myceliaudio
         {
             EnsureTrackExists(args.Track);
             AudioTrack toTweenFor = tracks[args.Track];
-            Tween fadeTweenToUse = _fadeTweens[toTweenFor];
 
-            if (fadeTweenToUse != null)
+            if (args.FadeHandler != null)
             {
-                fadeTweenToUse.Kill();
+                args.FadeHandler += (leArgs, leTrack) => leArgs.OnComplete(leArgs);
+                // ^So client code doesn't have to worry about it
+                args.FadeHandler(args, toTweenFor);
+            }
+            else
+            {
+                IEnumerator defaultFade = _defaultFadeTweens[toTweenFor];
+                if (defaultFade != null)
+                {
+                    StopCoroutine(defaultFade);
+                }
+
+                defaultFade = DoBasicTween(args, toTweenFor);
+                _defaultFadeTweens[toTweenFor] = defaultFade;
+                StartCoroutine(defaultFade);
+            }
+        }
+
+        protected virtual IEnumerator DoBasicTween(AlterVolumeArgs args, AudioTrack toTween)
+        {
+            float timer = 0f, initVolume = toTween.BaseVolScale,
+                targVolume = args.TargetVolume;
+
+            while (timer < args.FadeDuration)
+            {
+                timer += Time.deltaTime;
+                float howFarAlong = timer / args.FadeDuration;
+                float newVol = Mathf.Lerp(initVolume, targVolume, howFarAlong);
+                toTween.BaseVolScale = newVol;
+                yield return null;
             }
 
-            fadeTweenToUse = DOTween.To(() => toTweenFor.BaseVolScale,
-                tweenedVol => toTweenFor.BaseVolScale = tweenedVol,
-                args.TargetVolume,
-                args.FadeDuration)
-                .OnComplete(() => args.OnComplete(args));
-
-            // Need to make sure it's registered in the dict
-            _fadeTweens[toTweenFor] = fadeTweenToUse;
+            args.OnComplete(args);
         }
 
         public virtual void Stop(int track)
