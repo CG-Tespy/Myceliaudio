@@ -12,7 +12,6 @@ namespace CGT.Myceliaudio
 
         protected virtual void Awake()
         {
-            AudioSystem.EnsureExists();
             UpdateCurrentVol();
         }
 

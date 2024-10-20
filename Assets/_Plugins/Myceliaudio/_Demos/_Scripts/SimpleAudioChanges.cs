@@ -22,7 +22,6 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void Start()
         {
-            AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
             AudioSys.SetTrackGroupVol(TrackGroup.BGMusic, startingMusicVol);

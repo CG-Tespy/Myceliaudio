@@ -11,8 +11,6 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void Awake()
         {
-            AudioSystem.EnsureExists();
-
             PlayAudioArgs playMusic = new PlayAudioArgs()
             {
                 Clip = _clip,

@@ -5,11 +5,6 @@ namespace CGT.Myceliaudio
 {
     public class MyceliaudioUTL : MonoBehaviour, INotificationReceiver
     {
-        protected virtual void Awake()
-        {
-            AudioSystem.EnsureExists();
-        }
-
         public void OnNotify(Playable origin, INotification notification, object context)
         {
             if (notification is not PlayAudioMarker)

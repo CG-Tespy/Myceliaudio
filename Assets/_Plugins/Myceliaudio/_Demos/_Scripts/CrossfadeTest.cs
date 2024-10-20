@@ -20,7 +20,6 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void Awake()
         {
-            AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
             AudioSys.SetTrackGroupVol(TrackGroup.BGMusic, startingMusicVol);

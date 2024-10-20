@@ -10,7 +10,7 @@ namespace CGT.Myceliaudio
     {
         public virtual int ID { get; set; }
 
-        public virtual void Init(GameObject toWorkWith = null)
+        public virtual void Init(GameObject toWorkWith)
         {
             holdsSource = toWorkWith;
             SetUpAudioSource();
@@ -158,7 +158,7 @@ namespace CGT.Myceliaudio
                     _baseSource.time = loopPoint;
                     whenToReturnToLoopPoint += lengthOfTheLoopSegment;
                 }
-
+                
                 yield return null;
             }
         }
@@ -167,6 +167,12 @@ namespace CGT.Myceliaudio
 
         public virtual void Stop()
         {
+            if (_playOnLoop != null)
+            {
+                AudioSys.StopCoroutine(_playOnLoop);
+                _playOnLoop = null;
+            }
+
             _baseSource.Stop();
         }
 

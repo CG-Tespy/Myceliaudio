@@ -10,19 +10,20 @@ namespace CGT.Myceliaudio
         [SerializeField] protected TrackManager _anchor;
         [SerializeField] protected TrackGroup _trackGroup;
 
-        public virtual TrackGroup Group
-        {
-            get { return _trackGroup; }
-        }
-
-        public virtual void Init()
+        public virtual void Init(TrackGroup trackGroup)
         {
             this.trackHolder = this.gameObject;
+            this.Group = trackGroup;
             SetUpInitialTracks();
             this.Anchor = _anchor; // To get volumes adjusted properly
         }
 
         protected GameObject trackHolder;
+        public virtual TrackGroup Group
+        {
+            get { return _trackGroup; }
+            protected set { _trackGroup = value; }
+        }
 
         protected virtual void SetUpInitialTracks()
         {
@@ -151,11 +152,12 @@ namespace CGT.Myceliaudio
             EnsureTrackExists(args.Track);
             AudioTrack toTweenFor = tracks[args.Track];
 
-            if (args.FadeHandler != null)
+            bool shouldUseCustomTweener = args.CustomFadeTweener != null;
+            if (shouldUseCustomTweener)
             {
-                args.FadeHandler += (leArgs, leTrack) => leArgs.OnComplete(leArgs);
+                args.CustomFadeTweener += (leArgs, leTrack) => leArgs.OnComplete(leArgs);
                 // ^So client code doesn't have to worry about it
-                args.FadeHandler(args, toTweenFor);
+                args.CustomFadeTweener(args, toTweenFor);
             }
             else
             {
@@ -202,6 +204,5 @@ namespace CGT.Myceliaudio
         }
 
         public virtual string Name { get; set; }
-
     }
 }

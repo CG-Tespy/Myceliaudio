@@ -1,7 +1,6 @@
 #define CGT_MYCELIAUDIO
 using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
 
 namespace CGT.Myceliaudio
 {
@@ -11,6 +10,28 @@ namespace CGT.Myceliaudio
     /// </summary>
     public class AudioSystem : MonoBehaviour
     {
+        public static AudioSystem S
+        {
+            get
+            {
+                EnsureExists();
+                return _s;
+            }
+        }
+
+        protected static void EnsureExists()
+        {
+            // We check here to avoid creating craploads of AudioSyses from lots of
+            // AudioCommands being executed in short order
+            bool alreadySetUp = _s != null;
+            if (alreadySetUp)
+            {
+                return;
+            }
+
+            _s = AudioSystemBuilder.BuildDefault();
+        }
+
         protected virtual void Awake()
         {
             if (_s != null && _s != this)
@@ -23,97 +44,33 @@ namespace CGT.Myceliaudio
                 _s = this;
             }
 
-            PrepSettingsFile();
-            PrepTrackManagers();
+            RegisterTrackManagers();
             DontDestroyOnLoad(this.gameObject);
         }
 
-        protected virtual void PrepTrackManagers()
+        protected static AudioSystem _s;
+
+        protected virtual void RegisterTrackManagers()
         {
             IList<TrackManager> managersFound = GetComponentsInChildren<TrackManager>();
 
             foreach (TrackManager manager in managersFound)
             {
                 TrackManagers[manager.Group] = manager;
-                manager.Init();
             }
-
-            masterManager = TrackManagers[TrackGroup.Master];
-            musicManager = TrackManagers[TrackGroup.BGMusic];
-            soundFXManager = TrackManagers[TrackGroup.SoundFX];
-            voiceManager = TrackManagers[TrackGroup.Voice];
-
-            SetDefaultVolumeLevels();
         }
 
         public IDictionary<TrackGroup, TrackManager> TrackManagers = new Dictionary<TrackGroup, TrackManager>();
-        protected TrackManager masterManager, musicManager, soundFXManager, voiceManager;
-
-        public static void EnsureExists()
-        {
-            // We check here to avoid creating craploads of AudioSyses from lots of
-            // AudioCommands being executed in short order
-            bool alreadySetUp = _s != null;
-            if (alreadySetUp)
-            {
-                return;
-            }
-
-            MyceliaudioSettingsSO _settings = Resources.Load<MyceliaudioSettingsSO>("MyceliaudioSettings");
-            _s = Instantiate(_settings.MainPrefab);
-            _s.gameObject.name = _settings.MainPrefab.name;
-        }
-
-        public static AudioSystem S
-        {
-            get
-            {
-                EnsureExists();
-                return _s;
-            }
-        }
-
-        protected static AudioSystem _s;
-
-        protected virtual void PrepSettingsFile()
-        {
-            var filePath = Path.Combine(Application.dataPath, SystemSettingsFileName);
-
-            if (!File.Exists(filePath))
-            {
-                systemSettings = new MyceliaudioSettings();
-                string whatToWrite = JsonUtility.ToJson(systemSettings);
-                File.WriteAllText(filePath, whatToWrite);
-            }
-            else
-            {
-                string jsonString = File.ReadAllText(filePath);
-                systemSettings = JsonUtility.FromJson<MyceliaudioSettings>(jsonString);
-            }
-        }
-
-        protected MyceliaudioSettings systemSettings;
-        protected VolumeSettings VolumeSettings { get { return systemSettings.Volume; } }
-
-        public static string SystemSettingsFileName { get; protected set; } = "myceliaudioSettings.json";
-
-        protected virtual void SetDefaultVolumeLevels()
-        {
-            masterManager.BaseVolumeScale = VolumeSettings.master;
-            musicManager.BaseVolumeScale = VolumeSettings.bgMusic;
-            soundFXManager.BaseVolumeScale = VolumeSettings.soundFX;
-            voiceManager.BaseVolumeScale = VolumeSettings.voice;
-        }
 
         public virtual float GetTrackVol(TrackGroup trackGroup, int track = 0)
         {
-            var managerToUse = TrackManagers[trackGroup];
+            TrackManager managerToUse = TrackManagers[trackGroup];
             return managerToUse.GetVolume(track);
         }
 
         public virtual void SetTrackVol(AlterVolumeArgs args)
         {
-            var managerToUse = TrackManagers[args.TrackSet];
+            TrackManager managerToUse = TrackManagers[args.TrackSet];
             managerToUse.SetTrackVolume(args);
         }
 
@@ -131,17 +88,15 @@ namespace CGT.Myceliaudio
 
         public virtual float GetTrackGroupVolume(TrackGroup trackGroup)
         {
-            var managerToUse = TrackManagers[trackGroup];
+            TrackManager managerToUse = TrackManagers[trackGroup];
             return managerToUse.BaseVolumeScale;
         }
 
         public virtual void SetTrackGroupVol(TrackGroup trackGroup, float newVol)
         {
-            var managerToUse = TrackManagers[trackGroup];
+            TrackManager managerToUse = TrackManagers[trackGroup];
             managerToUse.BaseVolumeScale = newVol;
         }
-
-        protected float _masterVol = 100f;
 
         public virtual void Play(PlayAudioArgs args)
         {
@@ -149,17 +104,19 @@ namespace CGT.Myceliaudio
             managerToInvolve.Play(args);
         }
 
-        public virtual void Stop(TrackGroup trackGroup, int track = 0)
+        public virtual void StopPlaying(TrackGroup trackGroup, int track = 0)
         {
-            var managerToUse = TrackManagers[trackGroup];
+            TrackManager managerToUse = TrackManagers[trackGroup];
             managerToUse.Stop(track);
         }
     
         public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
-            var managerToUse = TrackManagers[args.TrackSet];
+            TrackManager managerToUse = TrackManagers[args.TrackSet];
             managerToUse.FadeTrackVolume(args);
         }
-        
+
+        public static string SystemSettingsFileName { get; set; } = "myceliaudioSettings.json";
+
     }
 }
