@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class ChangeVolume : SoundShifterUnit
     {

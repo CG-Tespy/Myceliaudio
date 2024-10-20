@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class TrackManager : MonoBehaviour
     {

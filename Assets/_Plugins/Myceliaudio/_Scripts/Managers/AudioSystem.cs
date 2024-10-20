@@ -2,9 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using CGT.Amanita.Myceliaudio;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     /// <summary>
     /// Alternative to Fungus's built-in MusicManager that works with commands that alter

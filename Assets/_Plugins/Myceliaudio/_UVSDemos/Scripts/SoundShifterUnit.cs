@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class SoundShifterUnit : AudioUnit
     {

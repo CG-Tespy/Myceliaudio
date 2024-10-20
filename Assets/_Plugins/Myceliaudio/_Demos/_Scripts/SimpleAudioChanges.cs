@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace Myceliaudio.Demos
+namespace CGT.Myceliaudio.Demos
 {
     public class SimpleAudioChanges : MonoBehaviour
     {

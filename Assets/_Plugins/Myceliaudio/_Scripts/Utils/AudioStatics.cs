@@ -1,4 +1,4 @@
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     /// <summary>
     /// To help audio-playing not sound funky. These values are in the ranges

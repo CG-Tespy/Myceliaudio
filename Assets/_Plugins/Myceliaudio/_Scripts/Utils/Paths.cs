@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace CGT.Amanita.Myceliaudio.Editor
+namespace CGT.Myceliaudio.Editor
 {
     public static class Paths
     {

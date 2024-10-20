@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 
-namespace Myceliaudio.Editor
+namespace CGT.Myceliaudio.Editor
 {
     [Descriptor(typeof(PlayAudio))]
     public class PlayAudioNodeDescs : UnitDescriptor<PlayAudio>

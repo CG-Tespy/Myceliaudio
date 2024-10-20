@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class PlayAudioArgs : EventArgs
     {

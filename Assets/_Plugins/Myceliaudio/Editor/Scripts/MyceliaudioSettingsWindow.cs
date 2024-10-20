@@ -2,9 +2,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
-using Myceliaudio;
 
-namespace CGT.Amanita.Myceliaudio.Editor
+namespace CGT.Myceliaudio.Editor
 {
     public class MyceliaudioSettingsWindow : EditorWindow
     {

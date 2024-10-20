@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     [CreateAssetMenu(fileName = "NewMyceliaudioSettings", menuName = "Myceliaudio/New Settings")]
     public class MyceliaudioSettingsSO : ScriptableObject

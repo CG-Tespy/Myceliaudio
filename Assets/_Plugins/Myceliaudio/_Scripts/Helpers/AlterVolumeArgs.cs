@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Events;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class AlterVolumeArgs : EventArgs
     {

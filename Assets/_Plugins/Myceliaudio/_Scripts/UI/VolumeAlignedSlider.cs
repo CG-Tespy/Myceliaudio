@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     /// <summary>
     /// Changes the value of a Slider when the volume of

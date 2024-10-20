@@ -3,7 +3,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using System.Collections.Generic;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class PlayAudioMarker : Marker, INotification
     {

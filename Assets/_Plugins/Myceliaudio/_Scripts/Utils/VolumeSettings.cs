@@ -1,4 +1,4 @@
-namespace CGT.Amanita.Myceliaudio
+namespace CGT.Myceliaudio
 {
     [System.Serializable]
     public class VolumeSettings

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class SyncTextToVolume : MonoBehaviour
     {

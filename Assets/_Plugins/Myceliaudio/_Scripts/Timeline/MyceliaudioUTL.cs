@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public class MyceliaudioUTL : MonoBehaviour, INotificationReceiver
     {

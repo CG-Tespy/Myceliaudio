@@ -1,4 +1,4 @@
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     /// <summary>
     /// Changes the volume of a Track Set when a slider's value changes.

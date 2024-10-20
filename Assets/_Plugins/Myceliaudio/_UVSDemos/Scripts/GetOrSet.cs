@@ -1,4 +1,4 @@
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public enum GetOrSet { Get, Set }
 }

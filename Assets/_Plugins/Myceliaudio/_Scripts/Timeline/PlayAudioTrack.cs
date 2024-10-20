@@ -1,6 +1,6 @@
 using UnityEngine.Timeline;
 
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     [TrackBindingType(typeof(MyceliaudioUTL))]
     public class PlayAudioTrack : MarkerTrack

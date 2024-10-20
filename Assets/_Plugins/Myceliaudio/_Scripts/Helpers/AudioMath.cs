@@ -1,4 +1,4 @@
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     public static class AudioMath
     {
