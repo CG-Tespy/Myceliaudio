@@ -4,6 +4,6 @@ namespace Myceliaudio
 {
     public static class AudioEvents
     {
-        public static UnityAction<TrackSet, float> TrackSetVolChanged = delegate { };
+        public static UnityAction<TrackGroup, float> TrackSetVolChanged = delegate { };
     }
 }

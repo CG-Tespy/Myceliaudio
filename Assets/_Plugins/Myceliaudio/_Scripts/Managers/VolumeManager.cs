@@ -23,22 +23,22 @@ namespace Myceliaudio
         /// Sets the volume of the given track in the given set to the given target volume. 
         /// Said volume should be between 0 for silent and 100 for max.
         /// </summary>
-        public virtual void SetTrackVol(TrackSet set, int track, float targVol)
+        public virtual void SetTrackVol(TrackGroup set, int track, float targVol)
         {
             TrackManager relevantManager = TrackManagers[set];
             relevantManager.SetVolume(targVol, track);
         }
 
-        protected virtual IDictionary<TrackSet, TrackManager> TrackManagers { get { return _main.TrackManagers; } }
+        protected virtual IDictionary<TrackGroup, TrackManager> TrackManagers { get { return _main.TrackManagers; } }
 
         /// <summary>
         /// Changes the volume of a specific track set as opposed to an individual
         /// track within one. The volumes of the indiv tracks are scaled off those
         /// applied to their corresponding sets.
         /// </summary>
-        public virtual void SetTrackSetVol(TrackSet trackSet, float newVol)
+        public virtual void SetTrackSetVol(TrackGroup trackGroup, float newVol)
         {
-            TrackManager managerToUse = TrackManagers[trackSet];
+            TrackManager managerToUse = TrackManagers[trackGroup];
             managerToUse.BaseVolumeScale = newVol;
         }
 
@@ -46,16 +46,16 @@ namespace Myceliaudio
         /// Gets the volume of the given track belonging to the given set.
         /// </summary>
         /// <returns>A value between 0 and 100</returns>
-        public virtual float GetTrackVol(TrackSet trackSet, int track)
+        public virtual float GetTrackVol(TrackGroup trackGroup, int track)
         {
-            TrackManager relevantManager = TrackManagers[trackSet];
+            TrackManager relevantManager = TrackManagers[trackGroup];
             float result = relevantManager.GetVolume(track);
             return result;
         }
 
-        public virtual float GetTrackSetVol(TrackSet trackSet)
+        public virtual float GetTrackSetVol(TrackGroup trackGroup)
         {
-            TrackManager relevantManager = TrackManagers[trackSet];
+            TrackManager relevantManager = TrackManagers[trackGroup];
             float result = relevantManager.BaseVolumeScale;
             return result;
         }

@@ -8,7 +8,7 @@ namespace Myceliaudio
         [DoNotSerialize] public ControlInput enter;
         [DoNotSerialize] public ControlOutput started;
 
-        [DoNotSerialize] public ValueInput trackSet;
+        [DoNotSerialize] public ValueInput trackGroup;
 
         protected override void Definition()
         {
@@ -19,7 +19,7 @@ namespace Myceliaudio
 
         protected virtual void PrepValuePorts()
         {
-            trackSet = ValueInput<TrackSet>(nameof(trackSet), TrackSet.Null);
+            trackGroup = ValueInput<TrackGroup>(nameof(trackGroup), TrackGroup.Null);
         }
 
         protected virtual void PrepControlPorts()
@@ -52,21 +52,23 @@ namespace Myceliaudio
         protected virtual void PrepValueVars(Flow flow)
         {
             // For example, assigning the value of a ValueInput<int> to an int var
-            _trackSetVal = flow.GetValue<TrackSet>(trackSet);
+            _trackGroupVal = flow.GetValue<TrackGroup>(trackGroup);
 
             // Leaving _durationVal uninitialized here since not all audio units will
             // handle pauses the same way
         }
 
-        protected TrackSet _trackSetVal;
+        protected TrackGroup _trackGroupVal;
         protected float _durationVal;
 
         protected virtual void PrepAudioArgs()
         {
-            _audioArgs.TrackSet = _trackSetVal;
+            _playAudioArgs.TrackSet = _setVolumeArgs.TrackSet = _trackGroupVal;
+
         }
 
-        protected AudioArgs _audioArgs = new AudioArgs();
+        protected PlayAudioArgs _playAudioArgs = new PlayAudioArgs();
+        protected SetVolumeArgs _setVolumeArgs = new SetVolumeArgs();
 
     }
 }

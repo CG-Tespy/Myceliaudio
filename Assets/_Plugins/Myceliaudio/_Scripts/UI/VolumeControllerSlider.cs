@@ -13,7 +13,7 @@ namespace Myceliaudio
 
         protected virtual void AlignTrackSetVolWithSlider(float sliderVal)
         {
-            AudioSystem.S.SetTrackGroupVol(_trackSet, sliderVal);
+            AudioSystem.S.SetTrackGroupVol(_trackGroup, sliderVal);
         }
 
         protected virtual void OnEnable()

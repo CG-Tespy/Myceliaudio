@@ -7,7 +7,7 @@ namespace Myceliaudio
     public class AudioSliderComponent : MonoBehaviour
     {
         [SerializeField] protected Slider _slider;
-        [SerializeField] protected TrackSet _trackSet;
+        [SerializeField] protected TrackGroup _trackGroup;
         [Tooltip("Which track in the set you want this to work with")]
         [SerializeField] protected int _track;
 

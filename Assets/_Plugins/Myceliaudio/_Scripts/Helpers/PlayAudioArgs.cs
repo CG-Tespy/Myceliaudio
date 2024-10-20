@@ -8,7 +8,7 @@ namespace Myceliaudio
     public class PlayAudioArgs : EventArgs
     {
         public virtual AudioClip Clip { get; set; }
-        public virtual TrackSet TrackSet { get; set; }
+        public virtual TrackGroup TrackSet { get; set; }
         public virtual int Track { get; set; }
         public virtual bool Loop { get; set; }
 

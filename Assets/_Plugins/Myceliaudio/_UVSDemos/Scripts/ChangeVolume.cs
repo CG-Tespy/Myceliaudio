@@ -10,8 +10,7 @@ namespace Myceliaudio
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
-            _audioArgs.WantsVolumeSet = true;
-            _audioArgs.TargetVolume = _targetValueVal;
+            _setVolumeArgs.TargetVolume = _targetValueVal;
         }
 
     }

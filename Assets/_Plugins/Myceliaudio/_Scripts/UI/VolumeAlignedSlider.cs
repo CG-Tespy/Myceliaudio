@@ -11,7 +11,7 @@ namespace Myceliaudio
         protected override void InitApply()
         {
             base.InitApply();
-            float vol = AudioSystem.S.GetTrackGroupVolume(_trackSet);
+            float vol = AudioSystem.S.GetTrackGroupVolume(_trackGroup);
             SyncWith(vol);
         }
 
@@ -32,9 +32,9 @@ namespace Myceliaudio
         }
 
         // We assume a 0-100 scale for the new value
-        protected virtual void OnVolumeChanged(TrackSet setInvolved, float newVol)
+        protected virtual void OnVolumeChanged(TrackGroup setInvolved, float newVol)
         {
-            if (setInvolved == this._trackSet)
+            if (setInvolved == this._trackGroup)
             {
                 SyncWith(newVol);
             }

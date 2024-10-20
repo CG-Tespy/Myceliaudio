@@ -16,7 +16,7 @@ namespace Myceliaudio.Demos
             PlayAudioArgs playMusic = new PlayAudioArgs()
             {
                 Clip = _clip,
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 Loop = true,
                 LoopStartPoint = _loopStartPoint,
                 LoopEndPoint = _loopEndPoint

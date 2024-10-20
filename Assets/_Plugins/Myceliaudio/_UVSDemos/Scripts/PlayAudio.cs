@@ -54,17 +54,17 @@ namespace Myceliaudio
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
-            _audioArgs.Track = _trackVal;
-            _audioArgs.Clip = _clipVal;
-            _audioArgs.Loop = _loopVal;
-            _audioArgs.LoopStartPoint = _loopStartPointVal;
-            _audioArgs.LoopEndPoint = _loopEndPointVal;
+            _playAudioArgs.Track = _trackVal;
+            _playAudioArgs.Clip = _clipVal;
+            _playAudioArgs.Loop = _loopVal;
+            _playAudioArgs.LoopStartPoint = _loopStartPointVal;
+            _playAudioArgs.LoopEndPoint = _loopEndPointVal;
         }
 
         protected override ControlOutput OnEnterStart(Flow flow)
         {
             var baseOutput = base.OnEnterStart(flow);
-            AudioSystem.S.Play(_audioArgs);
+            AudioSystem.S.Play(_playAudioArgs);
             return baseOutput;
         }
 

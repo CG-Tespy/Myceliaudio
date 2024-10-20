@@ -6,11 +6,11 @@ namespace Myceliaudio
     public class SyncTextToVolume : MonoBehaviour
     {
         [SerializeField] protected TMP_Text _textField;
-        [SerializeField] protected TrackSet _trackSet;
+        [SerializeField] protected TrackGroup _trackGroup;
         
         protected virtual void Awake()
         {
-            float initVol = AudioSystem.S.GetTrackGroupVolume(_trackSet);
+            float initVol = AudioSystem.S.GetTrackGroupVolume(_trackGroup);
             SyncText(initVol);
         }
 
@@ -25,9 +25,9 @@ namespace Myceliaudio
             AudioEvents.TrackSetVolChanged += OnTrackSetVolChanged;
         }
 
-        protected virtual void OnTrackSetVolChanged(TrackSet involved, float newVol)
+        protected virtual void OnTrackSetVolChanged(TrackGroup involved, float newVol)
         {
-            if (this._trackSet == involved)
+            if (this._trackGroup == involved)
             {
                 SyncText(newVol);
             }

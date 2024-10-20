@@ -9,7 +9,7 @@ namespace Myceliaudio
     public class SetVolumeArgs : EventArgs
     {
         public virtual float TargetVolume { get; set; }
-        public virtual TrackSet TrackSet { get; set; }
+        public virtual TrackGroup TrackSet { get; set; }
         public virtual int Track { get; set; }
 
         public virtual bool WantsFade

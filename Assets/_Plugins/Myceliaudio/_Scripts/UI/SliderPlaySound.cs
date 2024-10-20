@@ -21,7 +21,7 @@ namespace Myceliaudio
         protected virtual void PrepAudioArgs()
         {
             _soundPlayArgs.Clip = _soundToPlay;
-            _soundPlayArgs.TrackSet = this._trackSet;
+            _soundPlayArgs.TrackSet = this._trackGroup;
             _soundPlayArgs.Track = this._track;
         }
 

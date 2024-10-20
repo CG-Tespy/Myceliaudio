@@ -40,13 +40,13 @@ namespace Myceliaudio
                 manager.Init();
             }
 
-            masterManager = TrackManagers[TrackSet.Master];
-            musicManager = TrackManagers[TrackSet.BGMusic];
-            soundFXManager = TrackManagers[TrackSet.SoundFX];
-            voiceManager = TrackManagers[TrackSet.Voice];
+            masterManager = TrackManagers[TrackGroup.Master];
+            musicManager = TrackManagers[TrackGroup.BGMusic];
+            soundFXManager = TrackManagers[TrackGroup.SoundFX];
+            voiceManager = TrackManagers[TrackGroup.Voice];
         }
 
-        public IDictionary<TrackSet, TrackManager> TrackManagers = new Dictionary<TrackSet, TrackManager>();
+        public IDictionary<TrackGroup, TrackManager> TrackManagers = new Dictionary<TrackGroup, TrackManager>();
         protected TrackManager masterManager, musicManager, soundFXManager, voiceManager;
 
         public static void EnsureExists()
@@ -110,15 +110,15 @@ namespace Myceliaudio
             // ^ So that things are scaled relative to the master volume
         }
 
-        public virtual float GetTrackVol(TrackSet trackSet, int track = 0)
+        public virtual float GetTrackVol(TrackGroup trackGroup, int track = 0)
         {
-            var managerToUse = TrackManagers[trackSet];
+            var managerToUse = TrackManagers[trackGroup];
             return managerToUse.GetVolume(track);
         }
 
-        public virtual float GetTrackPitch(TrackSet trackSet, int track = 0)
+        public virtual float GetTrackPitch(TrackGroup trackGroup, int track = 0)
         {
-            var managerToUse = TrackManagers[trackSet];
+            var managerToUse = TrackManagers[trackGroup];
             return managerToUse.GetPitch(track);
         }
 
@@ -134,11 +134,11 @@ namespace Myceliaudio
             managerToUse.SetTrackVolume(args);
         }
 
-        public virtual void SetTrackVol(TrackSet trackSet, int track, float targVol)
+        public virtual void SetTrackVol(TrackGroup trackGroup, int track, float targVol)
         {
             SetVolumeArgs args = new SetVolumeArgs()
             {
-                TrackSet = trackSet,
+                TrackSet = trackGroup,
                 Track = track,
                 TargetVolume = targVol
             };
@@ -146,15 +146,15 @@ namespace Myceliaudio
             SetTrackVol(args);
         }
 
-        public virtual float GetTrackGroupVolume(TrackSet trackSet)
+        public virtual float GetTrackGroupVolume(TrackGroup trackGroup)
         {
-            var managerToUse = TrackManagers[trackSet];
+            var managerToUse = TrackManagers[trackGroup];
             return managerToUse.BaseVolumeScale;
         }
 
-        public virtual void SetTrackGroupVol(TrackSet trackSet, float newVol)
+        public virtual void SetTrackGroupVol(TrackGroup trackGroup, float newVol)
         {
-            var managerToUse = TrackManagers[trackSet];
+            var managerToUse = TrackManagers[trackGroup];
             managerToUse.BaseVolumeScale = newVol;
         }
 
@@ -172,9 +172,9 @@ namespace Myceliaudio
             managerToInvolve.Play(args);
         }
 
-        public virtual void Stop(TrackSet trackSet, int track = 0)
+        public virtual void Stop(TrackGroup trackGroup, int track = 0)
         {
-            var managerToUse = TrackManagers[trackSet];
+            var managerToUse = TrackManagers[trackGroup];
             managerToUse.Stop(track);
         }
     

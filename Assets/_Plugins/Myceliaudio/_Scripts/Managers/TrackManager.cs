@@ -7,11 +7,11 @@ namespace Myceliaudio
     public class TrackManager : MonoBehaviour
     {
         [SerializeField] protected TrackManager _anchor;
-        [SerializeField] protected TrackSet _trackSet;
+        [SerializeField] protected TrackGroup _trackGroup;
 
-        public virtual TrackSet Set
+        public virtual TrackGroup Set
         {
-            get { return _trackSet; }
+            get { return _trackGroup; }
         }
 
         public virtual void Init()

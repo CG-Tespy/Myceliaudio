@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anchor: {fileID: 1378971351508545629}
-  _trackSet: 4
+  _trackGroup: 4
 --- !u!1 &1378971351508545631
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anchor: {fileID: 0}
-  _trackSet: 1
+  _trackGroup: 1
 --- !u!1 &1378971351665553632
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anchor: {fileID: 1378971351508545629}
-  _trackSet: 3
+  _trackGroup: 3
 --- !u!1 &1378971351956091564
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,4 +231,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anchor: {fileID: 1378971351508545629}
-  _trackSet: 2
+  _trackGroup: 2

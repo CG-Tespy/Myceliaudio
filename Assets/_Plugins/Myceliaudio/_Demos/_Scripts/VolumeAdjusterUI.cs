@@ -5,7 +5,7 @@ namespace Myceliaudio
 {
     public class VolumeAdjusterUI : MonoBehaviour
     {
-        [SerializeField] protected TrackSet _trackType;
+        [SerializeField] protected TrackGroup _trackType;
         [SerializeField] protected int _track = 0;
         [SerializeField] [Min(1)] protected int adjustmentInterval = 10;
         [SerializeField] protected Button lowerVolButton, raiseVolButton;

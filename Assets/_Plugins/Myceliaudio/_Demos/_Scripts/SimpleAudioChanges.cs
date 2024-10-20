@@ -25,15 +25,15 @@ namespace Myceliaudio.Demos
             AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
-            AudioSys.SetTrackGroupVol(TrackSet.BGMusic, startingMusicVol);
-            AudioSys.SetTrackGroupVol(TrackSet.SoundFX, startingSfxVol);
+            AudioSys.SetTrackGroupVol(TrackGroup.BGMusic, startingMusicVol);
+            AudioSys.SetTrackGroupVol(TrackGroup.SoundFX, startingSfxVol);
 
             UpdateTextFields();
 
             PlayAudioArgs playShortBgm = new PlayAudioArgs()
             {
                 Clip = bgmToPlay,
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 Loop = true,
                 LoopStartPoint = loopPoint,
                 LoopEndPoint = endPoint,
@@ -44,11 +44,11 @@ namespace Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetTrackGroupVolume(TrackSet.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVolume(TrackGroup.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
-            float sfxVol = AudioSys.GetTrackGroupVolume(TrackSet.SoundFX);
+            float sfxVol = AudioSys.GetTrackGroupVolume(TrackGroup.SoundFX);
             sfxVol = Mathf.Round(sfxVol);
             sfxVolLabel.text = $"SFX Volume: {sfxVol}%";
         }
@@ -65,12 +65,12 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnRaiseMusicVolClicked()
         {
-            ChangeVol(TrackSet.BGMusic, raiseIt);
+            ChangeVol(TrackGroup.BGMusic, raiseIt);
         }
 
         protected static int raiseIt = 1;
 
-        protected virtual void ChangeVol(TrackSet type, float sign)
+        protected virtual void ChangeVol(TrackGroup type, float sign)
         {
             float currentVol = AudioSys.GetTrackGroupVolume(type);
             currentVol += volChangeInterval * sign;
@@ -92,19 +92,19 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnLowerMusicVolClicked()
         {
-            ChangeVol(TrackSet.BGMusic, lowerIt);
+            ChangeVol(TrackGroup.BGMusic, lowerIt);
         }
 
         protected static int lowerIt = -1;
 
         protected virtual void OnRaiseSfxVolClicked()
         {
-            ChangeVol(TrackSet.SoundFX, raiseIt);
+            ChangeVol(TrackGroup.SoundFX, raiseIt);
         }
 
         protected virtual void OnLowerSfxVolClicked()
         {
-            ChangeVol(TrackSet.SoundFX, lowerIt);
+            ChangeVol(TrackGroup.SoundFX, lowerIt);
         }
 
         protected virtual void OnPlaySfxClicked()
@@ -115,7 +115,7 @@ namespace Myceliaudio.Demos
 
         PlayAudioArgs playSfxArgs = new PlayAudioArgs()
         {
-            TrackSet = TrackSet.SoundFX
+            TrackSet = TrackGroup.SoundFX
         };
 
         protected virtual void OnDisable()

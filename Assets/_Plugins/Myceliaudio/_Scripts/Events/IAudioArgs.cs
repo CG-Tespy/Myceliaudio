@@ -18,7 +18,7 @@ namespace Myceliaudio
         float AtTime { get; }
         bool WantsPlayAtNewTime { get; }
         int Track { get; }
-        TrackSet TrackSet { get; }
+        TrackGroup TrackSet { get; }
         AudioHandler OnComplete { get; set; }
         double LoopStartPoint { get; }
         double LoopEndPoint { get; }

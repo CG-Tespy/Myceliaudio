@@ -7,15 +7,14 @@ namespace Myceliaudio.UVS
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
-            _audioArgs.WantsVolumeSet = true;
-            _audioArgs.TargetVolume = _targetValueVal;
-            _audioArgs.FadeDuration = _durationVal;
+            _setVolumeArgs.TargetVolume = _targetValueVal;
+            _setVolumeArgs.FadeDuration = _durationVal;
         }
 
         protected override ControlOutput OnEnterStart(Flow flow)
         {
             var baseOutput = base.OnEnterStart(flow);
-            AudioSystem.S.SetTrackVol(_audioArgs);
+            AudioSystem.S.SetTrackVol(_setVolumeArgs);
             return baseOutput;
         }
 

@@ -10,13 +10,13 @@ namespace Myceliaudio
     {
         [SerializeField] protected UIPointerEventType _toRespondTo;
         [SerializeField] protected UIPointerEvents _events;
-        [SerializeField] protected TrackSet _trackSet;
+        [SerializeField] protected TrackGroup _trackGroup;
         [SerializeField] protected int _track;
         [SerializeField] protected AudioClip _soundToPlay;
 
         protected virtual void Awake()
         {
-            _audioArgs.TrackSet = _trackSet;
+            _audioArgs.TrackSet = _trackGroup;
             _audioArgs.Track = _track;
             _audioArgs.Clip = _soundToPlay;
         }

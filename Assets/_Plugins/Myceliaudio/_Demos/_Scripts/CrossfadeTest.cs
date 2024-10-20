@@ -23,13 +23,13 @@ namespace Myceliaudio.Demos
             AudioSystem.EnsureExists();
             AudioSys = AudioSystem.S;
 
-            AudioSys.SetTrackGroupVol(TrackSet.BGMusic, startingMusicVol);
+            AudioSys.SetTrackGroupVol(TrackGroup.BGMusic, startingMusicVol);
 
             // We want both clips playing at the same time, but with the second being silent
             PlayAudioArgs playFirstClip = new PlayAudioArgs()
             {
                 Clip = firstClip,
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 Loop = true,
             };
 
@@ -38,7 +38,7 @@ namespace Myceliaudio.Demos
             PlayAudioArgs playSecondClip = new PlayAudioArgs()
             {
                 Clip = secondClip,
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 Loop = true,
                 Track = 1,
             };
@@ -48,7 +48,7 @@ namespace Myceliaudio.Demos
             SetVolumeArgs setVolume = new SetVolumeArgs()
             {
                 TargetVolume = 0,
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 Track = 1,
             };
 
@@ -66,7 +66,7 @@ namespace Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetTrackGroupVolume(TrackSet.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVolume(TrackGroup.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
@@ -88,12 +88,12 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnRaiseMusicVolClicked()
         {
-            ChangeVol(TrackSet.BGMusic, raiseIt);
+            ChangeVol(TrackGroup.BGMusic, raiseIt);
         }
 
         protected static int raiseIt = 1;
 
-        protected virtual void ChangeVol(TrackSet type, float sign)
+        protected virtual void ChangeVol(TrackGroup type, float sign)
         {
             float currentVol = AudioSys.GetTrackGroupVolume(type);
             currentVol += volChangeInterval * sign;
@@ -108,7 +108,7 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnLowerMusicVolClicked()
         {
-            ChangeVol(TrackSet.BGMusic, lowerIt);
+            ChangeVol(TrackGroup.BGMusic, lowerIt);
         }
 
         protected static int lowerIt = -1;
@@ -135,7 +135,7 @@ namespace Myceliaudio.Demos
         {
             SetVolumeArgs fadeOut = new SetVolumeArgs()
             {
-                TrackSet = TrackSet.BGMusic,
+                TrackSet = TrackGroup.BGMusic,
                 TargetVolume = 0,
                 FadeDuration = currentFadeDur,
             };

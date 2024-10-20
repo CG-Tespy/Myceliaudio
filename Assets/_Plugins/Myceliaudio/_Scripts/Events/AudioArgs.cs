@@ -38,7 +38,7 @@ namespace Myceliaudio
         }
 
         public virtual int Track { get; set; }
-        public virtual TrackSet TrackSet { get; set; }
+        public virtual TrackGroup TrackSet { get; set; }
 
         /// <summary>
         /// By default a func that does nothing.

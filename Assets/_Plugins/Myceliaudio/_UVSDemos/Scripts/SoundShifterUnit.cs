@@ -41,7 +41,7 @@ namespace Myceliaudio
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
-            _audioArgs.Track = _trackVal;
+            _playAudioArgs.Track = _trackVal;
         }
 
     }
