@@ -158,8 +158,8 @@ namespace Myceliaudio.Demos
                 fadeIn.Track = firstClipTrack;
             }
 
-            AudioSys.SetTrackVol(fadeOut);
-            AudioSys.SetTrackVol(fadeIn);
+            AudioSys.FadeVolume(fadeOut);
+            AudioSys.FadeVolume(fadeIn);
             clipCurrentlyAudible = nextClipToBeAudible;
 
             StartCoroutine(DisableCrossfadeButton(currentFadeDur));

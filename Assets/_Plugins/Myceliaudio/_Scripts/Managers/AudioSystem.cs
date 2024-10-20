@@ -116,18 +116,6 @@ namespace Myceliaudio
             return managerToUse.GetVolume(track);
         }
 
-        public virtual float GetTrackPitch(TrackGroup trackGroup, int track = 0)
-        {
-            var managerToUse = TrackManagers[trackGroup];
-            return managerToUse.GetPitch(track);
-        }
-
-        public virtual void SetTrackVol(AudioArgs args)
-        {
-            var managerToUse = TrackManagers[args.TrackSet];
-            managerToUse.SetVolume(args);
-        }
-
         public virtual void SetTrackVol(SetVolumeArgs args)
         {
             var managerToUse = TrackManagers[args.TrackSet];
@@ -159,12 +147,6 @@ namespace Myceliaudio
         }
 
         protected float _masterVol = 100f;
-
-        public virtual void Play(AudioArgs args)
-        {
-            var managerToInvolve = TrackManagers[args.TrackSet];
-            managerToInvolve.Play(args);
-        }
 
         public virtual void Play(PlayAudioArgs args)
         {

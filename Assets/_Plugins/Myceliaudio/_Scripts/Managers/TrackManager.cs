@@ -67,41 +67,22 @@ namespace Myceliaudio
             }
         }
 
-        public virtual void Play(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            tracks[args.Track].Play(args);
-        }
-
         public virtual void Play(PlayAudioArgs args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].Play(args);
         }
 
-        public virtual void SetVolume(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            tracks[args.Track].SetVolume(args);
-        }
-
         public virtual void SetTrackVolume(SetVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
-            tracks[args.Track].SetVolume(args);
+            tracks[args.Track].SetVolume(args.TargetVolume);
         }
 
         public virtual void SetVolume(float newVol, int trackToSetFor = 0)
         {
             EnsureTrackExists(trackToSetFor);
-            tracks[trackToSetFor].SetVolumeImmediate(newVol);
-        }
-
-        protected virtual AudioArgs WithVolumeScaleApplied(AudioArgs baseArgs)
-        {
-            AudioArgs result = AudioArgs.CreateCopy(baseArgs);
-            result.TargetVolume *= VolumeScaleNormalized;
-            return result;
+            tracks[trackToSetFor].SetVolume(newVol);
         }
 
         protected virtual SetVolumeArgs WithVolumeScaleApplied(SetVolumeArgs baseArgs)
@@ -178,12 +159,6 @@ namespace Myceliaudio
             EnsureTrackExists(args.Track);
             args = WithVolumeScaleApplied(args);
             tracks[args.Track].FadeVolume(args);
-        }
-
-        public virtual void Stop(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            tracks[args.Track].Stop(args);
         }
 
         public virtual void Stop(int track)
