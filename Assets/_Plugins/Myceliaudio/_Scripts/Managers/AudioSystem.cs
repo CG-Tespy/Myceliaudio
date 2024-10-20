@@ -103,11 +103,6 @@ namespace Myceliaudio
             musicManager.BaseVolumeScale = VolumeSettings.bgMusic;
             soundFXManager.BaseVolumeScale = VolumeSettings.soundFX;
             voiceManager.BaseVolumeScale = VolumeSettings.voice;
-
-            musicManager.Anchor = masterManager;
-            soundFXManager.Anchor = masterManager;
-            voiceManager.Anchor = masterManager;
-            // ^ So that things are scaled relative to the master volume
         }
 
         public virtual float GetTrackVol(TrackGroup trackGroup, int track = 0)
@@ -116,7 +111,7 @@ namespace Myceliaudio
             return managerToUse.GetVolume(track);
         }
 
-        public virtual void SetTrackVol(SetVolumeArgs args)
+        public virtual void SetTrackVol(AlterVolumeArgs args)
         {
             var managerToUse = TrackManagers[args.TrackSet];
             managerToUse.SetTrackVolume(args);
@@ -124,7 +119,7 @@ namespace Myceliaudio
 
         public virtual void SetTrackVol(TrackGroup trackGroup, int track, float targVol)
         {
-            SetVolumeArgs args = new SetVolumeArgs()
+            AlterVolumeArgs args = new AlterVolumeArgs()
             {
                 TrackSet = trackGroup,
                 Track = track,
@@ -160,10 +155,10 @@ namespace Myceliaudio
             managerToUse.Stop(track);
         }
     
-        public virtual void FadeVolume(SetVolumeArgs args)
+        public virtual void FadeVolume(AlterVolumeArgs args)
         {
             var managerToUse = TrackManagers[args.TrackSet];
-            managerToUse.FadeVolume(args);
+            managerToUse.FadeTrackVolume(args);
         }
         
     }

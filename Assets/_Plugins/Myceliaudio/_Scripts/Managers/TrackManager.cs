@@ -40,7 +40,7 @@ namespace Myceliaudio
                 AudioTrack newTrack = new AudioTrack();
                 newTrack.Init(trackHolder);
                 newTrack.ID = id;
-                newTrack.EffVolScale = this.EffVolScale;
+                newTrack.Anchor = this;
                 tracks[id] = newTrack;
             }
         }
@@ -55,15 +55,16 @@ namespace Myceliaudio
                 TrackManager prevAnchor = _anchor;
                 if (prevAnchor != null)
                 {
-                    prevAnchor.BaseVolScaleChanged -= OnAnchorVolChanged;
+                    prevAnchor.EffVolScaleChanged -= OnAnchorVolChanged;
                 }
 
                 _anchor = value;
                 if (_anchor != null)
                 {
-                    _anchor.BaseVolScaleChanged += OnAnchorVolChanged;
+                    _anchor.EffVolScaleChanged += OnAnchorVolChanged;
                 }
-                UpdateTrackVolumeScales();
+
+                EffVolScaleChanged(EffVolScale);
             }
         }
 
@@ -73,7 +74,7 @@ namespace Myceliaudio
             tracks[args.Track].Play(args);
         }
 
-        public virtual void SetTrackVolume(SetVolumeArgs args)
+        public virtual void SetTrackVolume(AlterVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].SetVolume(args.TargetVolume);
@@ -85,17 +86,11 @@ namespace Myceliaudio
             tracks[trackToSetFor].SetVolume(newVol);
         }
 
-        protected virtual SetVolumeArgs WithVolumeScaleApplied(SetVolumeArgs baseArgs)
-        {
-            SetVolumeArgs result = SetVolumeArgs.CreateCopy(baseArgs);
-            result.TargetVolume *= VolumeScaleNormalized;
-            return result;
-        }
-
+        
         /// <summary>
         /// Normalized for AudioSources so we can use it as a multiplier. You know, since those prefer scales of 0 to 1.
         /// </summary>
-        protected virtual float VolumeScaleNormalized
+        public virtual float VolumeScaleNormalized
         {
             get { return BaseVolumeScale / AudioMath.VolumeConversion; }
         }
@@ -115,15 +110,12 @@ namespace Myceliaudio
             set
             {
                 _baseVolumeScale = Mathf.Clamp(value, AudioMath.MinVol, AudioMath.MaxVol);
-
-                BaseVolScaleChanged(_baseVolumeScale);
+                EffVolScaleChanged(EffVolScale);
                 AudioEvents.TrackSetVolChanged(Set, _baseVolumeScale);
-                UpdateTrackVolumeScales();
             }
         }
         
         protected float _baseVolumeScale = 100f;
-        public event UnityAction<float> BaseVolScaleChanged = delegate { };
 
         // This affects the actual volume values that the tracks play at.
         public virtual float EffVolScale
@@ -141,23 +133,20 @@ namespace Myceliaudio
             }
         }
 
+        public virtual float EffVolScaleNormalized
+        {
+            get { return EffVolScale / AudioMath.VolumeConversion; }
+        }
         public virtual void OnAnchorVolChanged(float newVolScale)
         {
-            UpdateTrackVolumeScales();
+            EffVolScaleChanged(EffVolScale);
         }
 
-        protected virtual void UpdateTrackVolumeScales()
-        {
-            foreach (var trackEl in tracks.Values)
-            {
-                trackEl.EffVolScale = this.EffVolScale;
-            }
-        }
-        
-        public virtual void FadeVolume(SetVolumeArgs args)
+        public event UnityAction<float> EffVolScaleChanged = delegate { };  
+
+        public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
-            args = WithVolumeScaleApplied(args);
             tracks[args.Track].FadeVolume(args);
         }
 

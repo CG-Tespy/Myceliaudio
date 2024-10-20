@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Myceliaudio
 {
-    public class SetVolumeArgs : EventArgs
+    public class AlterVolumeArgs : EventArgs
     {
         public virtual float TargetVolume { get; set; }
         public virtual TrackGroup TrackSet { get; set; }
@@ -19,11 +19,11 @@ namespace Myceliaudio
 
         public virtual float FadeDuration { get; set; } = 0f;
 
-        public virtual UnityAction<SetVolumeArgs> OnComplete { get; set; } = delegate { };
+        public virtual UnityAction<AlterVolumeArgs> OnComplete { get; set; } = delegate { };
 
-        public static SetVolumeArgs CreateCopy(SetVolumeArgs other)
+        public static AlterVolumeArgs CreateCopy(AlterVolumeArgs other)
         {
-            SetVolumeArgs result = new SetVolumeArgs()
+            AlterVolumeArgs result = new AlterVolumeArgs()
             {
                 TargetVolume = other.TargetVolume,
                 TrackSet = other.TrackSet,

@@ -10,22 +10,86 @@ namespace Myceliaudio
     public class AudioTrack
     {
         public virtual int ID { get; set; }
-        public virtual float EffVolScale
+
+        public virtual TrackManager Anchor
         {
-            get { return _effVolScale; }
+            get { return _anchor; }
             set
             {
-                _effVolScale = Mathf.Clamp(value, AudioMath.MinVol, AudioMath.MaxVol);
+                TrackManager prevAnchor = _anchor;
+                if (prevAnchor != null)
+                {
+                    prevAnchor.EffVolScaleChanged += OnAnchorEffVolChanged;
+                }
+
+                _anchor = value;
+                if (_anchor != null)
+                {
+                    _anchor.EffVolScaleChanged += OnAnchorEffVolChanged;
+                }
+            }
+        }
+        protected TrackManager _anchor;
+
+        public virtual void OnAnchorEffVolChanged(float newVolScale)
+        {
+            UpdateCurrentVol();
+        }
+
+        protected virtual void UpdateCurrentVol()
+        {
+            CurrentVolume = EffVolScale;
+        }
+
+        /// <summary>
+        /// On a scale of 0 to 100. 0 = total silence, 100 = max vol
+        /// </summary>
+        public virtual float CurrentVolume
+        {
+            get { return baseSource.volume * AudioMath.VolumeConversion; }
+            protected set
+            {
+                // Need to convert to a scale of 0 to 1 since that's what the base
+                // audio sources prefer
+                float normalizedForAudioSource = value / AudioMath.VolumeConversion;
+                float withinLimits = Mathf.Clamp(normalizedForAudioSource, AudioMath.MinVol, AudioMath.MaxVolNormalized);
+                baseSource.volume = withinLimits;
+            }
+        }
+
+        public virtual float BaseVolScale
+        {
+            get { return _baseVolScale; }
+            protected set
+            {
+                _baseVolScale = value;
                 UpdateCurrentVol();
             }
         }
 
-        protected float _effVolScale = 100f;
+        protected float _baseVolScale = 100f;
 
-        protected virtual void UpdateCurrentVol()
+        public virtual float BaseVolScaleNormalized
         {
-            CurrentVolume = _latestTargetVolume * EffVolScaleNormalized;
+            get { return BaseVolScale / AudioMath.VolumeConversion; }
         }
+
+        public virtual float EffVolScale
+        {
+            get
+            {
+                float result = BaseVolScale;
+
+                if (Anchor != null)
+                {
+                    result *= Anchor.EffVolScaleNormalized;
+                }
+
+                return result;
+            }
+        }
+
+        protected float _effVolScale = 100f;
 
         protected virtual float EffVolScaleNormalized
         {
@@ -110,12 +174,12 @@ namespace Myceliaudio
             set { baseSource.clip = value; }
         }
 
-        protected float _latestTargetVolume = 100f;
+        
         protected bool tweeningVolume, tweeningPitch;
 
         public virtual void SetVolumeImmediate(float targVol)
         {
-            _latestTargetVolume = targVol;
+            BaseVolScale = targVol;
             UpdateCurrentVol();
         }
 
@@ -124,22 +188,6 @@ namespace Myceliaudio
         protected virtual AudioSystem AudioSys { get {  return AudioSystem.S; } }
 
         protected static double dspTimeScheduleOffset = 0.2;
-
-        /// <summary>
-        /// On a scale of 0 to 100. 0 = total silence, 100 = max vol
-        /// </summary>
-        public virtual float CurrentVolume
-        {
-            get { return baseSource.volume * AudioMath.VolumeConversion; }
-            protected set
-            {
-                // Need to convert to a scale of 0 to 1 since that's what the base
-                // audio sources prefer
-                float normalizedForAudioSource = value / AudioMath.VolumeConversion;
-                float withinLimits = Mathf.Clamp(normalizedForAudioSource, AudioMath.MinVol, AudioMath.MaxVolNormalized);
-                baseSource.volume = withinLimits;
-            }
-        }
 
         /// <summary>
         /// On a scale of 0 to 200. 0 = min, 100 = base pitch, 200 = double the base pitch
@@ -156,34 +204,24 @@ namespace Myceliaudio
             }
         }
 
-        public virtual void FadeVolume(IAudioArgs args)
+        public virtual void FadeVolume(AlterVolumeArgs args)
         {
-            float preFinalTargVol = args.TargetVolume * EffVolScaleNormalized; // 0-100
-            _latestTargetVolume = preFinalTargVol / AudioMath.VolumeConversion; // 0-1 (for AudioSources to use)
-
+            // Need to tween the base vol, not the audio source directly
             if (fadeTween != null)
             {
                 fadeTween.Kill();
             }
 
-            fadeTween = baseSource.DOFade(_latestTargetVolume, args.FadeDuration)
+            fadeTween = DOTween.To(() => BaseVolScale, OnBaseVolScaleValTween, args.TargetVolume, args.FadeDuration)
                 .OnComplete(() => args.OnComplete(args));
         }
 
         protected Tween fadeTween;
 
-        public virtual void FadeVolume(SetVolumeArgs args)
+        protected virtual void OnBaseVolScaleValTween(float tweenedValue)
         {
-            float preFinalTargVol = args.TargetVolume * EffVolScaleNormalized; // 0-100
-            _latestTargetVolume = preFinalTargVol / AudioMath.VolumeConversion; // 0-1 (for AudioSources to use)
-
-            if (fadeTween != null)
-            {
-                fadeTween.Kill();
-            }
-
-            fadeTween = baseSource.DOFade(_latestTargetVolume, args.FadeDuration)
-                .OnComplete(() => args.OnComplete(args));
+            BaseVolScale = tweenedValue;
+            UpdateCurrentVol();
         }
 
         public virtual void SetVolume(float targVol)

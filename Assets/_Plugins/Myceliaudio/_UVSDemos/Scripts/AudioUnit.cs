@@ -68,7 +68,7 @@ namespace Myceliaudio
         }
 
         protected PlayAudioArgs _playAudioArgs = new PlayAudioArgs();
-        protected SetVolumeArgs _setVolumeArgs = new SetVolumeArgs();
+        protected AlterVolumeArgs _setVolumeArgs = new AlterVolumeArgs();
 
     }
 }
