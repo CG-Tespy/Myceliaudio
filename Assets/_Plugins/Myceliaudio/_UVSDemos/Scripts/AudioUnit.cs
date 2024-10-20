@@ -63,8 +63,7 @@ namespace CGT.Myceliaudio
 
         protected virtual void PrepAudioArgs()
         {
-            _playAudioArgs.TrackSet = _setVolumeArgs.TrackSet = _trackGroupVal;
-
+            _playAudioArgs.TrackGroup = _setVolumeArgs.TrackGroup = _trackGroupVal;
         }
 
         protected PlayAudioArgs _playAudioArgs = new PlayAudioArgs();

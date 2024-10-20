@@ -14,7 +14,7 @@ namespace CGT.Myceliaudio.Demos
             PlayAudioArgs playMusic = new PlayAudioArgs()
             {
                 Clip = _clip,
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 Loop = true,
                 LoopStartPoint = _loopStartPoint,
                 LoopEndPoint = _loopEndPoint

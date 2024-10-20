@@ -66,7 +66,7 @@ namespace CGT.Myceliaudio
 
         public virtual void SetTrackVol(AlterVolumeArgs args)
         {
-            TrackManager managerToUse = TrackManagers[args.TrackSet];
+            TrackManager managerToUse = TrackManagers[args.TrackGroup];
             managerToUse.SetTrackVolume(args);
         }
 
@@ -74,7 +74,7 @@ namespace CGT.Myceliaudio
         {
             AlterVolumeArgs args = new AlterVolumeArgs()
             {
-                TrackSet = trackGroup,
+                TrackGroup = trackGroup,
                 Track = track,
                 TargetVolume = targVol
             };
@@ -96,7 +96,7 @@ namespace CGT.Myceliaudio
 
         public virtual void Play(PlayAudioArgs args)
         {
-            var managerToInvolve = TrackManagers[args.TrackSet];
+            var managerToInvolve = TrackManagers[args.TrackGroup];
             managerToInvolve.Play(args);
         }
 
@@ -108,7 +108,7 @@ namespace CGT.Myceliaudio
     
         public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
-            TrackManager managerToUse = TrackManagers[args.TrackSet];
+            TrackManager managerToUse = TrackManagers[args.TrackGroup];
             managerToUse.FadeTrackVolume(args);
         }
 

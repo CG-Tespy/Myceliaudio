@@ -32,7 +32,7 @@ namespace CGT.Myceliaudio.Demos
             PlayAudioArgs playShortBgm = new PlayAudioArgs()
             {
                 Clip = bgmToPlay,
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 Loop = true,
                 LoopStartPoint = loopPoint,
                 LoopEndPoint = endPoint,
@@ -107,7 +107,7 @@ namespace CGT.Myceliaudio.Demos
 
         PlayAudioArgs playSfxArgs = new PlayAudioArgs()
         {
-            TrackSet = TrackGroup.SoundFX
+            TrackGroup = TrackGroup.SoundFX
         };
 
         protected virtual void OnDisable()

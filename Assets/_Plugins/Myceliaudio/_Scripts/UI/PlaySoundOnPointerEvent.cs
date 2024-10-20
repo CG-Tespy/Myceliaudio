@@ -16,7 +16,7 @@ namespace CGT.Myceliaudio
 
         protected virtual void Awake()
         {
-            _audioArgs.TrackSet = _trackGroup;
+            _audioArgs.TrackGroup = _trackGroup;
             _audioArgs.Track = _track;
             _audioArgs.Clip = _soundToPlay;
         }

@@ -28,7 +28,7 @@ namespace CGT.Myceliaudio.Demos
             PlayAudioArgs playFirstClip = new PlayAudioArgs()
             {
                 Clip = firstClip,
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 Loop = true,
             };
 
@@ -37,7 +37,7 @@ namespace CGT.Myceliaudio.Demos
             PlayAudioArgs playSecondClip = new PlayAudioArgs()
             {
                 Clip = secondClip,
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 Loop = true,
                 Track = 1,
             };
@@ -47,7 +47,7 @@ namespace CGT.Myceliaudio.Demos
             AlterVolumeArgs setVolume = new AlterVolumeArgs()
             {
                 TargetVolume = 0,
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 Track = 1,
             };
 
@@ -134,7 +134,7 @@ namespace CGT.Myceliaudio.Demos
         {
             AlterVolumeArgs fadeOut = new AlterVolumeArgs()
             {
-                TrackSet = TrackGroup.BGMusic,
+                TrackGroup = TrackGroup.BGMusic,
                 TargetVolume = 0,
                 FadeDuration = currentFadeDur,
             };

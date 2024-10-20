@@ -43,6 +43,8 @@ namespace CGT.Myceliaudio
                 {
                     _anchor.RealVolumeChanged += OnAnchorRealVolChanged;
                 }
+
+                UpdateCurrentVolApplied();
             }
         }
 

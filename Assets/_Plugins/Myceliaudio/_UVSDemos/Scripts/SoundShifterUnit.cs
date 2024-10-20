@@ -39,7 +39,7 @@ namespace CGT.Myceliaudio
         protected override void PrepAudioArgs()
         {
             base.PrepAudioArgs();
-            _playAudioArgs.Track = _trackVal;
+            _setVolumeArgs.Track = _playAudioArgs.Track = _trackVal;
         }
 
     }
