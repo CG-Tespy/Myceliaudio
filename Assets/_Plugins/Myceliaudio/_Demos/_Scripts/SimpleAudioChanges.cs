@@ -76,14 +76,7 @@ namespace Myceliaudio.Demos
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 
-            AudioArgs setVol = new AudioArgs()
-            {
-                TrackSet = type,
-                TargetVolume = currentVol,
-                WantsVolumeSet = true
-            };
-
-            AudioSys.SetTrackGroupVol(setVol.TrackSet, currentVol);
+            AudioSys.SetTrackGroupVol(type, currentVol);
 
             UpdateTextFields();
         }
