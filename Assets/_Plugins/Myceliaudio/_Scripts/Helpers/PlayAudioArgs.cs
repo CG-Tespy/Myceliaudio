@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Myceliaudio
 {
-    public class AudioPlayArgs : EventArgs
+    public class PlayAudioArgs : EventArgs
     {
         public virtual AudioClip Clip { get; set; }
         public virtual TrackSet TrackSet { get; set; }

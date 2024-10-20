@@ -154,7 +154,7 @@ namespace Myceliaudio
             managerToInvolve.Play(args);
         }
 
-        public virtual void Play(AudioPlayArgs args)
+        public virtual void Play(PlayAudioArgs args)
         {
             var managerToInvolve = TrackManagers[args.TrackSet];
             managerToInvolve.Play(args);

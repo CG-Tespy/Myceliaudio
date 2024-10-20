@@ -30,7 +30,7 @@ namespace Myceliaudio.Demos
 
             UpdateTextFields();
 
-            AudioPlayArgs playShortBgm = new AudioPlayArgs()
+            PlayAudioArgs playShortBgm = new PlayAudioArgs()
             {
                 Clip = bgmToPlay,
                 TrackSet = TrackSet.BGMusic,

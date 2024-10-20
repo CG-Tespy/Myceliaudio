@@ -13,7 +13,7 @@ namespace Myceliaudio.Demos
         {
             AudioSystem.EnsureExists();
 
-            AudioPlayArgs playMusic = new AudioPlayArgs()
+            PlayAudioArgs playMusic = new PlayAudioArgs()
             {
                 Clip = _clip,
                 TrackSet = TrackSet.BGMusic,

@@ -70,7 +70,7 @@ namespace Myceliaudio
             }
         }
 
-        public virtual void Play(AudioPlayArgs args)
+        public virtual void Play(PlayAudioArgs args)
         {
             if (args.Loop)
             {
@@ -224,7 +224,7 @@ namespace Myceliaudio
 
         protected static double dspTimeScheduleOffset = 0.2;
 
-        protected IEnumerator PlayOnLoopCoroutine(AudioPlayArgs args)
+        protected IEnumerator PlayOnLoopCoroutine(PlayAudioArgs args)
         {
             AudioClip clip = baseSource.clip = args.Clip;
             baseSource.Play();

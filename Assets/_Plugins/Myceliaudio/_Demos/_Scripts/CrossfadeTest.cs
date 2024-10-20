@@ -26,7 +26,7 @@ namespace Myceliaudio.Demos
             AudioSys.SetTrackGroupVol(TrackSet.BGMusic, startingMusicVol);
 
             // We want both clips playing at the same time, but with the second being silent
-            AudioPlayArgs playFirstClip = new AudioPlayArgs()
+            PlayAudioArgs playFirstClip = new PlayAudioArgs()
             {
                 Clip = firstClip,
                 TrackSet = TrackSet.BGMusic,
@@ -35,7 +35,7 @@ namespace Myceliaudio.Demos
 
             AudioSys.Play(playFirstClip);
 
-            AudioPlayArgs playSecondClip = new AudioPlayArgs()
+            PlayAudioArgs playSecondClip = new PlayAudioArgs()
             {
                 Clip = secondClip,
                 TrackSet = TrackSet.BGMusic,
@@ -99,22 +99,6 @@ namespace Myceliaudio.Demos
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 
-            AudioArgs setVol = new AudioArgs()
-            {
-                TrackSet = type,
-                TargetVolume = currentVol,
-                WantsVolumeSet = true
-            };
-
-            //SetVolumeArgs setVol = new SetVolumeArgs()
-            //{
-            //    TrackSet = type,
-            //    TargetVolume = currentVol,
-
-            //};
-
-            //AudioSys.SetVolOf(type, currentVol);
-
             AudioSys.SetTrackGroupVol(type, currentVol);
 
             UpdateTextFields();
@@ -149,14 +133,6 @@ namespace Myceliaudio.Demos
 
         protected virtual void OnCrossfadeButtonClicked()
         {
-            //AudioArgs fadeOut = new AudioArgs()
-            //{
-            //    WantsVolumeSet = true,
-            //    TrackSet = TrackSet.BGMusic,
-            //    TargetVolume = 0,
-            //    FadeDuration = currentFadeDur,
-            //};
-
             SetVolumeArgs fadeOut = new SetVolumeArgs()
             {
                 TrackSet = TrackSet.BGMusic,
@@ -164,10 +140,10 @@ namespace Myceliaudio.Demos
                 FadeDuration = currentFadeDur,
             };
 
-            //AudioArgs fadeIn = AudioArgs.CreateCopy(fadeOut);
             SetVolumeArgs fadeIn = SetVolumeArgs.CreateCopy(fadeOut);
             fadeIn.TargetVolume = 100f; // Note that this gets scaled by the base vol of the track type
             AudioClip nextClipToBeAudible = null;
+
             if (clipCurrentlyAudible == firstClip)
             {
                 // Then we will fade into the second

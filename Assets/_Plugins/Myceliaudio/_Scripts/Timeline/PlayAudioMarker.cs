@@ -9,10 +9,10 @@ namespace Myceliaudio
     {
         [TextArea(3, 6)]
         [SerializeField] protected string notes = string.Empty;
-        [SerializeField] protected AudioArgs[] _argSet = new AudioArgs[] { };
+        [SerializeField] protected PlayAudioArgs[] _argSet = new PlayAudioArgs[] { };
         
         public virtual string Notes { get { return notes; } }
-        public virtual IList<AudioArgs> ArgSet { get { return _argSet; } }
+        public virtual IList<PlayAudioArgs> ArgSet { get { return _argSet; } }
         public virtual string Name { get { return name; } }
 
         public PropertyName id => new PropertyName();

@@ -73,7 +73,7 @@ namespace Myceliaudio
             tracks[args.Track].Play(args);
         }
 
-        public virtual void Play(AudioPlayArgs args)
+        public virtual void Play(PlayAudioArgs args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].Play(args);
