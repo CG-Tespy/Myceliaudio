@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace CGT.Myceliaudio
 {
@@ -42,10 +43,12 @@ namespace CGT.Myceliaudio
                 newTrack.ID = id;
                 newTrack.Anchor = this;
                 tracks[id] = newTrack;
+                _fadeTweens.Add(newTrack, null);
             }
         }
 
         protected IDictionary<int, AudioTrack> tracks = new Dictionary<int, AudioTrack>();
+        protected IDictionary<AudioTrack, Tween> _fadeTweens = new Dictionary<AudioTrack, Tween>();
 
         public virtual TrackManager Anchor
         {
@@ -77,16 +80,15 @@ namespace CGT.Myceliaudio
         public virtual void SetTrackVolume(AlterVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
-            tracks[args.Track].SetVolume(args.TargetVolume);
+            tracks[args.Track].BaseVolScale = args.TargetVolume;
         }
 
-        public virtual void SetVolume(float newVol, int trackToSetFor = 0)
+        public virtual void SetTrackVolume(float newVol, int trackToSetFor = 0)
         {
             EnsureTrackExists(trackToSetFor);
-            tracks[trackToSetFor].SetVolume(newVol);
+            tracks[trackToSetFor].BaseVolScale = newVol;
         }
 
-        
         /// <summary>
         /// Normalized for AudioSources so we can use it as a multiplier. You know, since those prefer scales of 0 to 1.
         /// </summary>
@@ -147,7 +149,23 @@ namespace CGT.Myceliaudio
         public virtual void FadeTrackVolume(AlterVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
-            tracks[args.Track].FadeVolume(args);
+            AudioTrack toTweenFor = tracks[args.Track];
+            Tween fadeTweenToUse = _fadeTweens[toTweenFor];
+
+
+            if (fadeTweenToUse != null)
+            {
+                fadeTweenToUse.Kill();
+            }
+
+            fadeTweenToUse = DOTween.To(() => toTweenFor.BaseVolScale,
+                tweenedVol => toTweenFor.BaseVolScale = tweenedVol,
+                args.TargetVolume,
+                args.FadeDuration)
+                .OnComplete(() => args.OnComplete(args));
+
+            // Need to make sure it's registered in the dict
+            _fadeTweens[toTweenFor] = fadeTweenToUse;
         }
 
         public virtual void Stop(int track)
@@ -160,12 +178,6 @@ namespace CGT.Myceliaudio
         {
             EnsureTrackExists(track);
             return tracks[track].CurrentVolume;
-        }
-
-        public virtual float GetPitch(int track)
-        {
-            EnsureTrackExists(track);
-            return tracks[track].CurrentPitch;
         }
 
         public virtual string Name { get; set; }

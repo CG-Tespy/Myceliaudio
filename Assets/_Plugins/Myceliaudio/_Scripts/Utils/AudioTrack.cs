@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +9,23 @@ namespace CGT.Myceliaudio
     public class AudioTrack
     {
         public virtual int ID { get; set; }
+
+        public virtual void Init(GameObject toWorkWith = null)
+        {
+            holdsSource = toWorkWith;
+            SetUpAudioSource();
+        }
+
+        protected GameObject holdsSource; // So we can pull off tweens
+
+        protected virtual void SetUpAudioSource()
+        {
+            _baseSource = holdsSource.AddComponent<AudioSource>();
+            _baseSource.playOnAwake = false;
+            _baseSource.volume = EffVolScaleNormalized;
+        }
+
+        protected AudioSource _baseSource;
 
         public virtual TrackManager Anchor
         {
@@ -29,6 +45,7 @@ namespace CGT.Myceliaudio
                 }
             }
         }
+
         protected TrackManager _anchor;
 
         public virtual void OnAnchorEffVolChanged(float newVolScale)
@@ -46,32 +63,15 @@ namespace CGT.Myceliaudio
         /// </summary>
         public virtual float CurrentVolume
         {
-            get { return baseSource.volume * AudioMath.VolumeConversion; }
+            get { return _baseSource.volume * AudioMath.VolumeConversion; }
             protected set
             {
                 // Need to convert to a scale of 0 to 1 since that's what the base
                 // audio sources prefer
                 float normalizedForAudioSource = value / AudioMath.VolumeConversion;
                 float withinLimits = Mathf.Clamp(normalizedForAudioSource, AudioMath.MinVol, AudioMath.MaxVolNormalized);
-                baseSource.volume = withinLimits;
+                _baseSource.volume = withinLimits;
             }
-        }
-
-        public virtual float BaseVolScale
-        {
-            get { return _baseVolScale; }
-            protected set
-            {
-                _baseVolScale = value;
-                UpdateCurrentVol();
-            }
-        }
-
-        protected float _baseVolScale = 100f;
-
-        public virtual float BaseVolScaleNormalized
-        {
-            get { return BaseVolScale / AudioMath.VolumeConversion; }
         }
 
         public virtual float EffVolScale
@@ -89,36 +89,29 @@ namespace CGT.Myceliaudio
             }
         }
 
-        protected float _effVolScale = 100f;
+        public virtual float BaseVolScale
+        {
+            get { return _baseVolScale; }
+            set
+            {
+                _baseVolScale = value;
+                UpdateCurrentVol();
+            }
+        }
+
+        protected float _baseVolScale = 100f;
 
         protected virtual float EffVolScaleNormalized
         {
             get { return EffVolScale / AudioMath.VolumeConversion; }
         }
 
-        protected AudioSource baseSource;
-
-        public virtual void Init(GameObject toWorkWith = null)
-        {
-            holdsSource = toWorkWith;
-            SetUpAudioSource();
-        }
-
-        protected GameObject holdsSource; // So we can pull off tweens
-
-        protected virtual void SetUpAudioSource()
-        {
-            baseSource = holdsSource.AddComponent<AudioSource>();
-            baseSource.playOnAwake = false;
-            baseSource.volume = EffVolScaleNormalized;
-        }
-
         public virtual void Play(PlayAudioArgs args)
         {
             if (args.Loop)
             {
-                baseSource.Stop();
-                baseSource.loop = true; // to avoid issues for when the end point is at the exact end of the song
+                _baseSource.Stop();
+                _baseSource.loop = true; // To avoid issues for when the end point is at the exact end of the song
 
                 if (_playOnLoop != null)
                 {
@@ -130,16 +123,18 @@ namespace CGT.Myceliaudio
             }
             else
             {
-                baseSource.PlayOneShot(args.Clip);
+                _baseSource.PlayOneShot(args.Clip);
             }
         }
 
         protected IEnumerator _playOnLoop;
+        // ^Need this as a separate object to avoid loop points getting confused when
+        // switching from one song to another
 
         protected IEnumerator PlayOnLoopCoroutine(PlayAudioArgs args)
         {
-            AudioClip clip = baseSource.clip = args.Clip;
-            baseSource.Play();
+            AudioClip clip = _baseSource.clip = args.Clip;
+            _baseSource.Play();
 
             // Since the base loop point is in milliseconds...
             float loopPoint = (float)(args.LoopStartPoint / 1000.0);
@@ -160,7 +155,7 @@ namespace CGT.Myceliaudio
 
                 if (shouldReturnToLoopPoint)
                 {
-                    baseSource.time = loopPoint;
+                    _baseSource.time = loopPoint;
                     whenToReturnToLoopPoint += lengthOfTheLoopSegment;
                 }
 
@@ -168,82 +163,11 @@ namespace CGT.Myceliaudio
             }
         }
 
-        protected AudioClip Clip
-        {
-            get { return baseSource.clip; }
-            set { baseSource.clip = value; }
-        }
-
-        
-        protected bool tweeningVolume, tweeningPitch;
-
-        public virtual void SetVolumeImmediate(float targVol)
-        {
-            BaseVolScale = targVol;
-            UpdateCurrentVol();
-        }
-
-        // ^Need this as a separate object to avoid loop points getting confused when
-        // switching from one song to another
-        protected virtual AudioSystem AudioSys { get {  return AudioSystem.S; } }
-
-        protected static double dspTimeScheduleOffset = 0.2;
-
-        /// <summary>
-        /// On a scale of 0 to 200. 0 = min, 100 = base pitch, 200 = double the base pitch
-        /// </summary>
-        public virtual float CurrentPitch
-        {
-            get { return baseSource.pitch * AudioMath.VolumeConversion; }
-            protected set
-            {
-                float normalizedForAudioSource = value / AudioMath.VolumeConversion;
-                float withinLimits = Mathf.Clamp(normalizedForAudioSource, AudioMath.MinPitch,
-                    AudioMath.MaxPitchNormalized); // To cap things at 2x pitch
-                baseSource.pitch = withinLimits;
-            }
-        }
-
-        public virtual void FadeVolume(AlterVolumeArgs args)
-        {
-            // Need to tween the base vol, not the audio source directly
-            if (fadeTween != null)
-            {
-                fadeTween.Kill();
-            }
-
-            fadeTween = DOTween.To(() => BaseVolScale, OnBaseVolScaleValTween, args.TargetVolume, args.FadeDuration)
-                .OnComplete(() => args.OnComplete(args));
-        }
-
-        protected Tween fadeTween;
-
-        protected virtual void OnBaseVolScaleValTween(float tweenedValue)
-        {
-            BaseVolScale = tweenedValue;
-            UpdateCurrentVol();
-        }
-
-        public virtual void SetVolume(float targVol)
-        {
-            SetVolumeImmediate(targVol);
-        }
-
-        protected virtual bool Loop
-        {
-            get { return baseSource.loop; }
-            set { baseSource.loop = value; }
-        }
-
-        protected virtual float AtTime
-        {
-            get { return baseSource.time; }
-            set { baseSource.time = value; }
-        }
+        protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
 
         public virtual void Stop()
         {
-            baseSource.Stop();
+            _baseSource.Stop();
         }
 
     }

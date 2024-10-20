@@ -1,4 +1,4 @@
-#define CGT_AUD_MAN_SYS
+#define CGT_MYCELIAUDIO
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;

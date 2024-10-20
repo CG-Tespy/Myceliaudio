@@ -25,7 +25,7 @@ namespace CGT.Myceliaudio
         public virtual void SetTrackVol(TrackGroup set, int track, float targVol)
         {
             TrackManager relevantManager = TrackManagers[set];
-            relevantManager.SetVolume(targVol, track);
+            relevantManager.SetTrackVolume(targVol, track);
         }
 
         protected virtual IDictionary<TrackGroup, TrackManager> TrackManagers { get { return _main.TrackManagers; } }
