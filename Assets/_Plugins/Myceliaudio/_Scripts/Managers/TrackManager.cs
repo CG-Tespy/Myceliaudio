@@ -94,7 +94,7 @@ namespace Myceliaudio
         public virtual void SetVolume(float newVol, int trackToSetFor = 0)
         {
             EnsureTrackExists(trackToSetFor);
-            tracks[trackToSetFor].SetVolRightAway(newVol);
+            tracks[trackToSetFor].SetVolumeImmediate(newVol);
         }
 
         protected virtual AudioArgs WithVolumeScaleApplied(AudioArgs baseArgs)
@@ -173,23 +173,11 @@ namespace Myceliaudio
             }
         }
         
-        public virtual void FadeVolume(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            args = WithVolumeScaleApplied(args);
-            tracks[args.Track].FadeVolume(args);
-        }
-
         public virtual void FadeVolume(SetVolumeArgs args)
         {
             EnsureTrackExists(args.Track);
             args = WithVolumeScaleApplied(args);
             tracks[args.Track].FadeVolume(args);
-        }
-
-        public virtual void SetPitch(AudioArgs args)
-        {
-            tracks[args.Track].SetPitch(args);
         }
 
         public virtual void Stop(AudioArgs args)
@@ -204,22 +192,10 @@ namespace Myceliaudio
             trackToStop.Stop();
         }
 
-        public virtual float GetVolume(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            return GetVolume(args.Track);
-        }
-
         public virtual float GetVolume(int track)
         {
             EnsureTrackExists(track);
             return tracks[track].CurrentVolume;
-        }
-
-        public virtual float GetPitch(AudioArgs args)
-        {
-            EnsureTrackExists(args.Track);
-            return GetPitch(args.Track);
         }
 
         public virtual float GetPitch(int track)

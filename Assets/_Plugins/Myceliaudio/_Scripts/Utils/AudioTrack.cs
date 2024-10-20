@@ -118,7 +118,7 @@ namespace Myceliaudio
         {
             if (args.WantsVolumeSet && !tweeningVolume)
             {
-                SetVolumeWithoutDelay(args);
+                SetVolumeImmediate(args.TargetVolume);
             }
 
             if (args.WantsPitchSet && !tweeningPitch)
@@ -142,21 +142,9 @@ namespace Myceliaudio
         protected float _latestTargetVolume = 100f;
         protected bool tweeningVolume, tweeningPitch;
 
-        protected virtual void SetVolumeWithoutDelay(IAudioArgs args)
-        {
-            _latestTargetVolume = args.TargetVolume;
-            UpdateCurrentVol();
-        }
-
-        protected virtual void SetVolumeImmediate(float targVol)
+        public virtual void SetVolumeImmediate(float targVol)
         {
             _latestTargetVolume = targVol;
-            UpdateCurrentVol();
-        }
-
-        public virtual void SetVolRightAway(float newVol)
-        {
-            _latestTargetVolume = newVol;
             UpdateCurrentVol();
         }
 
@@ -329,7 +317,7 @@ namespace Myceliaudio
             }
             else
             {
-                SetVolumeWithoutDelay(args);
+                SetVolumeImmediate(args.TargetVolume);
                 args.OnComplete(args);
             }
         }
