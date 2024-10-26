@@ -8,8 +8,6 @@ namespace CGT.Myceliaudio
     {
         [SerializeField] protected Slider _slider;
         [SerializeField] protected TrackGroup _trackGroup;
-        [Tooltip("Which track in the set you want this to work with")]
-        [SerializeField] protected int _track;
 
         [Tooltip("If this is assigned, this only does its thing when steps are done")]
         [SerializeField] protected SliderStep _sliderStep;

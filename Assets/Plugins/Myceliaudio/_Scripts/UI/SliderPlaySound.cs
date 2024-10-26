@@ -9,6 +9,7 @@ namespace CGT.Myceliaudio
     public class SliderPlaySound : AudioSliderComponent
     {
         [SerializeField] protected AudioClip _soundToPlay;
+        [SerializeField] protected int _track;
         [Tooltip("The minimum amount of time (in seconds) that must pass between sound-plays. Applies when NOT using a SliderStep component.")]
         [SerializeField] protected float _cooldownTime = 0.3f;
 
