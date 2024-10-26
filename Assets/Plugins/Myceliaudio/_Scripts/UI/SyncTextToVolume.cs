@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace CGT.Myceliaudio
 {
+    /// <summary>
+    /// Sets (and updates when appropriate) a text field so it displays the 
+    /// volume level of a specified TrackGroup.
+    /// </summary>
     public class SyncTextToVolume : MonoBehaviour
     {
         [SerializeField] protected TMP_Text _textField;

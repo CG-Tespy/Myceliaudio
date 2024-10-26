@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CGT.Myceliaudio
 {
-    public class AudioSliderComponent : MonoBehaviour
+    public abstract class AudioSliderComponent : MonoBehaviour
     {
         [SerializeField] protected Slider _slider;
         [SerializeField] protected TrackGroup _trackGroup;
