@@ -24,7 +24,6 @@ namespace CGT.UI
 
             float diff = _slider.maxValue - _slider.minValue;
             _stepInterval = diff / _stepCount;
-            Debug.Log($"SliderStep interval is {_stepInterval}");
         }
 
         protected float _stepInterval = 1f;
