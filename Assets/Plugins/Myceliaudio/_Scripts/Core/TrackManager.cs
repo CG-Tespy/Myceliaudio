@@ -78,10 +78,10 @@ namespace CGT.Myceliaudio
             tracks[args.Track].Play(args);
         }
 
-        public virtual void SetTrackVolume(AlterVolumeArgs args)
+        public virtual void SetTrackVolume(AlterAudioSourceArgs args)
         {
             EnsureTrackExists(args.Track);
-            tracks[args.Track].BaseVolume = args.TargetVolume;
+            tracks[args.Track].BaseVolume = args.TargetValue;
         }
 
         public virtual void SetTrackVolume(float newVol, int trackToSetFor = 0)
@@ -147,15 +147,15 @@ namespace CGT.Myceliaudio
 
         public event UnityAction<float> RealVolumeChanged = delegate { };  
 
-        public virtual void FadeTrackVolume(AlterVolumeArgs args)
+        public virtual void FadeTrackVolume(AlterAudioSourceArgs args)
         {
             EnsureTrackExists(args.Track);
             AudioTrack toTweenFor = tracks[args.Track];
 
-            bool shouldUseCustomTweener = args.ApplyCustomFade != null;
+            bool shouldUseCustomTweener = args.CustomFader != null;
             if (shouldUseCustomTweener)
             {
-                args.ApplyCustomFade(args, toTweenFor);
+                args.CustomFader(args, toTweenFor);
             }
             else
             {
@@ -171,10 +171,10 @@ namespace CGT.Myceliaudio
             }
         }
 
-        protected virtual IEnumerator DoBasicTween(AlterVolumeArgs args, AudioTrack toTween)
+        protected virtual IEnumerator DoBasicTween(AlterAudioSourceArgs args, AudioTrack toTween)
         {
             float timer = 0f, initVolume = toTween.BaseVolume,
-                targVolume = args.TargetVolume;
+                targVolume = args.TargetValue;
 
             while (timer < args.FadeDuration)
             {
@@ -182,6 +182,7 @@ namespace CGT.Myceliaudio
                 float howFarAlong = timer / args.FadeDuration;
                 float newVol = Mathf.Lerp(initVolume, targVolume, howFarAlong);
                 toTween.BaseVolume = newVol;
+                args.OnUpdate(args, newVol);
                 yield return null;
             }
 

@@ -44,9 +44,9 @@ namespace CGT.Myceliaudio.Demos
 
             AudioSys.Play(playSecondClip);
 
-            AlterVolumeArgs setVolume = new AlterVolumeArgs()
+            AlterAudioSourceArgs setVolume = new AlterAudioSourceArgs()
             {
-                TargetVolume = 0,
+                TargetValue = 0,
                 TrackGroup = TrackGroup.BGMusic,
                 Track = 1,
             };
@@ -132,15 +132,15 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void OnCrossfadeButtonClicked()
         {
-            AlterVolumeArgs fadeOut = new AlterVolumeArgs()
+            AlterAudioSourceArgs fadeOut = new AlterAudioSourceArgs()
             {
                 TrackGroup = TrackGroup.BGMusic,
-                TargetVolume = 0,
+                TargetValue = 0,
                 FadeDuration = currentFadeDur,
             };
 
-            AlterVolumeArgs fadeIn = AlterVolumeArgs.CreateCopy(fadeOut);
-            fadeIn.TargetVolume = 100f; // Note that this gets scaled by the base vol of the track type
+            AlterAudioSourceArgs fadeIn = AlterAudioSourceArgs.CreateCopy(fadeOut);
+            fadeIn.TargetValue = 100f; // Note that this gets scaled by the base vol of the track type
             AudioClip nextClipToBeAudible = null;
 
             if (clipCurrentlyAudible == firstClip)
