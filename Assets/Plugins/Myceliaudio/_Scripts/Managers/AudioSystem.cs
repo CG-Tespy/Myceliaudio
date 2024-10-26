@@ -1,10 +1,11 @@
 #define CGT_MYCELIAUDIO_1_00_00
 using UnityEngine;
 using System.Collections.Generic;
+using CGT.Myceliaudio.Internal;
 
 namespace CGT.Myceliaudio
 {
-    public class AudioSystem : MonoBehaviour
+    public partial class AudioSystem : MonoBehaviour
     {
         public static AudioSystem S
         {
@@ -41,11 +42,14 @@ namespace CGT.Myceliaudio
             }
 
             RegisterTrackManagers();
+            _audioPlayer = new AudioPlayer(TrackManagers);
             DontDestroyOnLoad(this.gameObject);
         }
 
-        protected static AudioSystem _s;
+        protected AudioPlayer _audioPlayer;
 
+        protected static AudioSystem _s;
+        protected VolumeManager _volumeManager;
         protected virtual void RegisterTrackManagers()
         {
             IList<TrackManager> managersFound = GetComponentsInChildren<TrackManager>();
@@ -96,14 +100,12 @@ namespace CGT.Myceliaudio
 
         public virtual void Play(PlayAudioArgs args)
         {
-            var managerToInvolve = TrackManagers[args.TrackGroup];
-            managerToInvolve.Play(args);
+            _audioPlayer.Play(args);
         }
 
         public virtual void StopPlaying(TrackGroup trackGroup, int track = 0)
         {
-            TrackManager managerToUse = TrackManagers[trackGroup];
-            managerToUse.Stop(track);
+            _audioPlayer.StopPlaying(trackGroup, track);
         }
     
         public virtual void FadeTrackVolume(AlterVolumeArgs args)
