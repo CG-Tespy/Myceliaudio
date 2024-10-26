@@ -1,3 +1,4 @@
+using Myceliaudio;
 using System.Collections;
 using UnityEngine;
 
@@ -6,21 +7,21 @@ namespace CGT.Myceliaudio
     /// <summary>
     /// Helper class for NeoNeoAudioSys that also kind of wraps Unity's built-in AudioSource component
     /// </summary>
-    public class AudioTrack
+    public class AudioTrack : IAudioTrackTweenables
     {
         public virtual int ID { get; set; }
 
         public virtual void Init(GameObject toWorkWith)
         {
-            holdsSource = toWorkWith;
+            GameObject = toWorkWith;
             SetUpAudioSource();
         }
 
-        protected GameObject holdsSource; // So we can pull off tweens
+        public GameObject GameObject { get; protected set; } // Might help with custom tweens
 
         protected virtual void SetUpAudioSource()
         {
-            _baseSource = holdsSource.AddComponent<AudioSource>();
+            _baseSource = GameObject.AddComponent<AudioSource>();
             _baseSource.playOnAwake = false;
             _baseSource.volume = RealVolumeNormalized;
         }
