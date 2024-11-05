@@ -1955,7 +1955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56a537fb35290c4db9cd3544a1ab4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmToPlay: {fileID: 8300000, guid: 8d6c1cc8ba1614a42965feb026fc95c2, type: 3}
+  bgmToPlay: {fileID: 8300000, guid: a5b41984cbdf6b9448bffa75bdeb8d77, type: 3}
   sfx: {fileID: 8300000, guid: d811e1de5510de04fbaebcbbdd4f3753, type: 3}
   volChangeInterval: 5
   loopPoint: 0

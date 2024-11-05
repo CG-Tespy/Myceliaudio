@@ -82,7 +82,7 @@ namespace CGT.Myceliaudio
             SetTrackVol(args);
         }
 
-        public virtual float GetTrackGroupVolume(TrackGroup trackGroup)
+        public virtual float GetTrackGroupVol(TrackGroup trackGroup)
         {
             TrackManager managerToUse = TrackManagers[trackGroup];
             return managerToUse.BaseVolume;
@@ -106,7 +106,7 @@ namespace CGT.Myceliaudio
             managerToUse.Stop(track);
         }
     
-        public virtual void FadeTrackVolume(AlterAudioSourceArgs args)
+        public virtual void FadeTrackVol(AlterAudioSourceArgs args)
         {
             TrackManager managerToUse = TrackManagers[args.TrackGroup];
             managerToUse.FadeTrackVolume(args);

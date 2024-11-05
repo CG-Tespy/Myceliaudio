@@ -43,11 +43,11 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetTrackGroupVolume(TrackGroup.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVol(TrackGroup.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
-            float sfxVol = AudioSys.GetTrackGroupVolume(TrackGroup.SoundFX);
+            float sfxVol = AudioSys.GetTrackGroupVol(TrackGroup.SoundFX);
             sfxVol = Mathf.Round(sfxVol);
             sfxVolLabel.text = $"SFX Volume: {sfxVol}%";
         }
@@ -71,7 +71,7 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void ChangeVol(TrackGroup type, float sign)
         {
-            float currentVol = AudioSys.GetTrackGroupVolume(type);
+            float currentVol = AudioSys.GetTrackGroupVol(type);
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 

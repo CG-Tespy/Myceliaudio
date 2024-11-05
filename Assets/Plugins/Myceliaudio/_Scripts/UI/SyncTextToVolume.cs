@@ -14,7 +14,7 @@ namespace CGT.Myceliaudio
         
         protected virtual void Start()
         {
-            float initVol = AudioSystem.S.GetTrackGroupVolume(_trackGroup);
+            float initVol = AudioSystem.S.GetTrackGroupVol(_trackGroup);
             SyncText(initVol);
         }
 

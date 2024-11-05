@@ -65,7 +65,7 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void UpdateTextFields()
         {
-            float musicVol = AudioSys.GetTrackGroupVolume(TrackGroup.BGMusic);
+            float musicVol = AudioSys.GetTrackGroupVol(TrackGroup.BGMusic);
             musicVol = Mathf.Round(musicVol);
             musicVolLabel.text = $"Music Volume: {musicVol}%";
 
@@ -94,7 +94,7 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void ChangeVol(TrackGroup type, float sign)
         {
-            float currentVol = AudioSys.GetTrackGroupVolume(type);
+            float currentVol = AudioSys.GetTrackGroupVol(type);
             currentVol += volChangeInterval * sign;
             currentVol = Mathf.Clamp(currentVol, AudioMath.MinVol, AudioMath.MaxVol);
 
@@ -157,8 +157,8 @@ namespace CGT.Myceliaudio.Demos
                 fadeIn.Track = firstClipTrack;
             }
 
-            AudioSys.FadeTrackVolume(fadeOut);
-            AudioSys.FadeTrackVolume(fadeIn);
+            AudioSys.FadeTrackVol(fadeOut);
+            AudioSys.FadeTrackVol(fadeIn);
             clipCurrentlyAudible = nextClipToBeAudible;
 
             StartCoroutine(DisableCrossfadeButton(currentFadeDur));

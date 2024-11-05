@@ -17,7 +17,7 @@ namespace CGT.Myceliaudio
 
         protected virtual void UpdateCurrentVol()
         {
-            _currentVol = AudioSys.GetTrackGroupVolume(_trackType);
+            _currentVol = AudioSys.GetTrackGroupVol(_trackType);
         }
 
         protected float _currentVol;

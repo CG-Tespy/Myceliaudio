@@ -11,7 +11,7 @@ namespace CGT.Myceliaudio
         protected override void InitApply()
         {
             base.InitApply();
-            float vol = AudioSystem.S.GetTrackGroupVolume(_trackGroup);
+            float vol = AudioSystem.S.GetTrackGroupVol(_trackGroup);
             SyncWith(vol);
         }
 
