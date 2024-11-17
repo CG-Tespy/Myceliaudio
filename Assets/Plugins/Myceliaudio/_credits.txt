@@ -7,9 +7,6 @@
 ~Fonts~
 	Gesine Todt
 
-~Musical Artistry~
-	Nid (AKA Aoha Music)
-
 ~Special Thanks~
 	GameDevTV
 	Zenva Academy	
