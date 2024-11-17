@@ -1922,7 +1922,7 @@ GameObject:
   - component: {fileID: 1800021087}
   - component: {fileID: 1800021088}
   m_Layer: 0
-  m_Name: SmallAdventure
+  m_Name: Song
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1955,11 +1955,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56a537fb35290c4db9cd3544a1ab4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmToPlay: {fileID: 8300000, guid: a5b41984cbdf6b9448bffa75bdeb8d77, type: 3}
-  sfx: {fileID: 8300000, guid: d811e1de5510de04fbaebcbbdd4f3753, type: 3}
+  bgmToPlay: {fileID: 8300000, guid: 8e70e83e5e413aa4daf495af98d29643, type: 3}
+  sfx: {fileID: 8300000, guid: 47aa3ef6557fcd64f81493803e42a506, type: 3}
   volChangeInterval: 5
   loopPoint: 0
-  endPoint: 60043
+  endPoint: 0
   startingMusicVol: 50
   startingSfxVol: 65
   raiseMusicVol: {fileID: 2094631363}

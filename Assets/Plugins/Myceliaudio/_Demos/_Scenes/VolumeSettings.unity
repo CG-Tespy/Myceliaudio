@@ -1317,7 +1317,7 @@ GameObject:
   - component: {fileID: 1199215341}
   - component: {fileID: 1199215342}
   m_Layer: 0
-  m_Name: SmallAdventure
+  m_Name: Song
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 8300000, guid: 654ff23bf1984a34eba8be5e88a3dc4b, type: 3}
   _loopStartPoint: 0
-  _loopEndPoint: 60043
+  _loopEndPoint: 0
 --- !u!1001 &1339350014
 PrefabInstance:
   m_ObjectHideFlags: 0
