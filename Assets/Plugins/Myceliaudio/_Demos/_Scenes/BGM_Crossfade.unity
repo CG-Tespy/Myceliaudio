@@ -844,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstClip: {fileID: 8300000, guid: d99959378cd1aed49b9d406020adc820, type: 3}
-  secondClip: {fileID: 8300000, guid: 8e70e83e5e413aa4daf495af98d29643, type: 3}
+  secondClip: {fileID: 8300000, guid: a5b41984cbdf6b9448bffa75bdeb8d77, type: 3}
   volChangeInterval: 5
   fadeChangeInterval: 0.5
   raiseMusicVol: {fileID: 1287587859}
