@@ -1,4 +1,4 @@
-#define CGT_MYCELIAUDIO_1_00_00
+#define CGT_MYCELIAUDIO_1_00_03
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -105,7 +105,7 @@ namespace CGT.Myceliaudio
             TrackManager managerToUse = TrackManagers[trackGroup];
             managerToUse.Stop(track);
         }
-    
+
         public virtual void FadeTrackVol(AlterAudioSourceArgs args)
         {
             TrackManager managerToUse = TrackManagers[args.TrackGroup];
@@ -114,5 +114,10 @@ namespace CGT.Myceliaudio
 
         public static string SystemSettingsFileName { get; set; } = "myceliaudioSettings.json";
 
+        public virtual AudioClip GetClipPlayingAt(TrackGroup trackGroup, int track)
+        {
+            var manager = TrackManagers[trackGroup];
+            return manager.GetClipPlayingIn(track);
+        }
     }
 }

@@ -161,7 +161,7 @@ namespace CGT.Myceliaudio
                     _baseSource.time = loopPoint;
                     whenToReturnToLoopPoint += lengthOfTheLoopSegment;
                 }
-                
+
                 yield return null;
             }
         }
@@ -179,5 +179,23 @@ namespace CGT.Myceliaudio
             _baseSource.Stop();
         }
 
+        /// <summary>
+        /// The clip playing on loop, as opposed to one shots
+        /// </summary>
+        public virtual AudioClip ClipPlaying
+        {
+            get
+            {
+                if (_baseSource.isPlaying)
+                {
+                    return _baseSource.clip;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
     }
 }

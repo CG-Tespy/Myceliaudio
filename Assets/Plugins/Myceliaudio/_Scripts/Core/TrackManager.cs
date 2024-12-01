@@ -117,7 +117,7 @@ namespace CGT.Myceliaudio
                 AudioEvents.TrackSetVolChanged(Group, _baseVolume);
             }
         }
-        
+
         protected float _baseVolume = 100f;
 
         // This affects the actual volume values that the tracks play at.
@@ -145,7 +145,7 @@ namespace CGT.Myceliaudio
             RealVolumeChanged(RealVolume);
         }
 
-        public event UnityAction<float> RealVolumeChanged = delegate { };  
+        public event UnityAction<float> RealVolumeChanged = delegate { };
 
         public virtual void FadeTrackVolume(AlterAudioSourceArgs args)
         {
@@ -203,5 +203,12 @@ namespace CGT.Myceliaudio
         }
 
         public virtual string Name { get; set; }
+
+        public virtual AudioClip GetClipPlayingIn(int track)
+        {
+            EnsureTrackExists(track);
+            var trackInvolved = tracks[track];
+            return trackInvolved.ClipPlaying;
+        }
     }
 }
