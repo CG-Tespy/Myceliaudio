@@ -2,6 +2,7 @@ using CGT.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using PointerEventData = UnityEngine.EventSystems.PointerEventData;
 
 namespace CGT.Myceliaudio
@@ -16,11 +17,25 @@ namespace CGT.Myceliaudio
 
         protected virtual void Awake()
         {
+            if (_events == null)
+            {
+                _events = GetComponent<UIPointerEvents>();
+            }
+
+            bool shouldCreateOwnEvents = _events == null;
+            if (shouldCreateOwnEvents)
+            {
+                _events = this.gameObject.AddComponent<UIPointerEvents>();
+            }
+
+            _selectable = _events.GetComponent<Selectable>();
+
             _audioArgs.TrackGroup = _trackGroup;
             _audioArgs.Track = _track;
             _audioArgs.Clip = _soundToPlay;
         }
 
+        protected Selectable _selectable;
         protected PlayAudioArgs _audioArgs = new PlayAudioArgs();
 
         protected List<UnityAction<PointerEventData>> toListenFor = new List<UnityAction<PointerEventData>>();
@@ -80,7 +95,6 @@ namespace CGT.Myceliaudio
             {
                 _events.Drop += OnPointerEventTriggered;
             }
-
         }
 
         protected virtual void OnPointerEventTriggered(PointerEventData eventData)
