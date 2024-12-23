@@ -46,6 +46,7 @@ namespace CGT.Myceliaudio
             PlayAudioArgs result = new PlayAudioArgs()
             {
                 Clip = other.Clip,
+                TrackGroup = other.TrackGroup,
                 Track = other.Track,
                 Loop = other.Loop,
                 LoopStartPoint = other.LoopStartPoint,
