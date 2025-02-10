@@ -1,4 +1,4 @@
-#define CGT_UTILS
+#define CGT_UTILS_V1_0_16
 
 namespace CGT
 {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT.Myceliaudio.Demos
+namespace CGT.Myceliaudio.Utils
 {
     public class PlayMusicOnStart : MonoBehaviour
     {
@@ -10,6 +10,12 @@ namespace CGT.Myceliaudio.Demos
 
         protected virtual void Awake()
         {
+            if (_clip == null)
+            {
+                Debug.LogWarning($"{this.gameObject}'s PlayMusicOnStart has no clip to play.");
+                return;
+            }
+
             PlayAudioArgs playMusic = new PlayAudioArgs()
             {
                 Clip = _clip,

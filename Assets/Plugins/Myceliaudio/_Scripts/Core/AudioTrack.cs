@@ -1,6 +1,7 @@
 using Myceliaudio;
 using System.Collections;
 using UnityEngine;
+using CGT.Audio;
 
 namespace CGT.Myceliaudio
 {

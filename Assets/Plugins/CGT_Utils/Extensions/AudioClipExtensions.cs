@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT.Myceliaudio
+namespace CGT.Audio
 {
     public static class AudioClipExtensions
     {
