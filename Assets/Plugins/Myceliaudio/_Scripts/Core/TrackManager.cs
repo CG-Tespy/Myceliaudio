@@ -78,6 +78,12 @@ namespace CGT.Myceliaudio
             tracks[args.Track].Play(args);
         }
 
+        public virtual void PlayOneShot(int trackID, AudioClip clip)
+        {
+            EnsureTrackExists(trackID);
+            tracks[trackID].PlayOneShot(clip);
+        }
+
         public virtual void SetTrackVolume(AlterAudioSourceArgs args)
         {
             EnsureTrackExists(args.Track);

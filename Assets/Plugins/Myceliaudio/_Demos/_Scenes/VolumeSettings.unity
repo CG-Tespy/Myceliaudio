@@ -1350,9 +1350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd1ff270df5c2f4bbd90cdc12ad7997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 8300000, guid: 7b51fc55d181def4bad71fe120ac7602, type: 3}
+  _clip: {fileID: 8300000, guid: 8e70e83e5e413aa4daf495af98d29643, type: 3}
   _loopStartPoint: 0
-  _loopEndPoint: 152350
+  _loopEndPoint: 0
 --- !u!1001 &1339350014
 PrefabInstance:
   m_ObjectHideFlags: 0

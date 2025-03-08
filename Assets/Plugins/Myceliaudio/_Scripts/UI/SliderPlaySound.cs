@@ -13,9 +13,8 @@ namespace CGT.Myceliaudio
         [Tooltip("The minimum amount of time (in seconds) that must pass between sound-plays. Applies when NOT using a SliderStep component.")]
         [SerializeField] protected float _cooldownTime = 0.3f;
 
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
             PrepAudioArgs();
         }
 

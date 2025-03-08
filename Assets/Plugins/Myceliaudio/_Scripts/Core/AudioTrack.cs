@@ -5,7 +5,7 @@ using CGT.Audio;
 namespace CGT.Myceliaudio
 {
     /// <summary>
-    /// Helper class for NeoNeoAudioSys that also kind of wraps Unity's built-in AudioSource component
+    /// Helper class for that also kind of wraps Unity's built-in AudioSource component
     /// </summary>
     public class AudioTrack : IAudioTrackTweenables
     {
@@ -111,11 +111,13 @@ namespace CGT.Myceliaudio
 
         public virtual void Play(PlayAudioArgs args)
         {
+            _baseSource.Stop();
+            _baseSource.loop = args.Loop;
+            // ^To avoid issues for when the end point is at the exact end of the song (when looping)
+            _baseSource.clip = args.Clip;
+
             if (args.Loop)
             {
-                _baseSource.Stop();
-                _baseSource.loop = true; // To avoid issues for when the end point is at the exact end of the song
-
                 if (_playOnLoop != null)
                 {
                     AudioSys.StopCoroutine(_playOnLoop);
@@ -126,7 +128,7 @@ namespace CGT.Myceliaudio
             }
             else
             {
-                _baseSource.PlayOneShot(args.Clip);
+                _baseSource.Play();
             }
         }
 
@@ -167,6 +169,16 @@ namespace CGT.Myceliaudio
         }
 
         protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
+
+        public virtual void PlayOneShot(PlayAudioArgs args)
+        {
+            PlayOneShot(args.Clip);
+        }
+
+        public virtual void PlayOneShot(AudioClip clip)
+        {
+            _baseSource.PlayOneShot(clip);
+        }
 
         public virtual void Stop()
         {

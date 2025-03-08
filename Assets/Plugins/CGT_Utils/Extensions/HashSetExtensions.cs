@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CGT
+namespace CGT.Collections
 {
     public static class HashSetExtensions
     {

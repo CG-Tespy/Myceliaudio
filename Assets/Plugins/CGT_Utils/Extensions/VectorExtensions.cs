@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CGT
+namespace CGT.Physics
 {
     public static class VectorExtensions
     {

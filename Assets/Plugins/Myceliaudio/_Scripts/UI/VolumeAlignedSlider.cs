@@ -1,3 +1,4 @@
+using CGT.Myceliaudio;
 using UnityEngine;
 
 namespace CGT.Myceliaudio
@@ -13,17 +14,6 @@ namespace CGT.Myceliaudio
             base.InitApply();
             float vol = AudioSystem.S.GetTrackGroupVol(_trackGroup);
             SyncWith(vol);
-        }
-
-        protected virtual void SyncWith(float newVol)
-        {
-            float percentage = newVol / 100f;
-            // The formula for lerp is:
-            // lerpedValue = startValue + (range * percentage)
-            // range = (endValue - startValue)
-            float result = Mathf.Lerp(_slider.minValue, _slider.maxValue, percentage);
-
-            _slider.SetValueWithoutNotify(result); // To avoid stack overflows
         }
 
         protected virtual void OnEnable()

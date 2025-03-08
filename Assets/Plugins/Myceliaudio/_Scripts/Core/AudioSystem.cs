@@ -97,8 +97,26 @@ namespace CGT.Myceliaudio
 
         public virtual void Play(PlayAudioArgs args)
         {
-            var managerToInvolve = TrackManagers[args.TrackGroup];
-            managerToInvolve.Play(args);
+            if (args.OneShot)
+            {
+                PlayOneShot(args);
+            }
+            else
+            {
+                var managerToInvolve = TrackManagers[args.TrackGroup];
+                managerToInvolve.Play(args);
+            }
+        }
+
+        public virtual void PlayOneShot(PlayAudioArgs args)
+        {
+            PlayOneShot(args.TrackGroup, args.Track, args.Clip);
+        }
+
+        public virtual void PlayOneShot(TrackGroup group, int track, AudioClip clip)
+        {
+            var managerToInvolve = TrackManagers[group];
+            managerToInvolve.PlayOneShot(track, clip);
         }
 
         public virtual void StopPlaying(TrackGroup trackGroup, int track = 0)

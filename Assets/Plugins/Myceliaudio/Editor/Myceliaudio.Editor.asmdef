@@ -2,7 +2,7 @@
     "name": "Myceliaudio.Editor",
     "rootNamespace": "",
     "references": [
-        "Myceliaudio.Core"
+        "GUID:496102a5b2b933b4e880e1094585516e"
     ],
     "includePlatforms": [
         "Editor"

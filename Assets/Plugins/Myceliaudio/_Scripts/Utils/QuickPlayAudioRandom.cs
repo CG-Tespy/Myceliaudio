@@ -7,6 +7,7 @@ namespace CGT.Myceliaudio.Utils
     {
         [SerializeField] protected PlayAudioArgs[] _audioConfigs = new PlayAudioArgs[] { };
         [SerializeField] protected AudioTiming _timing = AudioTiming.Awake;
+        [SerializeField] protected bool _ignoreIfAlreadyPlaying;
 
         protected virtual void Awake()
         {
@@ -18,10 +19,23 @@ namespace CGT.Myceliaudio.Utils
         protected virtual void PlayIfDesiredTimingIs(AudioTiming currentTiming)
         {
             _playAudio = _audioConfigs.GetRandom();
+            bool alreadyPlaying = AudioSystem.S.GetClipPlayingAt(_playAudio.TrackGroup, _playAudio.Track) == _playAudio.Clip;
+
+            if (alreadyPlaying && _ignoreIfAlreadyPlaying)
+            {
+                return;
+            }
 
             if ((_timing & currentTiming) > 0)
             {
-                AudioSystem.S.Play(_playAudio);
+                if (_playAudio.OneShot)
+                {
+                    AudioSystem.S.PlayOneShot(_playAudio);
+                }
+                else
+                {
+                    AudioSystem.S.Play(_playAudio);
+                }
             }
         }
 

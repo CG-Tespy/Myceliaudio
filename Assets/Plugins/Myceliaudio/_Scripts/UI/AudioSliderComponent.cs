@@ -16,23 +16,48 @@ namespace CGT.Myceliaudio
 
         [Tooltip("Whether this should do its thing right away")]
         [SerializeField] protected bool _applyOnStart = false;
+        [SerializeField] protected float _delayBeforeApply = 0f;
 
-        protected virtual void Awake()
-        {
-            _prevStepVal = _slider.value;
-            // ^To prevent things from activating twice in quick succession in
-            // response to a single step
-        }
-
-        protected float _prevStepVal;
+        public virtual TrackGroup TrackGroup { get { return _trackGroup; } }
 
         protected virtual void Start()
         {
+            AlignToSystemVol();
+            _prevStepVal = _slider.value;
+            // ^To prevent things from activating twice in quick succession in
+            // response to a single step
+
             if (_applyOnStart)
             {
-                InitApply();
+                if (_delayBeforeApply <= 0)
+                {
+                    InitApply();
+                }
+                else
+                {
+                    Invoke(nameof(InitApply), _delayBeforeApply);
+                }
             }
         }
+
+        protected virtual void AlignToSystemVol()
+        {
+            float vol = AudioSystem.S.GetTrackGroupVol(_trackGroup);
+            SyncWith(vol);
+        }
+
+        protected virtual void SyncWith(float newVol)
+        {
+            float percentage = newVol / 100f;
+            // The formula for lerp is:
+            // lerpedValue = startValue + (range * percentage)
+            // range = (endValue - startValue)
+            float result = Mathf.Lerp(_slider.minValue, _slider.maxValue, percentage);
+
+            _slider.SetValueWithoutNotify(result); // To avoid stack overflows
+        }
+
+        protected float _prevStepVal;
 
         protected virtual void InitApply()
         {
@@ -45,6 +70,8 @@ namespace CGT.Myceliaudio
         {
             return newValue != _prevStepVal;
         }
+
+
 
     }
 }
