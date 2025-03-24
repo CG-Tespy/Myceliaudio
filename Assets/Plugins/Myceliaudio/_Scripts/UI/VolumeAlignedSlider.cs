@@ -1,6 +1,3 @@
-using CGT.Myceliaudio;
-using UnityEngine;
-
 namespace CGT.Myceliaudio
 {
     /// <summary>
@@ -9,15 +6,16 @@ namespace CGT.Myceliaudio
     /// </summary>
     public class VolumeAlignedSlider : AudioSliderComponent
     {
-        protected override void InitApply()
+        protected override void Apply()
         {
-            base.InitApply();
+            base.Apply();
             float vol = AudioSystem.S.GetTrackGroupVol(_trackGroup);
             SyncWith(vol);
         }
 
-        protected virtual void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             AudioEvents.TrackSetVolChanged += OnVolumeChanged;
         }
 
@@ -30,8 +28,9 @@ namespace CGT.Myceliaudio
             }
         }
 
-        protected virtual void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             AudioEvents.TrackSetVolChanged -= OnVolumeChanged;
         }
     }

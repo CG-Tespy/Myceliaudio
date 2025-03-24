@@ -1,24 +1,89 @@
 using CGT.UI;
 using UnityEngine;
 using UnityEngine.UI;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
+#endif
+using UnityEngine.EventSystems;
 
 namespace CGT.Myceliaudio
 {
     public abstract class AudioSliderComponent : MonoBehaviour
     {
+#if ENABLE_INPUT_SYSTEM
+        [SerializeField] protected InputActionReference _movementInput;
+#endif
         [SerializeField] protected Slider _slider;
         [SerializeField] protected TrackGroup _trackGroup;
 
-        [Tooltip("If this is assigned, this only does its thing when steps are done")]
+        [Tooltip("If this is assigned, then when using the mouse to drag, this only does its thing when steps are done ")]
         [SerializeField] protected SliderStep _sliderStep;
         [Tooltip("Whether or not this should do its thing based on the SliderStep component")]
         [SerializeField] protected bool _useSliderStep;
+        [Tooltip("Whether or not this should do its thing in response to the specified movement input. Meant mainly for gamepads.")]
+        [SerializeField] protected bool _useMovementInput;
 
         [Tooltip("Whether this should do its thing right away")]
         [SerializeField] protected bool _applyOnStart = false;
         [SerializeField] protected float _delayBeforeApply = 0f;
 
         public virtual TrackGroup TrackGroup { get { return _trackGroup; } }
+
+        protected virtual void OnEnable()
+        {
+            if (ShouldUseSliderStep)
+            {
+                _sliderStep.StepApplied += OnSliderValChanged;
+            }
+            else
+            {
+                _slider.onValueChanged.AddListener(OnSliderValChanged);
+            }
+#if ENABLE_INPUT_SYSTEM
+            if (_movementInput != null)
+            {
+                _movementInput.action.Enable();
+                _movementInput.action.performed += OnMovementInput;
+            }
+#endif
+        }
+
+        protected virtual void OnSliderValChanged(float newVal)
+        {
+            
+        }
+#if ENABLE_INPUT_SYSTEM
+        protected virtual void OnMovementInput(CallbackContext ctx)
+        {
+            if (_useMovementInput)
+            {
+                // ^Why put the check here instead of OnEnable? For the sake of debugging
+                if (EventSystem.current.currentSelectedGameObject == _slider.gameObject)
+                {
+                    Apply();
+                }
+            }
+        }
+#endif
+        protected virtual void OnDisable()
+        {
+            if (ShouldUseSliderStep)
+            {
+                _sliderStep.StepApplied -= OnSliderValChanged;
+            }
+            else
+            {
+                _slider.onValueChanged.RemoveListener(OnSliderValChanged);
+            }
+
+#if ENABLE_INPUT_SYSTEM
+            if (_movementInput != null)
+            {
+                _movementInput.action.performed -= OnMovementInput;
+            }
+#endif
+        }
 
         protected virtual void Start()
         {
@@ -31,11 +96,11 @@ namespace CGT.Myceliaudio
             {
                 if (_delayBeforeApply <= 0)
                 {
-                    InitApply();
+                    Apply();
                 }
                 else
                 {
-                    Invoke(nameof(InitApply), _delayBeforeApply);
+                    Invoke(nameof(Apply), _delayBeforeApply);
                 }
             }
         }
@@ -59,7 +124,7 @@ namespace CGT.Myceliaudio
 
         protected float _prevStepVal;
 
-        protected virtual void InitApply()
+        protected virtual void Apply()
         {
 
         }
@@ -70,8 +135,6 @@ namespace CGT.Myceliaudio
         {
             return newValue != _prevStepVal;
         }
-
-
 
     }
 }

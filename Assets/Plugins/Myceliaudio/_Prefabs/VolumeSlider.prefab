@@ -103,12 +103,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0e0afb7eb643940b584e85a3896220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementInput: {fileID: 0}
   _slider: {fileID: 8558814418138442080}
   _trackGroup: 0
-  _track: 0
   _sliderStep: {fileID: 5570889646477044717}
   _useSliderStep: 0
-  _applyOnStart: 0
+  _useMovementInput: 0
+  _applyOnStart: 1
+  _delayBeforeApply: 0
 --- !u!114 &2380496309152715470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,12 +123,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696ac3abdb3ff7d4aba566d13b8485a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementInput: {fileID: 0}
   _slider: {fileID: 8558814418138442080}
   _trackGroup: 0
-  _track: 0
   _sliderStep: {fileID: 5570889646477044717}
-  _useSliderStep: 0
+  _useSliderStep: 1
+  _useMovementInput: 1
   _applyOnStart: 0
+  _delayBeforeApply: 0
 --- !u!1 &8558814416533974047
 GameObject:
   m_ObjectHideFlags: 0

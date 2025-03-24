@@ -1,15 +1,23 @@
-using CGT.Myceliaudio;
-
-namespace Myceliaudio
+namespace CGT.Myceliaudio
 {
     /// <summary>
     /// Changes the volume of a Track Set when a slider's value changes.
     /// </summary>
     public class VolumeControllerSlider : AudioSliderComponent
     {
-        protected override void InitApply()
+        protected override void OnSliderValChanged(float newVal)
         {
-            base.InitApply();
+            if (this.ShouldUseSliderStep && IsDifferentStepValue(newVal))
+            {
+                _prevStepVal = newVal;
+            }
+
+            Apply();
+        }
+
+        protected override void Apply()
+        {
+            base.Apply();
             AlignTrackSetVolWithSlider(_slider.value);
         }
 
@@ -18,33 +26,9 @@ namespace Myceliaudio
             AudioSystem.S.SetTrackGroupVol(_trackGroup, sliderVal);
         }
 
-        protected virtual void OnEnable()
+        protected override void OnDisable()
         {
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied += OnSliderValChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.AddListener(OnSliderValChanged);
-            }
-        }
-
-        protected virtual void OnSliderValChanged(float newVal)
-        {
-            if (this.ShouldUseSliderStep && IsDifferentStepValue(newVal))
-            {
-                AlignTrackSetVolWithSlider(newVal);
-                _prevStepVal = newVal;
-            }
-            else if (!this.ShouldUseSliderStep)
-            {
-                AlignTrackSetVolWithSlider(newVal);
-            }
-        }
-
-        protected virtual void OnDisable()
-        {
+            base.OnDisable();
             if (ShouldUseSliderStep)
             {
                 _sliderStep.StepApplied -= OnSliderValChanged;

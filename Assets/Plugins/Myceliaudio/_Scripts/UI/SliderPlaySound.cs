@@ -27,9 +27,9 @@ namespace CGT.Myceliaudio
 
         protected PlayAudioArgs _soundPlayArgs = new PlayAudioArgs();
 
-        protected override void InitApply()
+        protected override void Apply()
         {
-            base.InitApply();
+            base.Apply();
             PlayTheSound();
         }
 
