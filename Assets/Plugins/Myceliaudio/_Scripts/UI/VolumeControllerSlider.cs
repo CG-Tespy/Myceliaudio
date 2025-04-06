@@ -26,17 +26,5 @@ namespace CGT.Myceliaudio
             AudioSystem.S.SetTrackGroupVol(_trackGroup, sliderVal);
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied -= OnSliderValChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.RemoveListener(OnSliderValChanged);
-            }
-        }
     }
 }
