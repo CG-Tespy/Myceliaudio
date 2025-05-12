@@ -22,8 +22,11 @@ namespace CGT.Myceliaudio
                 _loopStartPoint = Math.Clamp(value, 0, double.MaxValue);
             }
         }
-        [SerializeField] protected double _loopStartPoint;
+        [SerializeField] [Min(0)] protected double _loopStartPoint;
 
+        /// <summary>
+        /// If you want this to be at the exact end of the clip, leave this at 0.
+        /// </summary>
         public virtual double LoopEndPoint
         {
             get
@@ -35,9 +38,10 @@ namespace CGT.Myceliaudio
                 _loopEndPoint = Math.Clamp(value, 0, double.MaxValue);
             }
         }
-        [SerializeField] protected double _loopEndPoint;
+        [Tooltip("If you want this to be at the exact end of the clip, leave this at 0.")]
+        [SerializeField] [Min(0)] protected double _loopEndPoint;
 
-        public virtual bool HasLoopEndPoint
+        public virtual bool HasEndPointBeforeEndOfClip
         {
             get { return LoopEndPoint > 0; }
         }

@@ -46,18 +46,6 @@ namespace CGT.Myceliaudio
             _isOnCooldown = false;
         }
 
-        protected virtual void OnEnable()
-        {
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied += OnSliderValueChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.AddListener(OnSliderValueChanged);
-            }
-        }
-
         protected virtual void OnSliderValueChanged(float newValue)
         {
             if (this.ShouldUseSliderStep && IsDifferentStepValue(newValue))
@@ -75,16 +63,5 @@ namespace CGT.Myceliaudio
 
         protected bool _isOnCooldown = false;
 
-        protected virtual void OnDisable()
-        {
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied -= OnSliderValueChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.RemoveListener(OnSliderValueChanged);
-            }
-        }
     }
 }
