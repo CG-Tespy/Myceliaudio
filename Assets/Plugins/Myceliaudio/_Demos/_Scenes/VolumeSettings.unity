@@ -236,12 +236,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 280701674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd1ff270df5c2f4bbd90cdc12ad7997, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dbd34ea3023b37438be8a0a58378dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 8300000, guid: ebdd614464e3d7d42b6e9f863230ecfa, type: 3}
-  _loopStartPoint: 7285
-  _loopEndPoint: 103285
+  _timing: 1
+  _audioPlayConfigs:
+  - {fileID: 11400000, guid: 362acee9a0a438642af06cdcfda05539, type: 2}
+  _ignoreIfAlreadyPlaying: 0
+  _random: 0
 --- !u!224 &357884344 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5007074693278551649, guid: 37bd9524fc081b84997a43d906ed8377, type: 3}
@@ -883,7 +885,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 855565547}
-  - component: {fileID: 855565548}
+  - component: {fileID: 855565549}
   m_Layer: 0
   m_Name: SmallAdventure
   m_TagString: Untagged
@@ -906,7 +908,7 @@ Transform:
   m_Father: {fileID: 560967932}
   m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &855565548
+--- !u!114 &855565549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -915,12 +917,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 855565546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd1ff270df5c2f4bbd90cdc12ad7997, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dbd34ea3023b37438be8a0a58378dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 8300000, guid: 5f760f7270fd7d24789dd514eac3e35d, type: 3}
-  _loopStartPoint: 0
-  _loopEndPoint: 60023
+  _timing: 1
+  _audioPlayConfigs:
+  - {fileID: 11400000, guid: c5e2e6955f7933847af0133453117f03, type: 2}
+  _ignoreIfAlreadyPlaying: 0
+  _random: 0
 --- !u!1001 &874823470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1572,18 +1576,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1734478955}
     m_Modifications:
-    - target: {fileID: 1134465448402989134, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _trackGroup
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1134465448402989134, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _useSliderStep
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502163439462159777, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _trackGroup
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4848103523424832900, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1603,14 +1595,6 @@ PrefabInstance:
     - target: {fileID: 4848103523424832900, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669225754626021050, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669225754626021050, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _trackGroup
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6372684502640921570, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
       propertyPath: m_Name
@@ -1735,26 +1719,6 @@ PrefabInstance:
     - target: {fileID: 6372684504498566009, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7203665974237907309, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613952565700619793, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _trackGroup
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613952565700619793, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _applyOnStart
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613952565700619793, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _cooldownTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613952565700619793, guid: 41a718333ebc01f40b82a9676f062b07, type: 3}
-      propertyPath: _useSliderStep
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -3,20 +3,12 @@ using UnityEngine;
 
 namespace CGT.Myceliaudio
 {
-    // For pooling split audio clips when appropriate
+    /// <summary>
+    /// Helper class for making seamless audio transitions. This caches the results
+    /// of the splits to minimize performance impact.
+    /// </summary>
     public class AudioClipSplitter
     {
-        public static AudioClipSplitter S
-        {
-            get
-            {
-                _s ??= new AudioClipSplitter();
-                return _s;
-            }
-        }
-
-        private static AudioClipSplitter _s;
-
         /// <summary>
         /// As in everything up to the end point in the original clip. Might want to use this
         /// instead of the intro when making the loop follow it gets a bit finicky.

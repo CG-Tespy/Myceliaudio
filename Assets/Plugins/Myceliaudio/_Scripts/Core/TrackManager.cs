@@ -72,7 +72,7 @@ namespace CGT.Myceliaudio
             }
         }
 
-        public virtual void Play(PlayAudioArgs args)
+        public virtual void Play(IPlayAudioContext args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].Play(args);

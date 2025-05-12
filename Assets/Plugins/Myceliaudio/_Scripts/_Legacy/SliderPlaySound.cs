@@ -6,6 +6,7 @@ namespace CGT.Myceliaudio
     /// Has a sound played when a slider's value changes. The volume played at depends
     /// on the track and set thereof.
     /// </summary>
+    [System.Obsolete("Better to use SliderPlayAudio. It follows the new architecture better.")]
     public class SliderPlaySound : AudioSliderComponent
     {
         [SerializeField] protected AudioClip _soundToPlay;

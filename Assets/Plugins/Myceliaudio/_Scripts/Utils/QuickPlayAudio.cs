@@ -1,19 +1,36 @@
+using CGT.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CGT.Myceliaudio.Utils
 {
-    public class QuickPlayAudio : MonoBehaviour
+    public class QuickPlayAudio : MonoBehaviour, IAudioPlayer
     {
         [SerializeField] protected AudioTiming _timing = AudioTiming.Awake;
-        [SerializeField] protected PlayAudioArgs _mainArgs = new PlayAudioArgs();
+        [SerializeField] protected PlayAudioArgsSO[] _audioPlayConfigs = new PlayAudioArgsSO[] { };
         [SerializeField] protected bool _ignoreIfAlreadyPlaying;
+        [SerializeField] protected bool _random;
+
+        public virtual AudioTiming Timing
+        {
+            get { return _timing; }
+            set { _timing = value; }
+        }
+
+        public virtual bool Random
+        {
+            get { return _random; }
+            set { _random = value; }
+        }
 
         protected virtual void Awake()
         {
-            if (_mainArgs.Clip == null)
+            foreach (var configEl in _audioPlayConfigs)
             {
-                Debug.LogWarning($"{this.gameObject}'s {this.GetType().Name} has no clip to play.");
-                return;
+                if (configEl.Clip == null)
+                {
+                    Debug.LogWarning($"{configEl.name}'s Clip field is null.");
+                }
             }
 
             RegisterOwnerName();
@@ -40,30 +57,55 @@ namespace CGT.Myceliaudio.Utils
                 return;
             }
 
-            if (ShouldIgnore())
+            Play();
+        }
+
+        /// <summary>
+        /// Lets you make this play audio regardless of the timing this component is set to respond to.
+        /// </summary>
+        public virtual void Play()
+        {
+            // This function is for when you want to have another script play audio without needing to
+            // prep its own logic for doing so. Said script can simply have a reference to an instance
+            // of this one, delegating the audio-playing logic to it.
+            DecideOnConfigsToUse();
+            void DecideOnConfigsToUse()
             {
-                return;
+                _configsToUse.Clear();
+                if (_random)
+                {
+                    _configsToUse.Add(_audioPlayConfigs.GetRandom());
+                }
+                else
+                {
+                    _configsToUse.AddRange(_audioPlayConfigs);
+                }
             }
 
-            if (_mainArgs.Clip != null)
+            PlayBasedOnTheConfigs();
+            void PlayBasedOnTheConfigs()
             {
-                AudioSystem.S.Play(_mainArgs);
-            }
-            else
-            {
-                string errorMessage = $"{_ownerName} cannot play audio when the clip is null.";
-                Debug.LogError(errorMessage);
+                foreach (var configEl in _configsToUse)
+                {
+                    if (ShouldIgnore(configEl))
+                    {
+                        continue;
+                    }
+                    AudioSystem.S.Play(configEl);
+                }
             }
         }
 
-        protected virtual bool ShouldIgnore()
+        protected IList<PlayAudioArgsSO> _configsToUse = new List<PlayAudioArgsSO>();
+
+        protected virtual bool ShouldIgnore(PlayAudioArgsSO config)
         {
-            AudioClip currentlyPlaying = AudioSystem.S.GetClipPlayingAt(_mainArgs.TrackGroup, _mainArgs.Track);
-            bool alreadyPlayingThisClip = _mainArgs.Clip == currentlyPlaying;
+            AudioClip currentlyPlaying = AudioSystem.S.GetClipPlayingAt(config.TrackGroup, config.Track);
+            bool alreadyPlayingThisClip = config.Clip == currentlyPlaying;
             bool whetherWeShould = alreadyPlayingThisClip && _ignoreIfAlreadyPlaying;
             if (whetherWeShould)
             {
-                string logMessage = $"Not going to play {_ownerName}'s {_mainArgs.Clip.name} in {_mainArgs.TrackGroup} Track {_mainArgs.Track}. Reason: it was already playing there.";
+                string logMessage = $"Not going to play {config.name}'s clip in {config.TrackGroup} Track {config.Track}. Reason: it was already playing there.";
                 Debug.Log(logMessage);
             }
 

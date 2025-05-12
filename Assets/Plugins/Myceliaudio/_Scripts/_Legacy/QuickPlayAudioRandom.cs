@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace CGT.Myceliaudio.Utils
 {
+    [System.Obsolete("Better to use regular QuickPlayAudio, since that lets you play audio clips on a random basis")]
     public class QuickPlayAudioRandom : MonoBehaviour
     {
-        [SerializeField] protected PlayAudioArgs[] _audioConfigs = new PlayAudioArgs[] { };
         [SerializeField] protected AudioTiming _timing = AudioTiming.Awake;
+        [SerializeField] protected PlayAudioArgsSO[] _audioConfigs = new PlayAudioArgsSO[] { };
         [SerializeField] protected bool _ignoreIfAlreadyPlaying;
 
         protected virtual void Awake()
@@ -14,7 +15,7 @@ namespace CGT.Myceliaudio.Utils
             PlayIfDesiredTimingIs(AudioTiming.Awake);
         }
 
-        protected PlayAudioArgs _playAudio;
+        protected IPlayAudioContext _playAudio;
 
         protected virtual void PlayIfDesiredTimingIs(AudioTiming currentTiming)
         {

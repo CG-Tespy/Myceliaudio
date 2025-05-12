@@ -1,44 +1,22 @@
+using CGT.Myceliaudio.Utils;
 using CGT.UI;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 using PointerEventData = UnityEngine.EventSystems.PointerEventData;
 
 namespace CGT.Myceliaudio
 {
-    public class PlaySoundOnPointerEvent : MonoBehaviour
+    public class PlayAudioOnPointerEvent : MonoBehaviour
     {
         [SerializeField] protected UIPointerEventType _toRespondTo;
-        [SerializeField] protected UIPointerEvents _events;
-        [SerializeField] protected TrackGroup _trackGroup;
-        [SerializeField] protected int _track;
-        [SerializeField] protected AudioClip _soundToPlay;
+        [SerializeField] protected GameObject _respondsToPointerEvents;
+        [SerializeField] protected QuickPlayAudio _audioPlayer;
 
         protected virtual void Awake()
         {
-            if (_events == null)
-            {
-                _events = GetComponent<UIPointerEvents>();
-            }
-
-            bool shouldCreateOwnEvents = _events == null;
-            if (shouldCreateOwnEvents)
-            {
-                _events = this.gameObject.AddComponent<UIPointerEvents>();
-            }
-
-            _selectable = _events.GetComponent<Selectable>();
-
-            _audioArgs.TrackGroup = _trackGroup;
-            _audioArgs.Track = _track;
-            _audioArgs.Clip = _soundToPlay;
+            _events = _respondsToPointerEvents.GetOrAddComponent<UIPointerEvents>();
         }
 
-        protected Selectable _selectable;
-        protected PlayAudioArgs _audioArgs = new PlayAudioArgs();
-
-        protected List<UnityAction<PointerEventData>> toListenFor = new List<UnityAction<PointerEventData>>();
+        protected UIPointerEvents _events;
 
         protected virtual void OnEnable()
         {
@@ -99,7 +77,7 @@ namespace CGT.Myceliaudio
 
         protected virtual void OnPointerEventTriggered(PointerEventData eventData)
         {
-            AudioSystem.S.Play(_audioArgs);
+            _audioPlayer.Play();
         }
 
         protected virtual void OnDisable()
@@ -122,5 +100,17 @@ namespace CGT.Myceliaudio
             _events.Drop -= OnPointerEventTriggered;
         }
 
+        protected virtual void OnValidate()
+        {
+            if (_respondsToPointerEvents == null)
+            {
+                _respondsToPointerEvents = this.gameObject;
+            }
+
+            if (_audioPlayer == null)
+            {
+                _audioPlayer = this.gameObject.GetOrAddComponent<QuickPlayAudio>();
+            }
+        }
     }
 }

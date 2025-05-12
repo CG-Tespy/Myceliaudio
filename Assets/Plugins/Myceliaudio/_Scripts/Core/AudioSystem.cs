@@ -1,11 +1,12 @@
 #define MYCELIAUDIO
-#define MYCELIAUDIO_1_01_01f1
+#define MYCELIAUDIO_1_01_01f1_OR_LATER
+#define MYCELIAUDIO_1_03_01f1_OR_LATER
 using UnityEngine;
 using System.Collections.Generic;
 
 namespace CGT.Myceliaudio
 {
-    public class AudioSystem : MonoBehaviour
+    public class AudioSystem : MonoBehaviour, IAudioPlayer<IPlayAudioContext>
     {
         public static AudioSystem S
         {
@@ -46,6 +47,7 @@ namespace CGT.Myceliaudio
         }
 
         protected static AudioSystem _s;
+        protected AudioClipSplitter _clipSplitter;
 
         protected virtual void RegisterTrackManagers()
         {
@@ -95,7 +97,7 @@ namespace CGT.Myceliaudio
             managerToUse.BaseVolume = newVol;
         }
 
-        public virtual void Play(PlayAudioArgs args)
+        public virtual void Play(IPlayAudioContext args)
         {
             if (args.OneShot)
             {
@@ -108,7 +110,7 @@ namespace CGT.Myceliaudio
             }
         }
 
-        public virtual void PlayOneShot(PlayAudioArgs args)
+        public virtual void PlayOneShot(IPlayAudioContext args)
         {
             PlayOneShot(args.TrackGroup, args.Track, args.Clip);
         }
@@ -138,5 +140,21 @@ namespace CGT.Myceliaudio
             var manager = TrackManagers[trackGroup];
             return manager.GetClipPlayingIn(track);
         }
+
+        public virtual AudioClip GetIntro(AudioClip originalClip, double loopStartPoint)
+        {
+            return _clipSplitter.GetIntro(originalClip, loopStartPoint);
+        }
+
+        public virtual AudioClip GetLoop(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
+        {
+            return _clipSplitter.GetLoop(originalClip, loopStartPoint, loopEndPoint);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            _clipSplitter.Clear();
+        }
+
     }
 }

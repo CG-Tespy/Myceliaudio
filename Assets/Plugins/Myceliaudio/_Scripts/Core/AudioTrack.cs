@@ -128,7 +128,7 @@ namespace CGT.Myceliaudio
             get { return RealVolume / AudioMath.VolumeConversion; }
         }
 
-        public virtual void Play(PlayAudioArgs args)
+        public virtual void Play(IPlayAudioContext args)
         {
             _playsIntros.Stop();
             //_baseSource.loop = args.Loop;
@@ -155,7 +155,7 @@ namespace CGT.Myceliaudio
         // ^Need this as a separate object to avoid loop points getting confused when
         // switching from one song to another
 
-        protected IEnumerator PlayOnLoopCoroutine(PlayAudioArgs args)
+        protected IEnumerator PlayOnLoopCoroutine(IPlayAudioContext args)
         {
             AudioClip baseClip = args.Clip;
             bool loopTheEntireSong = args.LoopStartPoint <= 0 && !args.HasEndPointBeforeEndOfClip;
@@ -197,10 +197,10 @@ namespace CGT.Myceliaudio
 
                     if (weHaveAnIntroToPlay)
                     {
-                        intro = AudioClipSplitter.S.GetIntro(baseClip, loopStartPoint);
+                        intro = AudioSystem.S.GetIntro(baseClip, loopStartPoint);
                     }
 
-                    loopSegment = AudioClipSplitter.S.GetLoop(baseClip, loopStartPoint, loopEndPoint);
+                    loopSegment = AudioSystem.S.GetLoop(baseClip, loopStartPoint, loopEndPoint);
                 }
 
                 _playsIntros.clip = intro;
@@ -293,7 +293,7 @@ namespace CGT.Myceliaudio
 
         protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
 
-        public virtual void PlayOneShot(PlayAudioArgs args)
+        public virtual void PlayOneShot(IPlayAudioContext args)
         {
             PlayOneShot(args.Clip);
         }

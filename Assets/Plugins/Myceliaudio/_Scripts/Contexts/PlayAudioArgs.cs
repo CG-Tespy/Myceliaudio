@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CGT.Myceliaudio
 {
     [System.Serializable]
-    public class PlayAudioArgs : EventArgs
+    public class PlayAudioArgs : EventArgs, IPlayAudioContext
     {
         [field: SerializeField] public virtual AudioClip Clip { get; set; }
         [field: SerializeField] public virtual TrackGroup TrackGroup { get; set; }
@@ -22,11 +22,8 @@ namespace CGT.Myceliaudio
                 _loopStartPoint = Math.Clamp(value, 0, double.MaxValue);
             }
         }
-        [SerializeField] [Min(0)] protected double _loopStartPoint;
+        [SerializeField] protected double _loopStartPoint;
 
-        /// <summary>
-        /// If you want this to be at the exact end of the clip, leave this at 0.
-        /// </summary>
         public virtual double LoopEndPoint
         {
             get
@@ -38,8 +35,7 @@ namespace CGT.Myceliaudio
                 _loopEndPoint = Math.Clamp(value, 0, double.MaxValue);
             }
         }
-        [Tooltip("If you want this to be at the exact end of the clip, leave this at 0.")]
-        [SerializeField] [Min(0)] protected double _loopEndPoint;
+        [SerializeField] protected double _loopEndPoint;
 
         public virtual bool HasEndPointBeforeEndOfClip
         {
