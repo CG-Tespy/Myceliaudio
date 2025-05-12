@@ -16,6 +16,7 @@ namespace CGT.Myceliaudio
 #endif
         [SerializeField] protected Slider _slider;
         [SerializeField] protected TrackGroup _trackGroup;
+        public virtual TrackGroup TrackGroup { get { return _trackGroup; } }
 
         [Tooltip("If this is assigned, then when using the mouse to drag, this only does its thing when steps are done ")]
         [SerializeField] protected SliderStep _sliderStep;
@@ -27,8 +28,6 @@ namespace CGT.Myceliaudio
         [Tooltip("Whether this should do its thing right away")]
         [SerializeField] protected bool _applyOnStart = false;
         [SerializeField] protected float _delayBeforeApply = 0f;
-
-        public virtual TrackGroup TrackGroup { get { return _trackGroup; } }
 
         protected virtual void OnEnable()
         {
@@ -53,6 +52,7 @@ namespace CGT.Myceliaudio
         {
             
         }
+
 #if ENABLE_INPUT_SYSTEM
         protected virtual void OnMovementInput(CallbackContext ctx)
         {

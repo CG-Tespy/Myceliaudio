@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace CGT.Myceliaudio.Utils
 {
+    [System.Obsolete("Better to use QuickPlayAudio. Does the same thing as this Component and more.")]
     public class PlayMusicOnStart : MonoBehaviour
     {
         [SerializeField] protected AudioClip _clip;
@@ -18,7 +19,7 @@ namespace CGT.Myceliaudio.Utils
 
             PlayAudioArgs playMusic = new PlayAudioArgs()
             {
-                Clip = _clip,
+                MainClip = _clip,
                 TrackGroup = TrackGroup.BGMusic,
                 Loop = true,
                 LoopStartPoint = _loopStartPoint,

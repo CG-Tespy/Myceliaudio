@@ -1,11 +1,12 @@
 #define MYCELIAUDIO
-#define MYCELIAUDIO_1_01_01f1
+#define MYCELIAUDIO_1_01_01f1_OR_LATER
+#define MYCELIAUDIO_1_03_01f1_OR_LATER
 using UnityEngine;
 using System.Collections.Generic;
 
 namespace CGT.Myceliaudio
 {
-    public class AudioSystem : MonoBehaviour
+    public class AudioSystem : MonoBehaviour, IAudioPlayer<IPlayAudioContext>
     {
         public static AudioSystem S
         {
@@ -46,6 +47,7 @@ namespace CGT.Myceliaudio
         }
 
         protected static AudioSystem _s;
+        protected AudioClipSplitter _clipSplitter = new AudioClipSplitter();
 
         protected virtual void RegisterTrackManagers()
         {
@@ -95,7 +97,7 @@ namespace CGT.Myceliaudio
             managerToUse.BaseVolume = newVol;
         }
 
-        public virtual void Play(PlayAudioArgs args)
+        public virtual void Play(IPlayAudioContext args)
         {
             if (args.OneShot)
             {
@@ -108,9 +110,9 @@ namespace CGT.Myceliaudio
             }
         }
 
-        public virtual void PlayOneShot(PlayAudioArgs args)
+        public virtual void PlayOneShot(IPlayAudioContext args)
         {
-            PlayOneShot(args.TrackGroup, args.Track, args.Clip);
+            PlayOneShot(args.TrackGroup, args.Track, args.MainClip);
         }
 
         public virtual void PlayOneShot(TrackGroup group, int track, AudioClip clip)
@@ -138,5 +140,57 @@ namespace CGT.Myceliaudio
             var manager = TrackManagers[trackGroup];
             return manager.GetClipPlayingIn(track);
         }
+
+        public virtual bool IsPlaying(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetIsPlaying(track);
+        }
+
+        public virtual bool IsPlayingIntro(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.IsPlayingIntro(track);
+        }
+
+        public virtual bool IsPlayingMain(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.IsPlayingMain(track);
+        }
+
+        public virtual float GetIntroTime(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetIntroTime(track);
+        }
+
+        public virtual float GetMainTime(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetMainTime(track);
+        }
+
+        public virtual AudioClip GetIntroClipAssigned(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetIntroClipAssigned(track);
+        }
+
+        public virtual AudioClip GetIntroClip(AudioClip originalClip, double loopStartPoint)
+        {
+            return _clipSplitter.GetIntroClip(originalClip, loopStartPoint);
+        }
+
+        public virtual AudioClip GetLoopClip(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
+        {
+            return _clipSplitter.GetLoopClip(originalClip, loopStartPoint, loopEndPoint);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            _clipSplitter.Clear();
+        }
+
     }
 }

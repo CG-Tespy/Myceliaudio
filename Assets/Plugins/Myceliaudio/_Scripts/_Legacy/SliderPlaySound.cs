@@ -6,6 +6,7 @@ namespace CGT.Myceliaudio
     /// Has a sound played when a slider's value changes. The volume played at depends
     /// on the track and set thereof.
     /// </summary>
+    [System.Obsolete("Better to use SliderPlayAudio. It follows the new architecture better.")]
     public class SliderPlaySound : AudioSliderComponent
     {
         [SerializeField] protected AudioClip _soundToPlay;
@@ -20,7 +21,7 @@ namespace CGT.Myceliaudio
 
         protected virtual void PrepAudioArgs()
         {
-            _soundPlayArgs.Clip = _soundToPlay;
+            _soundPlayArgs.MainClip = _soundToPlay;
             _soundPlayArgs.TrackGroup = this._trackGroup;
             _soundPlayArgs.Track = this._track;
         }
@@ -46,18 +47,6 @@ namespace CGT.Myceliaudio
             _isOnCooldown = false;
         }
 
-        protected virtual void OnEnable()
-        {
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied += OnSliderValueChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.AddListener(OnSliderValueChanged);
-            }
-        }
-
         protected virtual void OnSliderValueChanged(float newValue)
         {
             if (this.ShouldUseSliderStep && IsDifferentStepValue(newValue))
@@ -75,16 +64,5 @@ namespace CGT.Myceliaudio
 
         protected bool _isOnCooldown = false;
 
-        protected virtual void OnDisable()
-        {
-            if (ShouldUseSliderStep)
-            {
-                _sliderStep.StepApplied -= OnSliderValueChanged;
-            }
-            else
-            {
-                _slider.onValueChanged.RemoveListener(OnSliderValueChanged);
-            }
-        }
     }
 }

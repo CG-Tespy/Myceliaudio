@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: _trackGroup
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6535297264184659394, guid: 14a051276b2aac041bd358071c9b1d70, type: 3}
+      propertyPath: _trackGroup
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639134051942572533, guid: 14a051276b2aac041bd358071c9b1d70, type: 3}
+      propertyPath: _trackGroup
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6924975324544660538, guid: 14a051276b2aac041bd358071c9b1d70, type: 3}
       propertyPath: _trackSet
       value: 4

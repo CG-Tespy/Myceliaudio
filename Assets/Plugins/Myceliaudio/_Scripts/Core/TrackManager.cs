@@ -72,7 +72,7 @@ namespace CGT.Myceliaudio
             }
         }
 
-        public virtual void Play(PlayAudioArgs args)
+        public virtual void Play(IPlayAudioContext args)
         {
             EnsureTrackExists(args.Track);
             tracks[args.Track].Play(args);
@@ -155,8 +155,7 @@ namespace CGT.Myceliaudio
 
         public virtual void FadeTrackVolume(AlterAudioSourceArgs args)
         {
-            EnsureTrackExists(args.Track);
-            AudioTrack toTweenFor = tracks[args.Track];
+            AudioTrack toTweenFor = GetTrackEnsured(args.Track);
 
             bool shouldUseCustomTweener = args.CustomFader != null;
             if (shouldUseCustomTweener)
@@ -175,6 +174,12 @@ namespace CGT.Myceliaudio
                 _defaultFadeTweens[toTweenFor] = defaultFade;
                 StartCoroutine(defaultFade);
             }
+        }
+
+        protected virtual AudioTrack GetTrackEnsured(int track)
+        {
+            EnsureTrackExists(track);
+            return tracks[track];
         }
 
         protected virtual IEnumerator DoBasicTween(AlterAudioSourceArgs args, AudioTrack toTween)
@@ -197,24 +202,65 @@ namespace CGT.Myceliaudio
 
         public virtual void Stop(int track)
         {
-            EnsureTrackExists(track);
-            var trackToStop = tracks[track];
+            var trackToStop = GetTrackEnsured(track);
             trackToStop.Stop();
         }
 
         public virtual float GetVolume(int track)
         {
-            EnsureTrackExists(track);
-            return tracks[track].CurrentVolumeApplied;
+            var trackToGetVolOf = GetTrackEnsured(track);
+            return trackToGetVolOf.CurrentVolumeApplied;
         }
 
         public virtual string Name { get; set; }
 
         public virtual AudioClip GetClipPlayingIn(int track)
         {
-            EnsureTrackExists(track);
-            var trackInvolved = tracks[track];
+            var trackInvolved = GetTrackEnsured(track);
             return trackInvolved.ClipPlaying;
         }
+
+        public virtual bool GetIsPlaying(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.IsPlaying;
+        }
+
+        public virtual bool IsPlayingIntro(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.IsPlayingIntro;
+        }
+
+        public virtual bool IsPlayingMain(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.IsPlayingMain;
+        }
+
+        public virtual float GetIntroTime(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.IntroTime;
+        }
+
+        public virtual float GetMainTime(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.MainTime;
+        }
+
+        public virtual AudioClip GetIntroClipAssigned(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.IntroClipAssigned;
+        }
+
+        public virtual AudioClip GetMainClipAssigned(int track)
+        {
+            var trackInvolved = GetTrackEnsured(track);
+            return trackInvolved.MainClipAssigned;
+        }
+
     }
 }
