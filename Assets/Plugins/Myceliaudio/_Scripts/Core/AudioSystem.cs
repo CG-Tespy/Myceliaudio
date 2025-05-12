@@ -141,14 +141,50 @@ namespace CGT.Myceliaudio
             return manager.GetClipPlayingIn(track);
         }
 
-        public virtual AudioClip GetIntro(AudioClip originalClip, double loopStartPoint)
+        public virtual bool IsPlaying(TrackGroup group, int track)
         {
-            return _clipSplitter.GetIntro(originalClip, loopStartPoint);
+            var manager = TrackManagers[group];
+            return manager.GetIsPlaying(track);
         }
 
-        public virtual AudioClip GetLoop(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
+        public virtual bool IsPlayingIntro(TrackGroup group, int track)
         {
-            return _clipSplitter.GetLoop(originalClip, loopStartPoint, loopEndPoint);
+            var manager = TrackManagers[group];
+            return manager.IsPlayingIntro(track);
+        }
+
+        public virtual bool IsPlayingMain(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.IsPlayingMain(track);
+        }
+
+        public virtual float GetIntroTime(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetIntroTime(track);
+        }
+
+        public virtual float GetMainTime(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetMainTime(track);
+        }
+
+        public virtual AudioClip GetIntroClipAssigned(TrackGroup group, int track)
+        {
+            var manager = TrackManagers[group];
+            return manager.GetIntroClipAssigned(track);
+        }
+
+        public virtual AudioClip GetIntroClip(AudioClip originalClip, double loopStartPoint)
+        {
+            return _clipSplitter.GetIntroClip(originalClip, loopStartPoint);
+        }
+
+        public virtual AudioClip GetLoopClip(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
+        {
+            return _clipSplitter.GetLoopClip(originalClip, loopStartPoint, loopEndPoint);
         }
 
         protected virtual void OnDestroy()

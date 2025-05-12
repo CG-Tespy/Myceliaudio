@@ -29,7 +29,7 @@ namespace CGT.Myceliaudio
 
         protected IDictionary<AudioClip, AudioClip> _firstPlayClips = new Dictionary<AudioClip, AudioClip>();
 
-        public virtual AudioClip GetIntro(AudioClip originalClip, double loopStartPoint)
+        public virtual AudioClip GetIntroClip(AudioClip originalClip, double loopStartPoint)
         {
             AudioClip result;
             bool thereIsAnIntro = loopStartPoint > 0;
@@ -119,7 +119,7 @@ namespace CGT.Myceliaudio
             return newClip;
         }
 
-        public virtual AudioClip GetLoop(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
+        public virtual AudioClip GetLoopClip(AudioClip originalClip, double loopStartPoint, double loopEndPoint)
         {
             bool alreadyRegistered = _loopClips.ContainsKey(originalClip) &&
                 _loopClips[originalClip] != null;

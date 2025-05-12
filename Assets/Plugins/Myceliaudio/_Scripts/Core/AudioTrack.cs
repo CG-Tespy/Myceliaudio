@@ -37,15 +37,15 @@ namespace CGT.Myceliaudio
         protected virtual void SetUpAudioSource()
         {
             _playsIntros = GameObject.AddComponent<AudioSource>();
-            _playsLoops = GameObject.AddComponent<AudioSource>();
-            _playsIntros.playOnAwake = _playsLoops.playOnAwake = false;
-            _playsIntros.volume = _playsLoops.volume = RealVolumeNormalized;
+            _playsMains = GameObject.AddComponent<AudioSource>();
+            _playsIntros.playOnAwake = _playsMains.playOnAwake = false;
+            _playsIntros.volume = _playsMains.volume = RealVolumeNormalized;
 
-            _playsLoops.loop = true;
+            _playsMains.loop = true;
             // ^Since we use this to play the loop segments of clips that have a loop start point
         }
 
-        protected AudioSource _playsIntros, _playsLoops;
+        protected AudioSource _playsIntros, _playsMains;
 
         public virtual TrackManager Anchor
         {
@@ -92,7 +92,7 @@ namespace CGT.Myceliaudio
                 // audio sources prefer
                 float normalizedForAudioSource = value / AudioMath.VolumeConversion;
                 float withinLimits = Mathf.Clamp(normalizedForAudioSource, AudioMath.MinVol, AudioMath.MaxVolNormalized);
-                _playsIntros.volume = _playsLoops.volume = withinLimits;
+                _playsIntros.volume = _playsMains.volume = withinLimits;
             }
         }
 
@@ -131,8 +131,9 @@ namespace CGT.Myceliaudio
         public virtual void Play(IPlayAudioContext args)
         {
             _playsIntros.Stop();
+            _playsMains.Stop();
             //_baseSource.loop = args.Loop;
-            _playsLoops.loop = args.Loop;
+            _playsMains.loop = args.Loop;
             _playsIntros.clip = args.Clip;
 
             if (args.Loop)
@@ -163,8 +164,8 @@ namespace CGT.Myceliaudio
             if (loopTheEntireSong)
             {
                 // No need to do any fancy file-splitting in this case
-                _playsLoops.clip = baseClip;
-                _playsLoops.Play();
+                _playsMains.clip = baseClip;
+                _playsMains.Play();
                 yield break;
             }
 
@@ -197,14 +198,14 @@ namespace CGT.Myceliaudio
 
                     if (weHaveAnIntroToPlay)
                     {
-                        intro = AudioSystem.S.GetIntro(baseClip, loopStartPoint);
+                        intro = AudioSystem.S.GetIntroClip(baseClip, loopStartPoint);
                     }
 
-                    loopSegment = AudioSystem.S.GetLoop(baseClip, loopStartPoint, loopEndPoint);
+                    loopSegment = AudioSystem.S.GetLoopClip(baseClip, loopStartPoint, loopEndPoint);
                 }
 
                 _playsIntros.clip = intro;
-                _playsLoops.clip = loopSegment;
+                _playsMains.clip = loopSegment;
 
                 PlayTheRightClips();
                 void PlayTheRightClips()
@@ -219,12 +220,12 @@ namespace CGT.Myceliaudio
                             double slightBuffer = 0.00;
                             double afterTheFirstPlayIsDone = AudioSettings.dspTime +
                                 _playsIntros.clip.PreciseLength() + slightBuffer;
-                            _playsLoops.PlayScheduled(afterTheFirstPlayIsDone);
+                            _playsMains.PlayScheduled(afterTheFirstPlayIsDone);
                         }
                     }
                     else
                     {
-                        _playsLoops.Play();
+                        _playsMains.Play();
                         // ^This would mean that the only cutoff is with the end point, and thus that
                         // the start point is at the exact beginning of the song.
                     }
@@ -235,61 +236,6 @@ namespace CGT.Myceliaudio
 
             yield break;
         }
-
-        protected AudioClip CopyAudioClip(AudioClip originalClip, double clipLengthInSeconds, double startTimeInSeconds = 0)
-        {
-            if (originalClip == null)
-            {
-                Debug.LogError("Original AudioClip is null. Cannot create a copy.");
-                return null;
-            }
-
-            // Calculate the starting sample based on the start time
-            int startSample = (int)(startTimeInSeconds * originalClip.frequency);
-
-            // Calculate the number of samples for the new clip
-            int sampleCount = (int)(clipLengthInSeconds * originalClip.frequency);
-
-            // Ensure we don't exceed the original clip's sample count
-            sampleCount = Mathf.Min(sampleCount, originalClip.samples - startSample);
-
-            if (sampleCount <= 0)
-            {
-                Debug.LogError("Invalid start time or clip length. No samples to copy.");
-                return null;
-            }
-
-            // Create a new AudioClip with the same properties as the original
-            AudioClip newClip = AudioClip.Create(
-                originalClip.name + "_Copy",
-                sampleCount,
-                originalClip.channels,
-                originalClip.frequency,
-                false // Non-streaming
-            );
-
-            // Retrieve the audio data from the original clip
-            float[] originalAudioData = new float[originalClip.samples * originalClip.channels];
-            originalClip.GetData(originalAudioData, 0);
-
-            // Copy only the relevant portion of the audio data
-            float[] newAudioData = new float[sampleCount * originalClip.channels];
-            int startIndex = startSample * originalClip.channels;
-            int endIndex = startIndex + newAudioData.Length;
-
-            for (int i = 0, j = startIndex; j < endIndex; i++, j++)
-            {
-                newAudioData[i] = originalAudioData[j];
-            }
-
-            // Set the data for the new clip
-            newClip.SetData(newAudioData, 0);
-
-            return newClip;
-        }
-
-
-
 
         protected virtual AudioSystem AudioSys { get { return AudioSystem.S; } }
 
@@ -321,16 +267,56 @@ namespace CGT.Myceliaudio
         {
             get
             {
-                if (_playsIntros.isPlaying)
+                if (IsPlayingIntro)
                 {
                     return _playsIntros.clip;
+                }
+                else if (IsPlayingMain)
+                {
+                    return _playsMains.clip;
                 }
                 else
                 {
                     return null;
                 }
-
             }
+        }
+
+        /// <summary>
+        /// Whether or not this track is playing anything
+        /// </summary>
+        public virtual bool IsPlaying
+        {
+            get { return IsPlayingIntro || IsPlayingMain; }
+        }
+
+        public virtual bool IsPlayingIntro
+        {
+            get { return _playsIntros.isPlaying; }
+        }
+
+        public virtual bool IsPlayingMain
+        {
+            get { return _playsMains.isPlaying; }
+        }
+
+        public virtual float IntroTime
+        {
+            get { return _playsIntros.time; }
+        }
+        public virtual float MainTime
+        {
+            get { return _playsMains.time; }
+        }
+
+        public virtual AudioClip IntroClipAssigned
+        {
+            get { return _playsIntros.clip; }
+        }
+
+        public virtual AudioClip MainClipAssigned
+        {
+            get { return _playsMains.clip; }
         }
     }
 }
