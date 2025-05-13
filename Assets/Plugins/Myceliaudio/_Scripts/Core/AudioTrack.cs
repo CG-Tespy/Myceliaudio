@@ -130,25 +130,18 @@ namespace CGT.Myceliaudio
 
         public virtual void Play(IPlayAudioContext args)
         {
-            _playsIntros.Stop();
-            _playsMains.Stop();
-            //_baseSource.loop = args.Loop;
+            Stop();
             _playsMains.loop = args.Loop;
-            _playsIntros.clip = args.Clip;
+            _playsMains.clip = args.Clip;
 
             if (args.Loop)
             {
-                if (_playOnLoop != null)
-                {
-                    AudioSys.StopCoroutine(_playOnLoop);
-                }
-
                 _playOnLoop = PlayOnLoopCoroutine(args);
                 AudioSys.StartCoroutine(_playOnLoop);
             }
             else
             {
-                _playsIntros.Play();
+                _playsMains.Play();
             }
         }
 
@@ -258,6 +251,7 @@ namespace CGT.Myceliaudio
             }
 
             _playsIntros.Stop();
+            _playsMains.Stop();
         }
 
         /// <summary>

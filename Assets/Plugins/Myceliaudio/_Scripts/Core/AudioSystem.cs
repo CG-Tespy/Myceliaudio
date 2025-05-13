@@ -47,7 +47,7 @@ namespace CGT.Myceliaudio
         }
 
         protected static AudioSystem _s;
-        protected AudioClipSplitter _clipSplitter;
+        protected AudioClipSplitter _clipSplitter = new AudioClipSplitter();
 
         protected virtual void RegisterTrackManagers()
         {
