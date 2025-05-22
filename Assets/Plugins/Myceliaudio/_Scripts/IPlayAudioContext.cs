@@ -4,7 +4,9 @@ namespace CGT.Myceliaudio
 {
     public interface IPlayAudioContext
     {
-        AudioClip Clip { get; set; }
+        AudioClip IntroClip { get; set; }
+        //AudioClip MainClip { get; set; }
+        AudioClip MainClip { get; set; }
         TrackGroup TrackGroup { get; }
         int Track { get; }
         bool Loop { get; }

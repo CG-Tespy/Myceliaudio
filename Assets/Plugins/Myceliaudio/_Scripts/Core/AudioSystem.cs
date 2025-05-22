@@ -112,7 +112,7 @@ namespace CGT.Myceliaudio
 
         public virtual void PlayOneShot(IPlayAudioContext args)
         {
-            PlayOneShot(args.TrackGroup, args.Track, args.Clip);
+            PlayOneShot(args.TrackGroup, args.Track, args.MainClip);
         }
 
         public virtual void PlayOneShot(TrackGroup group, int track, AudioClip clip)

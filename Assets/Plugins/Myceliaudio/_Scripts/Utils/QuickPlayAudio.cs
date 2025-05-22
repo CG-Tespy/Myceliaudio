@@ -27,7 +27,7 @@ namespace CGT.Myceliaudio.Utils
         {
             foreach (var configEl in _audioPlayConfigs)
             {
-                if (configEl.Clip == null)
+                if (configEl.MainClip == null)
                 {
                     Debug.LogWarning($"{configEl.name}'s Clip field is null.");
                 }
@@ -101,7 +101,7 @@ namespace CGT.Myceliaudio.Utils
         protected virtual bool ShouldIgnore(PlayAudioArgsSO config)
         {
             AudioClip currentlyPlaying = AudioSystem.S.GetClipPlayingAt(config.TrackGroup, config.Track);
-            bool alreadyPlayingThisClip = config.Clip == currentlyPlaying;
+            bool alreadyPlayingThisClip = config.MainClip == currentlyPlaying;
             bool whetherWeShould = alreadyPlayingThisClip && _ignoreIfAlreadyPlaying;
             if (whetherWeShould)
             {

@@ -132,7 +132,7 @@ namespace CGT.Myceliaudio
         {
             Stop();
             _playsMains.loop = args.Loop;
-            _playsMains.clip = args.Clip;
+            _playsMains.clip = args.MainClip;
 
             if (args.Loop)
             {
@@ -151,7 +151,7 @@ namespace CGT.Myceliaudio
 
         protected IEnumerator PlayOnLoopCoroutine(IPlayAudioContext args)
         {
-            AudioClip baseClip = args.Clip;
+            AudioClip baseClip = args.MainClip;
             bool loopTheEntireSong = args.LoopStartPoint <= 0 && !args.HasEndPointBeforeEndOfClip;
 
             if (loopTheEntireSong)
@@ -234,7 +234,7 @@ namespace CGT.Myceliaudio
 
         public virtual void PlayOneShot(IPlayAudioContext args)
         {
-            PlayOneShot(args.Clip);
+            PlayOneShot(args.MainClip);
         }
 
         public virtual void PlayOneShot(AudioClip clip)

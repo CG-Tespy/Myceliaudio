@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace CGT.Myceliaudio
@@ -7,10 +8,16 @@ namespace CGT.Myceliaudio
     {
         [SerializeField] protected PlayAudioArgs _details;
 
-        public virtual AudioClip Clip
+        public virtual AudioClip IntroClip
         {
-            get => _details.Clip;
-            set => _details.Clip = value;
+            get => _details.IntroClip;
+            set => _details.IntroClip = value;
+        }
+
+        public virtual AudioClip MainClip
+        {
+            get => _details.MainClip;
+            set => _details.MainClip = value;
         }
 
         public virtual TrackGroup TrackGroup

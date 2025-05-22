@@ -20,7 +20,7 @@ namespace CGT.Myceliaudio.Utils
         protected virtual void PlayIfDesiredTimingIs(AudioTiming currentTiming)
         {
             _playAudio = _audioConfigs.GetRandom();
-            bool alreadyPlaying = AudioSystem.S.GetClipPlayingAt(_playAudio.TrackGroup, _playAudio.Track) == _playAudio.Clip;
+            bool alreadyPlaying = AudioSystem.S.GetClipPlayingAt(_playAudio.TrackGroup, _playAudio.Track) == _playAudio.MainClip;
 
             if (alreadyPlaying && _ignoreIfAlreadyPlaying)
             {

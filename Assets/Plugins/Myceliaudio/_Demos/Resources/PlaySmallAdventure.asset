@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlaySmallAdventure
   m_EditorClassIdentifier: 
   _details:
-    <Clip>k__BackingField: {fileID: 8300000, guid: 5f760f7270fd7d24789dd514eac3e35d, type: 3}
-    <TrackGroup>k__BackingField: 2
-    <Track>k__BackingField: 0
-    <Loop>k__BackingField: 1
+    _introClip: {fileID: 0}
+    _mainClip: {fileID: 8300000, guid: 5f760f7270fd7d24789dd514eac3e35d, type: 3}
+    _trackGroup: 2
+    _track: 0
+    _loop: 1
     _loopStartPoint: 0
     _loopEndPoint: 60023
-    <OneShot>k__BackingField: 0

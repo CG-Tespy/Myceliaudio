@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlayEasternWinds
   m_EditorClassIdentifier: 
   _details:
-    <Clip>k__BackingField: {fileID: 8300000, guid: ebdd614464e3d7d42b6e9f863230ecfa, type: 3}
-    <TrackGroup>k__BackingField: 2
-    <Track>k__BackingField: 0
-    <Loop>k__BackingField: 1
+    _introClip: {fileID: 0}
+    _mainClip: {fileID: 8300000, guid: ebdd614464e3d7d42b6e9f863230ecfa, type: 3}
+    _trackGroup: 2
+    _track: 0
+    _loop: 1
     _loopStartPoint: 7285
     _loopEndPoint: 103285
-    <OneShot>k__BackingField: 0
