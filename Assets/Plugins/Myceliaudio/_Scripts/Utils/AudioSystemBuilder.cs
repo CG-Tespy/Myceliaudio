@@ -8,7 +8,8 @@ namespace CGT.Myceliaudio
     {
         public static AudioSystem BuildDefault()
         {
-            PrepSettingsFile();
+            PrepSettings();
+
             IList<GameObject> managers = PrepTrackManagers();
             GameObject mainSysHolder = new GameObject("Myceliaudio");
 
@@ -22,11 +23,14 @@ namespace CGT.Myceliaudio
             return result;
         }
 
-        private static void PrepSettingsFile()
+        private static void PrepSettings()
         {
-            var filePath = Path.Combine(Application.dataPath, AudioSystem.SystemSettingsFileName);
+#if !UNITY_WEBGL
+            string whereTheExeIs = Application.dataPath;
+            string filePath = Path.Combine(whereTheExeIs, AudioSystem.SystemSettingsFileName);
+            bool fileFound = File.Exists(filePath);
 
-            if (!File.Exists(filePath))
+            if (!fileFound)
             {
                 systemSettings = new MyceliaudioSettings();
                 string whatToWrite = JsonUtility.ToJson(systemSettings);
@@ -37,6 +41,9 @@ namespace CGT.Myceliaudio
                 string jsonString = File.ReadAllText(filePath);
                 systemSettings = JsonUtility.FromJson<MyceliaudioSettings>(jsonString);
             }
+#else
+            systemSettings = new MyceliaudioSettings();
+#endif
         }
 
         private static MyceliaudioSettings systemSettings;
