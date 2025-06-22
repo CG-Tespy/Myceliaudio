@@ -8,3 +8,6 @@ A robust, royalty-free and user-friendly audio system for the Unity Game Engine.
   - Sound Effects
   - Voice Clips
 - Easily extendable
+
+# Use Cases
+See [here.](https://github.com/CG-Tespy/Myceliaudio/wiki/Use-Case-Examples)
